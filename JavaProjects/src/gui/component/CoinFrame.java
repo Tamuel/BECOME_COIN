@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class CoinEditorFrame extends JFrame implements MouseListener, MouseMotionListener{
+public class CoinFrame extends JFrame implements MouseListener, MouseMotionListener{
 
 	protected int width;
 	protected int height;
@@ -19,7 +19,7 @@ public class CoinEditorFrame extends JFrame implements MouseListener, MouseMotio
 	protected int tempX;
 	protected int tempY;
 	
-	public CoinEditorFrame(String title, int width, int height) {
+	public CoinFrame(String title, int width, int height) {
 		super(title);
 		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
