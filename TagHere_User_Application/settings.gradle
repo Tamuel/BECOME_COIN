@@ -1,0 +1,2 @@
+include ':app', ':library', ':sample'
+include ':zBarScannerLibrary'
