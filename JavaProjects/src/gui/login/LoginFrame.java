@@ -1,83 +1,89 @@
 package gui.login;
 
-import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinPasswordField;
 import gui.component.CoinTextField;
 import resource.CoinColor;
+import resource.CoinFont;
 
-public class LoginFrame extends CoinFrame{
+public class LoginFrame extends CoinFrame implements ActionListener{
 	
 	private CoinTextField idField;
 	private CoinPasswordField passwordField;
 
 	private CoinButton loginButton;
-	private CoinButton exitButton;
+	private CoinButton signupButton;
+	
+	private JLabel markLabel;
+	private JLabel nameLabel;
 	
 	private int xBorder = 10;
 	private int yBorder = 10;
+
+	public LoginFrame() {
+		super("Coin Editor Login", 400, 310);
+		
+		addComponents();
+		
+		this.repaint();
+	}
 	
-
-	public LoginFrame(String frameName, int width, int height) {
-		super(frameName, width, height);
-
+	public void addComponents() {
 		idField = new CoinTextField("ID");
 		idField.setBackground(CoinColor.LIGHT_GRAY);
-		idField.setSize(this.getWidth() - xBorder * 2, this.getHeight() / 4);
-		idField.setLocation(xBorder, yBorder * 2);
+		this.add(idField).setBounds(xBorder * 5, yBorder * 12, this.getWidth() - xBorder * 10, 50);
 
 		passwordField = new CoinPasswordField("PASSWORD");
 		passwordField.setBackground(CoinColor.LIGHT_GRAY);
-		passwordField.setSize(this.getWidth() - xBorder * 2, this.getHeight() / 4);
-		passwordField.setLocation(xBorder, yBorder * 3 + this.getHeight() / 4);
+		this.add(passwordField).setBounds(xBorder * 5, yBorder * 18, this.getWidth() - xBorder * 10,50);
 		
-		loginButton = new CoinButton("로그인");//StringR.LOGIN);
-		loginButton.setSize((this.getWidth() - xBorder * 3) / 2, this.getHeight() / 4);
-		loginButton.setLocation(xBorder, yBorder * 4 + this.getHeight() / 4 * 2);
-		loginButton.addActionListener(new ButtonListener());
+		loginButton = new CoinButton(" 로그인 ");//StringR.LOGIN);
+		loginButton.addActionListener(this);
+		this.add(loginButton).setBounds(xBorder * 5, yBorder * 24, 100, 40);
 		
-		exitButton = new CoinButton("나가기");//StringR.EXIT);
-		exitButton.setSize((this.getWidth() - xBorder * 3) / 2, this.getHeight() / 4);
-		exitButton.setLocation(xBorder * 2 + loginButton.getWidth(), yBorder * 4 + this.getHeight() / 4 * 2);
-		exitButton.addActionListener(new ButtonListener());
+		signupButton = new CoinButton(" 회원 가입 ");//StringR.EXIT);
+		signupButton.addActionListener(this);
+		this.add(signupButton).setBounds(this.getWidth() - xBorder * 15, yBorder * 24, 100, 40);
 		
-		this.add(idField);
-		this.add(passwordField);
-		this.add(loginButton);
-		this.add(exitButton);
+		markLabel = new JLabel();
+		markLabel.setIcon(new ImageIcon("resources/images/Mark_Transparent_100x100.png"));
+		this.add(markLabel).setBounds(xBorder * 5, yBorder * 2, 100, 100);
+		
+		nameLabel = new JLabel("Coin Editor");
+		nameLabel.setFont(CoinFont.VERY_BIG_FONT);
+		this.add(nameLabel).setBounds(xBorder * 15, yBorder * 4 + 4, 200, 50);
+		
+		this.exitButton.addActionListener(this);
+		this.minimizeButton.addActionListener(this);
 		
 		getContentPane().setBackground(CoinColor.WHITE);
-		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	private class ButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent ev){
-			/*switch(ev.getSource().toString()) {
-			case "로그인":
-				DataProvider.getInstance();
-				DataProvider.getInstance().setId(idField.getText());
-				new SelectFloorPlanFrame(
-						StringR.SELECT_BUILDING,
-						DimenR.BUILDING_LIST_FRAME_WIDTH,
-						DimenR.BUILDING_LIST_FRAME_HEIGHT
-						);
-                dispose();
-				break;
-				
-			case "나가기":
-                dispose();
-                System.exit(0);
-				break;
-			}*/
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == loginButton) {
+			// TODO login process must be implemented
+			
+		}
+		else if(e.getSource() == signupButton) {
+			SignupFrame signupFrame = new SignupFrame();
+			this.dispose();
+		}
+		else if(e.getSource() == exitButton) {
+			dispose();
+		}
+		else if(e.getSource() == minimizeButton) {
+			setState(Frame.ICONIFIED);
 		}
 	}
 }

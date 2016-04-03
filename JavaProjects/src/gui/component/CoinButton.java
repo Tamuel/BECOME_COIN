@@ -112,7 +112,7 @@ public class CoinButton extends JButton{
 		this.setOpaque(true);
 		//this.setBackground(new Color(30, 114, 237));
 		this.setMargin(new Insets(0, 0, 0, 0));
-		this.setBackground(CoinColor.BUTTON_COLOR);
+		this.setBackground(CoinColor.THEME_COLOR);//CoinColor.BUTTON_COLOR);
 		Border empty = new EmptyBorder(2, 2, 2, 2);
 		this.setBorder(empty);
 		this.setFont(font);
