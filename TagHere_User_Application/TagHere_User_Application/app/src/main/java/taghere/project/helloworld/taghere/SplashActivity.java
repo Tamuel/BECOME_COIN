@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
+import taghere.project.helloworld.taghere.GoogleMap.GoogleMapActivity;
+
 public class SplashActivity extends Activity {
     private ImageView icon;
 
@@ -36,7 +38,8 @@ public class SplashActivity extends Activity {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        Intent scanActivity = new Intent(SplashActivity.this, ScanActivity.class);
+                        //아래줄 수정 필요
+                        Intent scanActivity = new Intent(SplashActivity.this, GoogleMapActivity.class);
                         startActivity(scanActivity);
                         SplashActivity.this.finish();
                     }
