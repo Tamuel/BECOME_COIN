@@ -12,6 +12,7 @@ import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinPasswordField;
 import gui.component.CoinTextField;
+import gui.editor.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
 
@@ -73,7 +74,8 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == loginButton) {
 			// TODO login process must be implemented
-			
+			SelectionFrame selectionFrame = new SelectionFrame();
+			this.dispose();
 		}
 		else if(e.getSource() == signupButton) {
 			SignupFrame signupFrame = new SignupFrame();
