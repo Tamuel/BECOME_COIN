@@ -168,27 +168,26 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 					break;
 				}
 			}
-			if(flagAlphabet == false)
-				return false;
-			
 			for(int j = 0; j < numbers.length; j++) {
 				if(temp == numbers[j]) {
 					flagNumber = true;
 					break;
 				}
 			}
-			if(flagNumber == false)
-				return false;
-			
 			for(int j = 0; j < specials.length; j++) {
 				if(temp == specials[j]) {
 					flagSpecial = true;
 					break;
 				}
 			}
-			if(flagSpecial == false)
-				return false;
 		}
+		
+		if(flagNumber == false)
+			return false;
+		if(flagSpecial == false)
+			return false;
+		if(flagAlphabet == false)
+			return false;
 		
 		return true;
 	}
