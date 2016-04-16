@@ -1,0 +1,10 @@
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+
+
+public class Main {
+	public static void main(String args[]) {
+		GAME game = new Game();
+		game.play();
+	}
+}

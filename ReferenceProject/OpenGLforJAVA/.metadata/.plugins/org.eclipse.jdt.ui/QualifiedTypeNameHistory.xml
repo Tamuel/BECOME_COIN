@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.jogamp.opengl.GLAutoDrawable"/>
+<fullyQualifiedTypeName name="com.jogamp.opengl.GLEventListener"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="com.jogamp.opengl.GLProfile"/>
+<fullyQualifiedTypeName name="com.jogamp.opengl.GLCapabilities"/>
+<fullyQualifiedTypeName name="com.jogamp.opengl.awt.GLCanvas"/>
+<fullyQualifiedTypeName name="com.jogamp.opengl.GL4"/>
+</qualifiedTypeNameHistroy>
