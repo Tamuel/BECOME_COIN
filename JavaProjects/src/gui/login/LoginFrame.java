@@ -12,7 +12,7 @@ import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinPasswordField;
 import gui.component.CoinTextField;
-import gui.editor.SelectionFrame;
+import gui.selector.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
 
@@ -73,7 +73,11 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == loginButton) {
-			// TODO login process must be implemented
+			/* TODO login process must be implemented
+			 * 1. request login to server
+			 * 2. if valid reply with user data, disopse this and open the selection frame
+			 * 3. if not valid with null data, do nothing and ask user to retry
+			 */
 			SelectionFrame selectionFrame = new SelectionFrame();
 			this.dispose();
 		}

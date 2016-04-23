@@ -126,12 +126,10 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 			idField.grabFocus();
 			return false;
 		}
-		// TODO id duplication check process must me implemented
-		/*else if(id duplication check) {
+		else if(idValidCheck() == false) {
 		 	warningLabel.setText("이미 존재하는 아이디입니다.");
 			idField.grabFocus();
-			duplicationCheck();
-		}*/
+		}
 		else if(passwordField.getPassword().length == 0) {
 			warningLabel.setText("비밀번호를 입력해주세요.");
 			passwordField.grabFocus();
@@ -148,6 +146,20 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 			return false;
 		}
 		
+		return true;
+	}
+	
+	/**
+	 * call this will check id duplication via server
+	 * @return true if not duplicated
+	 * <br>false if duplicated
+	 */
+	private boolean idValidCheck() {
+		/* TODO id duplication check process must me implemented
+		 * 1. request duplication check to server
+		 * 2. if valid id, go to next step
+		 * 3. if not valid id, notify user to change id
+		 * */
 		return true;
 	}
 	
@@ -194,7 +206,11 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 	
 	private void signup() {
 		if(validCheck() == true) {
-			// TODO Signup process must be implemented
+			/* TODO Signup process must be implemented
+			 * 1. request signup with user data to server
+			 * 2. if get done message, open the login frame and dispose this
+			 * 3. if get error message(exception), notify user there's an error
+			 */
 			LoginFrame loginFrame = new LoginFrame();
 			this.dispose();
 		}
