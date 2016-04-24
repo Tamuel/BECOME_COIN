@@ -1,4 +1,4 @@
-package gui.selector;
+package gui.select;
 
 import java.awt.Color;
 import java.awt.Dimension;

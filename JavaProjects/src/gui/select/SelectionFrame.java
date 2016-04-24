@@ -1,4 +1,4 @@
-package gui.selector;
+package gui.select;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +18,7 @@ import dataObjects.CoinFloor;
 import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinScrollPane;
+import gui.draw.CoinDrawingFrame;
 import gui.login.LoginFrame;
 import gui.login.SignupFrame;
 import resource.CoinColor;
@@ -191,6 +192,10 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			/* TODO edit floor plan(map) of selected floor
 			 * 
 			 */
+			if(selectedFloor != null) {
+				CoinDrawingFrame drawingFrame = new CoinDrawingFrame();
+				this.dispose();
+			}
 		}
 		else if(e.getSource() == mapPreviewPanel.getSwitchButon()) {
 			if(mapPreviewPanel.isSwitchOn() == true) {
