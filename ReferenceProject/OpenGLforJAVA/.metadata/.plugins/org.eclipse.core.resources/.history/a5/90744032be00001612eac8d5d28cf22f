@@ -1,0 +1,47 @@
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+import javax.swing.JFrame;
+
+
+public class GAME extends JFrame implements GLEventListener {
+	private static final long serialVersionUID = 1L;
+	
+	final private int width = 800;
+	final private int height = 600;
+
+	public GAME() {
+		super("Minimal OpenGL");
+		
+		this.setName("Minimal OpenGL");
+		
+	}
+	
+	public void play() {
+		
+	}
+
+	@Override
+	public void display(GLAutoDrawable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(GLAutoDrawable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init(GLAutoDrawable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

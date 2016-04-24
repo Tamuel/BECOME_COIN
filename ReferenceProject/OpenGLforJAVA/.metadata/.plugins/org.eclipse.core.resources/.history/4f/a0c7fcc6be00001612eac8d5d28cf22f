@@ -1,0 +1,12 @@
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+import javax.swing.JFrame;
+
+public class Main extends JFrame implements GLEventListener {
+	private static final long serialVersionUID = 1L;
+	
+	public static void main(String args[]) {
+		GAME game = new Game();
+		game.play();
+	}
+}

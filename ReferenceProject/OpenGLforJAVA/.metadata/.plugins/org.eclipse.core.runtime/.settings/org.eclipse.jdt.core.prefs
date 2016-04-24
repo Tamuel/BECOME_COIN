@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
+org.eclipse.jdt.core.compiler.compliance=1.8
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.source=1.8
+org.eclipse.jdt.core.userLibrary.JOGL=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<userlibrary systemlibrary\="false" version\="2">\r\n\t<archive path\="D\:/\uBB38\uC11C/\uB300\uD559\uAD50/4\uD559\uB144/\uC6F9\uBC0F\uC11C\uBC84\uD504\uB85C\uADF8\uB798\uBC0D/OpenGLforJAVA/JOGL/jogamp-all-platforms/jogamp-all-platforms/jar/gluegen-rt.jar"/>\r\n\t<archive path\="D\:/\uBB38\uC11C/\uB300\uD559\uAD50/4\uD559\uB144/\uC6F9\uBC0F\uC11C\uBC84\uD504\uB85C\uADF8\uB798\uBC0D/OpenGLforJAVA/JOGL/jogamp-all-platforms/jogamp-all-platforms/jar/jogl-all.jar"/>\r\n</userlibrary>\r\n
