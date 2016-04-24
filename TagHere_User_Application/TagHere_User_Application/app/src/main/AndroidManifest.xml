@@ -46,11 +46,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScanActivity"></activity>
+        <activity android:name=".ScanActivity" />
         <activity android:name=".FloorPlanActivity">
             -- android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".GoogleMap.GoogleMapActivity"></activity>
+        <activity android:name=".GoogleMap.GoogleMapActivity" />
+        <activity android:name=".GoogleMap.CoinPositionActivity" />
+        <activity
+            android:name=".LogIn.LogInActivity"
+            android:label="@string/title_activity_log_in"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

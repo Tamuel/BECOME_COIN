@@ -13,5 +13,6 @@
 
     <dimen name="vertex_radius">8dp</dimen>
     <dimen name="icon_radius">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
