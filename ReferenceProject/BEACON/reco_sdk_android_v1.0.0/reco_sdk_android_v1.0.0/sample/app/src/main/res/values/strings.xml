@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">RECO Sample</string>
+    <string name="background_monitoring">Background Monitoring</string>
+    <string name="background_ranging">Background Ranging</string>
+
+    <string name="start_monitoring">Start Monitoring</string>
+    <string name="start_ranging">Start Ranging</string>
+
+    <string name="temp">xxxxx</string>
+    <string name="major_label">Major: </string>
+    <string name="minor_label">Minor: </string>
+    <string name="tx_label">Tx Power: </string>
+    <string name="rssi_label">RSSI: </string>
+    <string name="proximity_label">Proximity: </string>
+    <string name="accuracy_label">meters</string>
+
+    <string name="location_permission_granted">Location permission has been granted. RECO SDK can now work properly.</string>
+    <string name="location_permission_not_granted">Location permission for this application is denied. RECO SDK may not work properly.</string>
+    <string name="location_permission_rationale">Location permission is needed to monitor or range beacons.</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+</resources>

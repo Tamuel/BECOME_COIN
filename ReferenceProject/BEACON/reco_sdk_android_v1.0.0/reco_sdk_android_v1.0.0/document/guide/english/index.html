@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RECO SDK for Android ver.English 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.2.0/cosmo/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="None" href="index.html#document-index" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html#document-index">
+          RECO SDK for Android ver.English</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html#document-index">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-requirements">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-getting_started">GETTING STARTED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-about_region">Understanding RECOBeaconRegion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-about_region#defining-recobeaconregion">Defining RECOBeaconRegion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-note_on_development">Notes on Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-license">RECO Beacon Software Development Kit AGREEMENT</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-requirements">Pre-requisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#android-api-version">Android API Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#androidmanifest-xml-permissions">AndroidManifest.xml permissions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-getting_started">GETTING STARTED</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#configuration-for-the-sdk">Configuration for the SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#connecting-to-recobeaconservice-for-region-monitoring-and-region-ranging">Connecting to RECOBeaconService for Region Monitoring and Region Ranging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#monitoring-recobeaconregion">Monitoring RECOBeaconRegion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#ranging-recobeaconregion">Ranging RECOBeaconRegion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#checking-a-state-of-recobeaconregion">Checking a state of RECOBeaconRegion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-about_region">Understanding RECOBeaconRegion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#defining-recobeaconregion">Defining RECOBeaconRegion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-note_on_development">Notes on Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-in-the-background">Running in the Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#a-known-android-bug">A Known Android Bug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#exception">Exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#error-code">Error Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-license">RECO Beacon Software Development Kit AGREEMENT</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="reco-sdk-for-android-v1-0">
+<h1>RECO SDK for Android v1.0<a class="headerlink" href="#reco-sdk-for-android-v1-0" title="Permalink to this headline">¶</a></h1>
+<p>This document describes how to use the RECO SDK of the Perples Inc. to develop android application.</p>
+<p>RECO SDK includes the followings:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">document</span><span class="o">/</span>
+        <span class="n">api</span><span class="o">/</span>                <span class="c1">// API documents</span>
+        <span class="n">guide</span><span class="o">/</span>              <span class="c1">// User guide documents</span>
+<span class="n">sample</span><span class="o">/</span>                 <span class="c1">// Sampel project</span>
+<span class="n">sdk</span><span class="o">/</span>                    <span class="c1">// RECO library (reco-sdk-android_[VERSION_NUMBER].aar)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">This document is based on the Android Studio 1.4.</p>
+</div>
+<div class="toctree-wrapper compound">
+<span id="document-requirements"></span><div class="section" id="pre-requisites">
+<span id="requirements"></span><h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h2>
+<p>The followings are prerequisites to use RECO SDK for Android.</p>
+<div class="section" id="android-api-version">
+<h3>Android API Version<a class="headerlink" href="#android-api-version" title="Permalink to this headline">¶</a></h3>
+<p>RECO SDK supports the following API version or higher. Target SDK version or Complie SDK version can be any version higher than 18.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Minimum Required SDK: API 18: Android 4.3 (Jelly Bean)</li>
+<li>Target SDK: any version higher than Android 4.3 (Jelly Beacon, API 18)</li>
+<li>Complie With: any version higher than Android 4.3 (Jelly Beacon, API 18)</li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/reco_sdk_android_01.png"><img alt="_images/reco_sdk_android_01.png" src="_images/reco_sdk_android_01.png" /></a>
+</div>
+</div>
+<div class="section" id="androidmanifest-xml-permissions">
+<h3>AndroidManifest.xml permissions<a class="headerlink" href="#androidmanifest-xml-permissions" title="Permalink to this headline">¶</a></h3>
+<p>RECO SDK requires the permission of <strong>BLUETOOTH_ADMIN</strong> and <strong>BLUETOOTH</strong>.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot; /&gt;
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p><strong>BLUETOOTH_ADMIN</strong> is required to allow the application to discover and pair bluetooth devices.</p>
+<p class="last"><strong>BLUETOOTH</strong> is required to use <strong>BLUETOOTH_ADMIN</strong>.</p>
+</div>
+<p>For Android API 23 (Marshmallow) or higher, one of the following location permissions is required.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&gt;
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Only one of the location permissions ( <strong>ACCESS_COARSE_LOCATION</strong> or <strong>ACCESS_FINE_LOCATION</strong> ) is required.</p>
+<p class="last">Thus, you do not need to declare the permissions if your applocation has one of the permissions already.</p>
+</div>
+<p>In addition, you should <strong>include RECOBeaconService inside &lt;application&gt; &lt;/application&gt;</strong> in order to start region monitoring and region ranging.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;service android:name=&quot;com.perples.recosdk.RECOBeaconService&quot; /&gt;
+</pre></div>
+</div>
+<p>In order to declare that your application is available to BLE-capable devices only, include the following.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;uses-feature android:name=&quot;android.hardware.bluetooth_le&quot; android:required=&quot;true&quot; /&gt;
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you want to make your application available to devices that do not support BLE, you should still include this element in AndroidManifest.xml, but set required=&#8221;false&#8221;.</p>
+<p>You can determine BLE availability by using the following method in RECO SDK at run-time.</p>
+<ul class="simple">
+<li>When monitoring regions:</li>
+</ul>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">RECOBeaconManager</span> <span class="n">recoManager</span> <span class="o">=</span> <span class="n">RECOBeaconManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">recoManager</span><span class="p">.</span><span class="n">isMonitoringAvailable</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">//You can start region monitoring if the device supports BLE.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>When ranging regions:</li>
+</ul>
+<div class="last highlight-c"><div class="highlight"><pre><span class="k">if</span><span class="p">(</span><span class="n">recoManager</span><span class="p">.</span><span class="n">isRangingAvailable</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">//You can start region ranging if the device supports BLE.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-getting_started"></span><div class="section" id="getting-started">
+<span id="id1"></span><h2>GETTING STARTED<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configuration-for-the-sdk">
+<span id="installing-docdir"></span><h3>Configuration for the SDK<a class="headerlink" href="#configuration-for-the-sdk" title="Permalink to this headline">¶</a></h3>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">This document is based on the Android Studio 1.4</p>
+</div>
+<ol class="arabic simple">
+<li>Add the following RECO SDK library as a module to the Android Studio project.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">reco</span><span class="o">-</span><span class="n">sdk</span><span class="o">-</span><span class="n">android_</span><span class="p">[</span><span class="n">VERSION_NUMBER</span><span class="p">].</span><span class="n">aar</span>
+</pre></div>
+</div>
+<p>1-1. Select File &gt; New &gt; New Module...</p>
+<p><a class="reference internal" href="_images/reco_sdk_android_02.png"><img alt="New Module" src="_images/reco_sdk_android_02.png" style="height: 600px;" /></a></p>
+<p>1-2. Select <strong>&#8220;Import .JAR/.AAR Package&#8221;</strong> .</p>
+<p><a class="reference internal" href="_images/reco_sdk_android_03.png"><img alt="Import Package" src="_images/reco_sdk_android_03.png" style="height: 600px;" /></a></p>
+<p>1-3. Select the SDK library after clicking the button in the red box.</p>
+<p>Subproject name will be used to distinguish the module. (For example, reco-sdk-android)</p>
+<p><a class="reference internal" href="_images/reco_sdk_android_04.png"><img alt="Select Module" src="_images/reco_sdk_android_04.png" style="height: 600px;" /></a></p>
+<ol class="arabic simple" start="2">
+<li>Set dependency to use RECO SDK.</li>
+</ol>
+<p>2-1. Select File &gt; Project Structure...</p>
+<p><img alt="Project Structure" src="_images/reco_sdk_android_05.png" /></p>
+<p>2-2. Select the <strong>&#8220;Dependencies&#8221;</strong> tab.</p>
+<p><img alt="Dependencies" src="_images/reco_sdk_android_06.png" /></p>
+<p>2-3. Select &#8220;Module dependency&#8221; by clicking &#8220;+&#8221; button below.</p>
+<p><img alt="Module Dependencies" src="_images/reco_sdk_android_07.png" /></p>
+<p>2-4. Select the subproject name you set in 1-3. (For example, :reco-sdk:android)</p>
+<p><img alt="Select Module Dependencies" src="_images/reco_sdk_android_08.png" /></p>
+<ol class="arabic simple" start="3">
+<li>Add the following permissions and service to the AndroidManifest.xml. For the details, please refer to the above &#8220;AndroidManifest.xml permission&#8221;.</li>
+</ol>
+<div class="highlight-java"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.BLUETOOTH&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.BLUETOOTH_ADMIN&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.ACCESS_COARSE_LOCATION&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">feature</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.hardware.bluetooth_le&quot;</span> <span class="n">android</span><span class="o">:</span><span class="n">required</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="n">application</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">service</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;com.perples.recosdk.RECOBeaconService&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">application</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>You do not need to duplicate the permissions that are already declared.</li>
+<li>Set android:required=&#8221;false&#8221; for the uses-feature to use the library for the devices that does not support BLE.</li>
+<li>At least one of the location permissions (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is required.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="connecting-to-recobeaconservice-for-region-monitoring-and-region-ranging">
+<h3>Connecting to RECOBeaconService for Region Monitoring and Region Ranging<a class="headerlink" href="#connecting-to-recobeaconservice-for-region-monitoring-and-region-ranging" title="Permalink to this headline">¶</a></h3>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>RECO SDK for Android performs monitoring regions and ranging regions using the instance of the RECOBeaconManager.</li>
+<li>The instance of the RECOBeaconManager must be bound to the RECOBeaconService before starting to monitor and range regions.</li>
+<li>In order to bind ECOBeaconService, RECOServiceConnectListener interface is required.</li>
+</ul>
+</div>
+<ol class="arabic simple">
+<li>Implement RECOServiceConnectListener and its callback method.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconManager</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOServiceConnectListener</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">class</span> <span class="n">YourClassName</span> <span class="n">implements</span> <span class="n">RECOServiceConnectListener</span> <span class="p">{</span>
+
+    <span class="p">..</span>
+    <span class="p">..</span>
+    <span class="p">..</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">onServiceConnect</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//Write the code when the connection to RECOBeaconService is established</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">onServiceFail</span><span class="p">(</span><span class="n">REOErrorCode</span> <span class="n">errorCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when fails to bind RECOBeaconService</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Create an instance of the RECOBeaconManager.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="c1">//RECOBeaconManager.getInstance(Context, boolean, boolean) gets context,</span>
+<span class="c1">//setting for scanning RECO beacons only or all beacons,</span>
+<span class="c1">//and setting for ranging timeout while monitoring in the background as parameters</span>
+
+<span class="n">boolean</span> <span class="n">mScanRecoOnly</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">boolean</span> <span class="n">mEnableBackgroundTimeout</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+<span class="n">RECOBeaconManager</span> <span class="n">recoManager</span> <span class="o">=</span> <span class="n">RECOBeaconManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">mScanRecoOnly</span><span class="p">,</span> <span class="n">mEnableBackgroundTimeout</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>As of release 2.0, RECOBeaconManager.getInstance(Context) and RECOBeaconManager.getInstance(Context, boolean) methods are replaced by RECOBeaconManager.getInstance(Context, boolean, boolean) method.</li>
+<li>If you create an instance of the RECOBeaconManager with RECOBeaconManager.getInstance(Context), it scans RECO beacons only and ranging timeout while monitoring in the background is set to true.</li>
+<li>Also, if you create an instance of the RECOBeaconManager with RECOBeaconManager.getInstance(Context, boolean), it scans RECO beacons only.</li>
+<li>For more detailed information, please refer to the &#8220;Notes on Development&#8221;.</li>
+</ul>
+</div>
+<ol class="arabic simple" start="3">
+<li>Set RECOServiceConnectListener interface, and connect the instance of the RECOBeaconManager to the RECOBeaconService.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">recoManager</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">onServiceConnect() callback method in the RECOServiceConnectListener is called when the connection to the RECOBeaconService is established after calling this method.</p>
+</div>
+<ol class="arabic simple" start="4">
+<li>Call unbind() method when you want to disconnect to the RECOBeaconService.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">recoManager</span><span class="p">.</span><span class="n">unbind</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>For more detailed information, please refer to the sample project in the RECO SDK Package.</p>
+</div>
+<div class="section" id="monitoring-recobeaconregion">
+<h3>Monitoring RECOBeaconRegion<a class="headerlink" href="#monitoring-recobeaconregion" title="Permalink to this headline">¶</a></h3>
+<p>Region monitoring detects the access of the user device to the region. If monitoring a region is started, the status of the region (inside, outside, and unknown) and enter/exit to the region can be detected.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>RECO SDK for Android performs monitoring using the instance of the RECOBeaconManager.</li>
+<li>Before monitoring regions, the instance of the RECOBeaconManager must be bound to RECOBeaconService.</li>
+<li>For monitoring, RECOMonitoringListener interface is required.</li>
+</ul>
+</div>
+<ol class="arabic simple">
+<li>Implement RECOMonitoringListener and its callback methods.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegion</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegionState</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOMonitoringListener</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">class</span> <span class="n">YourClassName</span> <span class="n">implements</span> <span class="n">RECOMonitoringListener</span> <span class="p">{</span>
+
+    <span class="p">..</span>
+    <span class="p">..</span>
+    <span class="p">..</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didDetermineStateForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegionState</span> <span class="n">recoRegionState</span><span class="p">,</span>
+                                        <span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//After starting monitoring a region, this method is called</span>
+        <span class="c1">//      when the state of the monitored region is changed</span>
+        <span class="c1">//          such as entry or exit to the region.</span>
+        <span class="c1">//This method is also called</span>
+        <span class="c1">//      when didEnterRegion(RECOBeaconRegion) or didExitRegion(RECOBeaconRegion)</span>
+        <span class="c1">//          callback method is called.</span>
+        <span class="c1">//Write the code when the state of the monitored region is changed</span>
+    <span class="p">}</span>
+
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didEnterRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">,</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">RECOBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//When the device is entered the monitored region, this method is called.</span>
+        <span class="c1">//After release of 0.2, list of beacons in the entered region is received.</span>
+        <span class="c1">//Write the code when the device is entered the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didExitRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//When the device is exited the monitored region, this method is called.</span>
+        <span class="c1">//Write the code when the device is exited the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didStartMonitoringForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This method is called right after starting monitoring a region</span>
+        <span class="c1">//Write the code when starting monitoring the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">monitoringDidFailForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">,</span> <span class="n">RECOErrorCode</span> <span class="n">errorCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This method is called when starting or stopping monitoring is failed.</span>
+        <span class="c1">//Please refer to the &quot;Error Code&quot; for RECOErrorCode.</span>
+        <span class="c1">//Write the code when monitoring is fail</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Bind RECOBeaconManager to RECOBeaconService. (Refer to &#8220;Connecting to RECOBeaconService for Region Monitoring and Region Ranging&#8221;)</li>
+<li>Set RECOMonitoringListener interface, and start monitoring.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">recoManager</span><span class="p">.</span><span class="n">setMonitoringListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+
+<span class="c1">//You can set scan period. The default is 1 second.</span>
+<span class="n">recoManager</span><span class="p">.</span><span class="n">setScanPeriod</span><span class="p">(</span><span class="n">TIME</span> <span class="n">IN</span> <span class="n">MILLISECOND</span><span class="p">);</span>
+
+<span class="c1">//You can set sleep period, which represents the time lag between scanning.</span>
+<span class="c1">//The default is 10 seconds.</span>
+<span class="n">recoManager</span><span class="p">.</span><span class="n">setSleepPeriod</span><span class="p">(</span><span class="n">TIME</span> <span class="n">IN</span> <span class="n">MILLISECOND</span><span class="p">);</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">RECOBeaconRegion</span><span class="o">&gt;</span> <span class="n">monitoringRegions</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">RECOBeaconRegion</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">monitoringRegions</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UNIQUE</span> <span class="n">IDENTIFIER</span><span class="p">));</span>
+<span class="n">monitoringRegions</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">MAJOR</span><span class="p">,</span>
+                                <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UNIQUE</span> <span class="n">IDENTIFIER</span><span class="p">));</span>
+
+<span class="k">for</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="nl">region</span> <span class="p">:</span> <span class="n">monitoringRegions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="c1">//You can set expiration time of the region. The default is 60 seconds.</span>
+        <span class="n">region</span><span class="p">.</span><span class="n">setRegionExpirationTimeMillis</span><span class="p">(</span><span class="n">TIME_IN_MILLISECOND</span><span class="p">);</span>
+        <span class="n">recoManager</span><span class="p">.</span><span class="n">startMonitoringForRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Remote Exception is occurred.</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">NullPointerException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Null Pointer Exception is occurred.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>The above code should be written in/after onServiceConnect() callback method of RECOServiceConnectListener</li>
+<li>monitoringDidFailForRegion() and onServiceFail() callback methods give you ErrorCode when RemoteException or NullPointerExcpetion occurs.</li>
+</ul>
+</div>
+<ol class="arabic simple" start="4">
+<li>Stop monitoring.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">for</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="nl">region</span> <span class="p">:</span> <span class="n">monitoringRegions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="n">recoManager</span><span class="p">.</span><span class="n">stopMonitoringForRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Remote Exception is occurred.</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">NullPointerException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Null Pointer Exception is occurred.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For more detailed information, please refer to the sample project in the RECO SDK Package.</p>
+</div>
+<div class="section" id="ranging-recobeaconregion">
+<h3>Ranging RECOBeaconRegion<a class="headerlink" href="#ranging-recobeaconregion" title="Permalink to this headline">¶</a></h3>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">RECO SDK for Android perform ranging regions using the instance of the RECOBeaconManager. Before raning regions, the instance of the RECOBeaconManager must be connected to the RECOBeaconService, and RECORangingListener interface is required.</p>
+</div>
+<ol class="arabic simple">
+<li>Implement RECORangingListener and its callback method.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegion</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegionState</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECORangingListener</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">class</span> <span class="n">YourClassName</span> <span class="n">implements</span> <span class="n">RECORangingListener</span> <span class="p">{</span>
+
+    <span class="p">..</span>
+    <span class="p">..</span>
+    <span class="p">..</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didRangeBeaconsInRegion</span><span class="p">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">RECOBeacon</span><span class="o">&gt;</span> <span class="n">recoBeacons</span><span class="p">,</span>
+                                            <span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This callback method is called every second</span>
+        <span class="c1">//                for ranged regions with their ranged beacons</span>
+        <span class="c1">//Write the code when ranged RECOBeacon list is received for the ranged region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">rangingBeaconsDidFailForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">,</span> <span class="n">RECOErrorCode</span> <span class="n">errorCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This method is called when starting or stopping ranging is failed.</span>
+        <span class="c1">//Please refer to the &quot;Error Code&quot; for RECOErrorCode.</span>
+        <span class="c1">//Write the code when ranging is fail</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Bind RECOBeaconManager to RECOBeaconService. (Refer to &#8220;Connecting to RECOBeaconService for Region Monitoring and Region Ranging&#8221;)</li>
+<li>Set RECORangingListener interface and start ranging.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">recoManager</span><span class="p">.</span><span class="n">setRangingListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">RECOBeaconRegion</span><span class="o">&gt;</span> <span class="n">rangingRegions</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">RECOBeaconRegion</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">rangingRegions</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UNIQUE</span> <span class="n">IDENTIFIER</span><span class="p">));</span>
+<span class="n">rangingRegions</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">MAJOR</span><span class="p">,</span>
+                                            <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UNIQUE</span> <span class="n">IDENTIFIER</span><span class="p">));</span>
+
+<span class="k">for</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="nl">region</span> <span class="p">:</span> <span class="n">rangingRegions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="n">recoManager</span><span class="p">.</span><span class="n">startRangingBeaconsInRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Remote Exception is occurred.</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">NullPointerException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Null Pointer Exception is occurred.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>The above code should be written in/after onServiceConnect() callback method of RECOServiceConnectListener</li>
+<li>rangingBeaconsDidFailForRegion() and onServiceFail() callback methods give you ErrorCode when RemoteException or NullPointerExcpetion occurs.</li>
+</ul>
+</div>
+<ol class="arabic simple" start="4">
+<li>Stop ranging.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">for</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="nl">region</span> <span class="p">:</span> <span class="n">rangingRegions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="p">{</span>
+        <span class="n">recoManager</span><span class="p">.</span><span class="n">stopRangingBeaconsInRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Remote Exception is occurred.</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">NullPointerException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//Write the code when Null Pointer Exception is occurred.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For more detailed information, please refer to the sample project in the RECO SDK Package.</p>
+</div>
+<div class="section" id="checking-a-state-of-recobeaconregion">
+<h3>Checking a state of RECOBeaconRegion<a class="headerlink" href="#checking-a-state-of-recobeaconregion" title="Permalink to this headline">¶</a></h3>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>RECO SDK for Android can check the state of each monitored regions with requestStateForRegion(RECOBeaconRegion) method using the instance of RECOBeaconManager.</li>
+<li>Before requesting state of regions, the instance of the RECOBeaconManager must be bound to the RECOBeaconService, and RECOMonitoringListener is required.</li>
+<li>In addition, the requested region must be monitored.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">requestStateForRegion(RECOBeaconRegion) method performs asynchronously, and delivers the results to didDetermineStateForRegion(RECOBeaconRegionState, RECOBeaconRegion) callback method.</p>
+</div>
+<ol class="arabic simple">
+<li>Implement RECOMonitoringListener and its callback methods.</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegion</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOBeaconRegionState</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">com</span><span class="p">.</span><span class="n">perples</span><span class="p">.</span><span class="n">recosdk</span><span class="p">.</span><span class="n">RECOMonitoringListener</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">class</span> <span class="n">YourClassName</span> <span class="n">implements</span> <span class="n">RECOMonitoringListener</span> <span class="p">{</span>
+
+    <span class="p">..</span>
+    <span class="p">..</span>
+    <span class="p">..</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didDetermineStateForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegionState</span> <span class="n">recoRegionState</span><span class="p">,</span>
+                                            <span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//The result of requestStateForRegion(RECOBeaconRegion) method is received</span>
+        <span class="c1">//Write the code when the result is received.</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didEnterRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">,</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">RECOBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//When the device is entered the monitored region, this method is called.</span>
+        <span class="c1">//After release of 0.2, list of beacons in the entered region is received.</span>
+        <span class="c1">//Write the code when the device is entered the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didExitRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//When the device is exited the monitored region, this method is called.</span>
+        <span class="c1">//Write the code when the device is exited the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">didStartMonitoringForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This method is called right after starting monitoring a region</span>
+        <span class="c1">//Write the code when starting monitoring the region</span>
+    <span class="p">}</span>
+
+    <span class="n">public</span> <span class="kt">void</span> <span class="n">monitoringDidFailForRegion</span><span class="p">(</span><span class="n">RECOBeaconRegion</span> <span class="n">recoRegion</span><span class="p">,</span> <span class="n">RECOErrorCode</span> <span class="n">errorCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//This method is called when starting or stopping monitoring is failed.</span>
+        <span class="c1">//Please refer to the &quot;Error Code&quot; for RECOErrorCode.</span>
+        <span class="c1">//Write the code when monitoring is fail</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Bind RECOBeaconManager to RECOBeaconService. (Refer to &#8220;Connecting to RECOBeaconService for Region Monitoring and Region Ranging&#8221;)</li>
+<li>Set RECOMonitoringListener interface and call requestStateForRegion(RECOBeaconRegion).</li>
+</ol>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">RECOBeaconRegion</span> <span class="n">region</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UUID</span><span class="p">,</span>
+                                                    <span class="n">YOUR</span> <span class="n">REGION</span> <span class="n">UNIQUE</span> <span class="n">IDENTIFIER</span><span class="p">);</span>
+<span class="n">recoManager</span><span class="p">.</span><span class="n">setMonitoringListener</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+<span class="n">recoManager</span><span class="p">.</span><span class="n">startMonitoringForRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+<span class="n">recoManager</span><span class="p">.</span><span class="n">requestStateForRegion</span><span class="p">(</span><span class="n">region</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>The above code should be written in/after onServiceConnect() callback method of RECOServiceConnectListener</li>
+</ul>
+</div>
+<p>For more detailed information, please refer to the sample project in the RECO SDK Package.</p>
+</div>
+</div>
+<span id="document-about_region"></span><div class="section" id="understanding-recobeaconregion">
+<h2>Understanding RECOBeaconRegion<a class="headerlink" href="#understanding-recobeaconregion" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="defining-recobeaconregion">
+<span id="installing-docdir"></span><h2>Defining RECOBeaconRegion<a class="headerlink" href="#defining-recobeaconregion" title="Permalink to this headline">¶</a></h2>
+<p>RECOBeaconRegion is defined by the reach of BLE Beacon signals.
+RECOBeaconRegion is an area defined by proximity uuid, major, and minor of the BLE Beacon.</p>
+<p>RECOBeaconRegion is identified by a combination of the following values.</p>
+<ul class="simple">
+<li><strong>Proximity UUID(universally unique identifier)</strong> : 128-bit value that uniquely identifies one or more beacons as a certain type or from a certain organization.</li>
+<li><strong>Major</strong> : 16-bit unsigned integer that can be used to group related beacons that have the same proximity UUID.</li>
+<li><strong>Minor</strong> : 16-bit unsigned integer that differentiates beacons with the same proximity UUID and major value.</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Store</th>
+<th class="head">San Francisco</th>
+<th class="head">New York</th>
+<th class="head">Chicago</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="2">Proximity UUID</td>
+<td colspan="3">24DDF411-8CF1-440C-87CD-E368DAF9C93E</td>
+</tr>
+<tr class="row-odd"><td colspan="2">Major</td>
+<td>1001</td>
+<td>1002</td>
+<td>1003</td>
+</tr>
+<tr class="row-even"><td rowspan="3">Minor</td>
+<td>Clothing</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr class="row-odd"><td>Shoes</td>
+<td>200</td>
+<td>200</td>
+<td>200</td>
+</tr>
+<tr class="row-even"><td>Jewelry</td>
+<td>300</td>
+<td>300</td>
+<td>300</td>
+</tr>
+</tbody>
+</table>
+<p>For example, the regions can be defined by the following.</p>
+<ul class="simple">
+<li>For all stores: using Proximity UUID</li>
+</ul>
+<p>If a region is defined by proximity uuid only, the region is the extent of any stores.
+The region with proximity uuid detects the beacon signal containing the proximity uuid.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">String</span> <span class="n">mProximityUuid</span> <span class="o">=</span> <span class="s">&quot;24DDF411-8CF1-440C-87CD-E368DAF9C93E&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">mIdentifier</span> <span class="o">=</span> <span class="s">&quot;ALL Stores&quot;</span><span class="p">;</span>
+
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mIdentifier</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>For each store: using Proximity UUID and Major</li>
+</ul>
+<p>Each store can be uniquely identified by the combination of proximity uuid and major.
+The region defined by the combination of proximity uuid and major detects the beacon signal containing the proximity uuid and major.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">String</span> <span class="n">mProximityUuid</span> <span class="o">=</span> <span class="s">&quot;24DDF411-8CF1-440C-87CD-E368DAF9C93E&quot;</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor1</span> <span class="o">=</span> <span class="mi">1001</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor2</span> <span class="o">=</span> <span class="mi">1002</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor3</span> <span class="o">=</span> <span class="mi">1003</span><span class="p">;</span>
+
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion1</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor1</span><span class="p">,</span> <span class="s">&quot;San Francisco&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion2</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor2</span><span class="p">,</span> <span class="s">&quot;New York&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor3</span><span class="p">,</span> <span class="s">&quot;Chicago&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>For each section in each store: using Proximity UUID, Major, and Minor</li>
+</ul>
+<p>Each section in each store can be uniquely identified by the combination of proximity uuid, major, and minor.
+The region with proximity uuid, major, and minor detects the beacon signal containing all of them.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">String</span> <span class="n">mProximityUuid</span> <span class="o">=</span> <span class="s">&quot;24DDF411-8CF1-440C-87CD-E368DAF9C93E&quot;</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor1</span> <span class="o">=</span> <span class="mi">1001</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor2</span> <span class="o">=</span> <span class="mi">1002</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMajor3</span> <span class="o">=</span> <span class="mi">1003</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">mMinor1</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMinor2</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mMinor3</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span>
+
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion1</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor1</span><span class="p">,</span> <span class="n">mMinor1</span><span class="p">,</span> <span class="s">&quot;Clothing section of the branch in San Francisco&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion2</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor2</span><span class="p">,</span> <span class="n">mMinor1</span><span class="p">,</span> <span class="s">&quot;Clothing section of the branch in New York&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor3</span><span class="p">,</span> <span class="n">mMinor1</span><span class="p">,</span>  <span class="s">&quot;Clothing section of the branch in Chicago&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion4</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor1</span><span class="p">,</span> <span class="n">mMinor2</span><span class="p">,</span> <span class="s">&quot;Shoes section of the branch in San Francisco&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion5</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor2</span><span class="p">,</span> <span class="n">mMinor3</span><span class="p">,</span> <span class="s">&quot;Jewelry section of the branch in New York&quot;</span><span class="p">);</span>
+<span class="n">RECOBeaconRegion</span> <span class="n">mRecoRegion6</span> <span class="o">=</span> <span class="n">new</span> <span class="n">RECOBeaconRegion</span><span class="p">(</span><span class="n">mProximityUuid</span><span class="p">,</span> <span class="n">mMajor3</span><span class="p">,</span> <span class="n">mMinor2</span><span class="p">,</span>  <span class="s">&quot;Shoes section of the branch in Chicago&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>The region cannot be defined by major or minor only.</strong> If you want to create a region with a specific major, the region should contain proper proximity uuid. For the region with a specific minor, the region should be defined by the combination of proximity uuid, major, and the minor value.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>RECOBeaconRegion uses unique identifier(string) to distinguish the region from other regions when generating the instance of the RECOBeaconRegion.</li>
+<li>The unique identifier cannot be null and the existing region is replaced by the new one with the same identifier.</li>
+<li>If you do not specify proximity uuid, <strong>the region will be set by our proximity uuid.</strong></li>
+<li>The default proximity uuid is 24DDF411-8CF1-440C-87CD-E368DAF9C93E.</li>
+</ul>
+</div>
+</div>
+<span id="document-note_on_development"></span><div class="section" id="notes-on-development">
+<h2>Notes on Development<a class="headerlink" href="#notes-on-development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-in-the-background">
+<h3>Running in the Background<a class="headerlink" href="#running-in-the-background" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Region Monitoring</strong> : Region Monitoring can be run in the background. For more detailed information, please refer to the sample project, especially RECOBackgroundMonitoringService.java, in the RECO SDK Package.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Scan period, sleep period, and the number of beacons may impact the battery usage.</p>
+</div>
+<ul class="simple">
+<li><strong>Region Ranging</strong> : Region Ranging can be run in the background, but we do not recommend. However, while monitoring in the background, it can help scan beacons around when enter or exit events are occurred.</li>
+</ul>
+<p>For more detailed information, please refer to the sample project, especially RECOBackgroundRangingService.java, in the RECO SDK Package.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Ranging is to scan beacons around continuously, which means DOES NOT sleep to scan. It may impact the battery drain, so running ranging in the background is not recommended.
+Also, ranging will timeout after 10 seconds ranging while monitoring (in the background).
+If you do not want to set timeout for ranging while monitoring in the background, please set false for the setting.</p>
+</div>
+<div class="highlight-c"><div class="highlight"><pre><span class="c1">//If you do not want to set timeout for ranging while monitoring in the background,</span>
+<span class="c1">//create an instance of RECOBeaconManager as follows</span>
+<span class="c1">//warning: it affetcs the battery consumption</span>
+<span class="n">RECOBeaconManager</span> <span class="n">recoManager</span> <span class="o">=</span> <span class="n">RECOBeaconManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-known-android-bug">
+<h3>A Known Android Bug<a class="headerlink" href="#a-known-android-bug" title="Permalink to this headline">¶</a></h3>
+<p>There is a known android bug that some android devices scan BLE devices only once. (link: <a class="reference external" href="http://code.google.com/p/android/issues/detail?id=65863">http://code.google.com/p/android/issues/detail?id=65863</a>)
+To resolve the bug in our SDK, you can use setDiscontinuousScan() method of the RECOBeaconManager.
+This method is to set whether the device scans BLE devices continuously or discontinuously.
+The default is set as FALSE. Please set TRUE only for specific devices.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you set TRUE, didRangeBeaconsInRegion() callback method may not be called every second.</p>
+</div>
+</div>
+<div class="section" id="exception">
+<h3>Exception<a class="headerlink" href="#exception" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>RemoteException</strong> : RECOBeaconManager is not bound to RECOBeaconService. Call RECOBeaconManager.bind(RECOServiceConnectListner serviceConnectLisnter) first.</li>
+<li><strong>NullPointerException</strong> : Null RECOBeacon parameter is received, or RECOBeaconManager does not have RECOMonitoringListener or RECORangingListener depending on methods (monitoring or ranging). You should set proper Listener first.</li>
+</ul>
+</div>
+<div class="section" id="error-code">
+<h3>Error Code<a class="headerlink" href="#error-code" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Error Code</th>
+<th class="head">설명</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RECO_MANAGER_NOT_BIND</td>
+<td><p class="first">RECOBeaconManager is not bound to RECOBeaconService.</p>
+<p class="last">Call RECOBeaconManager.bind(RECOServiceConnectListener) first.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>RECO_NULL_REGION</td>
+<td><p class="first">Cannot monitor or range null RECOBeaconRegion.</p>
+<p class="last">Create the instance of the RECOBeaconRegion and set it as a parameter.</p>
+</td>
+</tr>
+<tr class="row-even"><td>RECO_NULL_MONITORING_LISTENER</td>
+<td><p class="first">RECOBeaconManager does not have RECOMonitoringListener.</p>
+<p class="last">Call RECOBeaconManager.setMonitoringListener(RECOMonitoringListener) first.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>RECO_NULL_RANGING_LISTENER</td>
+<td><p class="first">RECOBeaconManager does not have RECORangingListener.</p>
+<p class="last">Call RECOBeaconManager.setRangingListener(RECORangingListener) first.</p>
+</td>
+</tr>
+<tr class="row-even"><td>RECO_LOCATION_PERMISSION_NOT_GRANTED</td>
+<td><p class="first">Location Permission is not granted.</p>
+<p>The RECO SDK may not work properly for Android API 23 (marshmallow) or higher.</p>
+<p class="last">Request one of the location permissions
+( <strong>&#8220;ACCESS_COARSE_LOCATION&#8221;</strong> or <strong>&#8220;ACCESS_FINE_LOCATION&#8221;</strong> ) first.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<span id="document-license"></span><div class="section" id="reco-beacon-software-development-kit-agreement">
+<span id="license"></span><h2>RECO Beacon Software Development Kit AGREEMENT<a class="headerlink" href="#reco-beacon-software-development-kit-agreement" title="Permalink to this headline">¶</a></h2>
+<p>This RECO Beacon Software Development Kit Agreement (“Agreement”) is between the individual or entity (“you” or “Developer”) that accepts it, and Perples, Inc. (“Perples”). You accept this Agreement by clicking an “agree” or similar button, where this option is provided by Perples, or if you use or access the Software Development Kit (“SDK”) or any part of the SDK. Your agreement to these terms also binds your authorized users, your company or organization. If you do not agree to the terms of this Agreement, do not accept it. Before accepting this Agreement, please carefully read it. Capitalized terms used but not defined in the body of this Agreement have the meaning given them in the “Definitions” exhibit.</p>
+<p>Last updated: May 26, 2015</p>
+<ol class="arabic">
+<li><p class="first">Development License</p>
+<p>1.1. Development License. Conditioned upon compliance with the terms and conditions of this Agreement, Perples hereby grants you a limited, non-exclusive, personal, revocable, non-sublicensable and non-transferable license to: (a) install and use a reasonable number of copies of the SDK on computers owned or controlled by you for the purpose of developing and testing applications that are intended for use solely in connection with a RECO Beacon Device; and (b) modify and incorporate into your Application any sample code provided in the SDK.</p>
+<p>1.2. Restrictions. The license granted to you in Section 1.1 is subject to the following restrictions, as well as others listed in this Agreement:</p>
+<p>1.2.1. Except as expressly permitted in Section 1.1: (a) you may not publish, distribute or copy the SDK, and (b) you may not modify or create derivative works of the SDK.</p>
+<p>1.2.2. You may use the SDK solely in connection with a RECO Beacon Device.</p>
+<p>1.2.3. You may not, and may not enable others to, reverse engineer, decompile, disassemble or otherwise attempt to reconstruct, identify or discover any source code, underlying ideas, techniques, or algorithms in the SDK, the RECO Beacon Device or any software that forms part of the SDK, nor attempt to circumvent any related security measures (except as and only to the extent any foregoing restriction is prohibited by applicable law or permitted by applicable law notwithstanding the foregoing restriction, or to the extent as may be permitted by licensing terms governing use of any open source software components or sample code included within the SDK).</p>
+<p>1.2.4. You may not remove, obscure, or alter any proprietary rights or confidentiality notices within the SDK or any software, documentation or other materials in it or supplied with it.</p>
+<p>1.2.5. You may not create Applications or other software that prevent or degrade the interaction of Applications developed by others with the Software.</p>
+<p>1.3. Updates. The terms of this Agreement will apply to any Updates that Perples makes available to you. You agree that Updates may require you to change or update your Application, and may affect your ability to use, access or interact with the SDK.</p>
+<p>1.4. Trademarks. You may indicate that your Application is “for RECO Beacon” or “RECO Beacon-enabled”. However, unless provided in an agreement between you and Perples, you may not otherwise use “RECO Beacon”, “RECO”, or any other trademark of the RECO Beacon by Perples in connection with your Application or company, or in any URL, product, service, name field or logos created by you.</p>
+<ol class="arabic simple" start="2">
+<li>Distribution License</li>
+</ol>
+<p>2.1. Distribution License. Conditioned upon compliance with the terms and conditions of this Agreement, Perples hereby grants you a limited, non-exclusive, personal, revocable, non-transferable license under Perples’s applicable intellectual property rights to the extent necessary to: (a) copy and distribute (or have copied and distributed) the RECO Beacon Redistributables, solely as compiled with, incorporated into, or packaged with, your Application; and (b) to make (but not have made), use, sell, offer for sale and import your Application.</p>
+<p>2.2. Restrictions. The license granted to you in Section 2.1 is subject to the following restrictions, as well as others listed in this Agreement:</p>
+<p>2.2.2. You may not, directly or indirectly, publish, post or otherwise make available the RECO Beacon Redistributables other than as compiled with, incorporated into, or packaged with, your Application.</p>
+<ol class="arabic simple" start="3">
+<li>Open Source Materials, Other Licenses</li>
+</ol>
+<p>Sample code made publicly available by Perples on its developer web site is provided subject to the MIT license, unless otherwise noted in the license, notice or readme files distributed with the example or in related documentation. The SDK may otherwise include software or other materials that are provided under a separate license agreement, and that separate license will govern the use of such software or other materials in the event of a conflict with this Agreement. Any such separate license agreement may be indicated in the license, notice, or readme files distributed with the applicable software or other materials or in related documentation.</p>
+<ol class="arabic simple" start="4">
+<li>No High Risk Use; Acknowledgment and Waiver</li>
+</ol>
+<p>4.1. Notwithstanding anything in this Agreement, you are not licensed to, and you agree not to, use, copy, sell, offer for sale, or distribute the SDK or RECO Beacon Devices (whether compiled with, incorporated into, or packaged with your Application or otherwise), for or in connection with uses where failure or fault of the RECO Beacon Device, RECO Beacon Redistributables or your Application could lead to death or serious bodily injury of any person, or to severe physical or environmental damage (“High Risk Use”). ANY SUCH USE IS STRICTLY PROHIBITED.</p>
+<p>4.2. You acknowledge the SDK may allow you to develop Applications that enable the control of motorized or mechanical equipment, or other systems, machines or devices. If you elect to use the SDK in such a way, you must take steps to design and test your Applications to ensure that your Applications do not present risks of personal injury or death, property damage, or other losses. The RECO Beacon Device, the RECO Beacon Redistributables and other software in the SDK may not always function as intended. You must design your Applications so that any failure of a RECO Beacon Device, a RECO Beacon Redistributable and/or such other software does not cause personal injury or death, property damage, or other losses. If you choose to use the SDK, (i) you assume all risk that use of the RECO Beacon Device and/or such other software by you or by any others causes any harm or loss, including to the end users of your Applications or to third parties, (ii) you hereby waive, on behalf of yourself and your Authorized Users, all claims against Perples and its affiliates related to such use, harm or loss (including, but not limited to, any claim that a RECO Beacon Device, a RECO Beacon Redistributable or such other software is defective), and (iii) you agree to hold Perples and its affiliates harmless from such claims.</p>
+<ol class="arabic simple" start="5">
+<li>Confidentiality and Privacy</li>
+</ol>
+<p>5.1. Beta Software etc. Obligations. You acknowledge and agree that Perples may share alpha or beta software or hardware with you that it identifies as non-public. If so, you agree not to disclose such software or hardware to others without the prior written consent of Perples until the time, if any, it is made public by Perples, and to use such software or hardware only for the purposes expressly permitted by this Agreement.</p>
+<ol class="arabic simple" start="6">
+<li>Ownership and Feedback</li>
+</ol>
+<p>6.1. Ownership. Perples agrees that it obtains no right, title or interest from you (or your licensors) under this Agreement in or to any of your Applications, including any intellectual property rights which subsist in those Applications. As between Perples and you, Perples owns all right, title and interest, including all intellectual property rights, in and to the SDK and the RECO Beacon Redistributables, other than any third party software or materials incorporated in the SDK, and you agree not to contest Perples’s ownership of any of the foregoing.</p>
+<p>6.2. Feedback. You may (but are not required to) provide feedback, comments and suggestions (collectively, “Feedback”) to Perples. You hereby grant to Perples a non-exclusive, perpetual, irrevocable, paid-up, transferable, sub-licensable, worldwide license under all intellectual property rights covering such Feedback to use, disclose and exploit all such Feedback for any purpose.</p>
+<ol class="arabic simple" start="7">
+<li>Your Obligations and Warranties</li>
+</ol>
+<p>In addition to your other obligations under this Agreement, you warrant and agree that:</p>
+<p>7.1. You will use the SDK only in accordance with all accompanying documentation, in the manner expressly permitted by this Agreement, and your use of the SDK, and the marketing, sales and distribution of your Application, will be in compliance with all applicable laws and regulations and all Republic of Korea and local or foreign export and re-export restrictions applicable to the technology and documentation provided under this Agreement (including privacy and data security laws and regulations), and you will not develop any Application which would commit or facilitate the commission of a crime, or other tortious, unlawful, or illegal act.</p>
+<ol class="arabic simple" start="8">
+<li>Agreement and Development Program</li>
+</ol>
+<p>We reserve the right to change this Agreement, the SDK or the Perples development and licensing program at any time in our discretion. Perples may require that you either accept and agree to the new terms of this Agreement, or, if you do not agree to the new terms, cease or terminate your use of the SDK. Your continued use of the SDK after changes to this Agreement take effect will constitute your acceptance of the changes. If you do not agree to a change, you must stop using the SDK and terminate this Agreement. Any termination of this Agreement by you under this Section 8 (and only this Section 8) will not affect your right, subject to your continued compliance with your obligations under this Agreement, to continue to distribute versions of your Application created and first distributed before termination, and will not affect the right of your End Users to continue using such versions of your Application, both of which rights will survive termination.</p>
+<ol class="arabic simple" start="9">
+<li>Term and Termination</li>
+</ol>
+<p>9.1. Term. This Agreement will continue to apply until terminated by either you or Perples as set out below.</p>
+<p>9.2. Termination by You. If you want to terminate this Agreement, you may terminate it by uninstalling and destroying all copies of the SDK that are in the possession, custody or control of you, your Authorized Users and your organization.</p>
+<p>9.3. Termination by Perples. Perples may at any time, terminate this Agreement with you for any reason or for no reason in Perples’s sole discretion, including as a result of non-compliance by you with the restrictions in Section 1.2 or Section 2.2, or for other reasons.</p>
+<p>9.4. Effect of Termination. Upon termination of this Agreement, all rights granted to you under this Agreement will immediately terminate and you must immediately cease all use and destroy all copies of the SDK in your and your Authorized Users’ possession, custody or control, and, except as specifically set out in Section 8, cease your distribution of Applications. Sections 1.2, 2.2, 5.1, 6, 9.4, and 10 - 13, and the Definitions exhibit, will survive termination of this Agreement. Termination of this Agreement will not affect the right of your End Users who have downloaded your Application prior to termination to continue using it.</p>
+<ol class="arabic simple" start="10">
+<li>Indemnification.</li>
+</ol>
+<p>You agree to indemnify, hold harmless and, at Perples’s option, defend Perples and its affiliates and their respective officers, directors, employees, agents, and representatives harmless from any and all judgments, awards, settlements, liabilities, damages, costs, penalties, fines and other expenses (including court costs and reasonable attorneys’ fees) incurred by them arising out of or relating to any third party claim (a) with respect to your Application, including products liability, privacy, or intellectual property infringement claims, or (b) based upon your negligence or willful misconduct or any breach or alleged breach of your representations, warranties, and covenants under this Agreement. In no event may you enter into any settlement or like agreement with a third party that affects Perples rights or binds Perples in any way, without the prior written consent of Perples.</p>
+<ol class="arabic simple" start="11">
+<li>Warranty Disclaimer.</li>
+</ol>
+<p>THE SDK AND THE RECO BEACON REDISTRIBUTABLES ARE PROVIDED &#8220;AS IS&#8221; WITHOUT WARRANTY OF ANY KIND. PERPLES, ON BEHALF OF ITSELF AND ITS SUPPLIERS, HEREBY DISCLAIMS ALL REPRESENTATIONS, PROMISES, OR WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT TO THE SDK AND THE RECO BEACON REDISTRIBUTABLES, INCLUDING THEIR CONDITION, AVAILABILITY, OR THE EXISTENCE OF ANY LATENT DEFECTS, AND PERPLES SPECIFICALLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, TITLE, NONINFRINGEMENT, SUITABILITY, AND FITNESS FOR ANY PURPOSE. PERPLES DOES NOT WARRANT THAT THE SDK OR THE RECO BEACON REDISTRIBUTABLES WILL BE ERROR-FREE OR THAT THEY WILL WORK WITHOUT INTERRUPTION.</p>
+<ol class="arabic simple" start="12">
+<li>Limitation of Liability.</li>
+</ol>
+<p>THE SOFTWARE IS PROVIDED &#8220;AS IS&#8221;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. MOREOVER, PERPLES SHALL NEVER BE LIABLE FOR ANY DEFECT IN SOURCE CODE WRITTEN BY YOU WHEN RELYING ON THE SDK.</p>
+<ol class="arabic simple" start="13">
+<li>Miscellaneous.</li>
+</ol>
+<p>13.1. Assignment. You may not assign this Agreement without the prior written consent of Perples. Any assignment without such consent is void and of no effect. Perples may assign this Agreement without your consent in connection with (a) a merger or consolidation of Perples, (b) a sale or assignment of substantially all its assets, or (c) any other transaction which results in another entity or person owning substantially all of the assets of Perples. In the event of a permitted assignment, this Agreement will inure to the benefit of and be binding upon the parties and their respective successors and permitted assigns.</p>
+<p>13.2. Waiver; Severability. The failure of the other party to enforce any rights under this Agreement will not be deemed a waiver of any rights. The rights and remedies of the parties in this Agreement are not exclusive and are in addition to any other rights and remedies provided by law. If any provision of this Agreement is held by a court of competent jurisdiction to be contrary to law, the remaining provisions of this Agreement will remain in full force and effect.</p>
+<p>13.3. Reservation. All licenses not expressly granted in this Agreement are reserved and no other licenses, immunity or rights, express or implied, are granted by Perples, by implication, estoppel, or otherwise. The software in the SDK is licensed, not sold.</p>
+<p>13.4. Export Restrictions. The software is subject to Republic of Korea export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the software. These laws include restrictions on destinations, end users, and end use.</p>
+<p>13.5. Relationship of the Parties. This Agreement does not create any agency, partnership, or joint venture relationship between Perples and you. This Agreement is for the sole benefit of Perples and you (and indemnified parties), and no other persons will have any right or remedy under this Agreement.</p>
+<p>13.6. Notice. The address for notice to Perples under this Agreement is:</p>
+<p>Perples, Inc.
+8F, 209 Dosan-daero, Gangnam-gu, Seoul, South Korea</p>
+<p>13.7. Entire Agreement. This Agreement is the entire understanding of the parties with respect to its subject matter and supersedes any previous or contemporaneous communications, whether oral or written with respect to such subject matter.</p>
+<p>Definitions</p>
+<p>Whenever capitalized in this Agreement:</p>
+<p>“Authorized Users” means your employees and contractors, members of your organization or, if you are an educational institution, your faculty, staff and registered students, who (a) have a demonstrable need to know or use the SDK in order to develop and test Applications on your behalf and (b) each have written and binding agreements with you to protect against the unauthorized use and disclosure of the SDK consistent with the terms and conditions of this Agreement. Authorized Users do not include End Users.about:blank</p>
+<p>“End User” means your end user customer(s) or licensee(s).</p>
+<p>“Perples” “we” or “us” means Perples, Inc. with a principal place of business at 8F, 209 Dosan-daero, Gangnam-gu, Seoul, South Korea.</p>
+<p>“RECO Beacon Device” means the RECO Beacon, a bluetooth low energy beacon device that sends out Bluetooth signals in regular intervals.</p>
+<p>“RECO Beacon Redistributables” means any .jar files, .so files, .framework files, or other materials we specifically designate in the SDK excluding the sample code as made available for incorporation into or distribution with Applications.</p>
+<p>“SDK” means, collectively, the RECO Beacon Redistributables, tools, APIs, software, documentation, other materials and any updates to the foregoing that may be provided or made available to you by Perples in connection with this Agreement, via the RECO Member Center or otherwise for use in connection with the Perples development program to develop Applications.</p>
+<p>“Updates” means updates, upgrades, modifications, enhancements, revisions, new releases or new versions to the SDK that Perples may make available to you in connection with this Agreement.</p>
+<p>“RECO Member Center” means the developer portal (<a class="reference external" href="http://member.reco2.me">http://member.reco2.me</a>) provided by Perples.</p>
+<p>Other capitalized terms used in this Agreement have the meaning given them elsewhere in this Agreement.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014 - 2015, Perples Inc..<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

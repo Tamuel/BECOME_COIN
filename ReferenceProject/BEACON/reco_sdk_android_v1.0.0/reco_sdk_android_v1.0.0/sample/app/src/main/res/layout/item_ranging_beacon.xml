@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout android:id="@+id/uuidLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp">
+
+        <TextView android:id="@+id/recoProximityUuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="@string/temp"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/signalLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuidLayout"
+        android:layout_marginLeft="10dp">
+
+        <TextView android:id="@+id/majorLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/major_label"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/recoMajor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/minorLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/minor_label"
+            android:textSize="15sp" />
+
+        <TextView android:id="@+id/recoMinor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/txPowerLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/tx_label"
+            android:textSize="15sp" />
+
+        <TextView android:id="@+id/recoTxPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/rssiLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/rssi_label"
+            android:textSize="15sp" />
+
+        <TextView android:id="@+id/recoRssi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/proximityLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signalLayout"
+        android:layout_marginLeft="15dp">
+
+        <TextView android:id="@+id/proximityLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/proximity_label"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/recoProximity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/recoAccuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/temp"
+            android:textSize="15sp"/>
+
+        <TextView android:id="@+id/accuracyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="@string/accuracy_label"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
