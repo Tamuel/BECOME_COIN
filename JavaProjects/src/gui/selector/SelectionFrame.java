@@ -37,10 +37,13 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private CoinButton newButton;
 	private CoinButton deleteButton;
 	private CoinButton editButton;
+	private CoinButton upButton;
+	private CoinButton downButton;
 	
 	private CoinScrollPane scroll;
 	
 	private ArrayList<CoinFloor> floorList;
+	private CoinFloor selectedFloor = null;
 	
 	public SelectionFrame() {
 		super("Selection Frame", 1280, 800);
@@ -76,6 +79,16 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		editButton = new CoinButton("도면 수정");
 		editButton.addActionListener(this);
 		this.add(editButton).setBounds(1129, 730, 100, 30);
+		
+		upButton = new CoinButton("△");
+		upButton.addActionListener(this);
+		upButton.setBackground(CoinColor.ORANGE);
+		this.add(upButton).setBounds(50 ,730, 30, 30);
+		
+		downButton = new CoinButton("▽");
+		downButton.addActionListener(this);
+		downButton.setBackground(CoinColor.ORANGE);
+		this.add(downButton).setBounds(90 ,730, 30, 30);
 	}
 	
 	/**
@@ -105,6 +118,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		scroll.repaint();
 		
 		mapPreviewPanel = new MapPreviewPanel();
+		mapPreviewPanel.addListener(this);
 		this.add(mapPreviewPanel).setBounds(500, 140, 730, 580);
 	}
 	
@@ -119,6 +133,19 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		
 		this.exitButton.addActionListener(this);
 		this.minimizeButton.addActionListener(this);
+	}
+	
+	private void buttonColorChange() {
+		if(selectedButton != null) {
+			selectedButton.setBackground(CoinColor.WHITE);
+			selectedButton.setForeground(CoinColor.BLACK);
+		}
+		if(selectedFloor != null) {
+			int index = floorList.indexOf(selectedFloor);
+			selectedButton = mapListPanel.getListButton().get(index);
+			selectedButton.setBackground(CoinColor.ORANGE);
+			selectedButton.setForeground(CoinColor.WHITE);
+		}
 	}
 	
 	@Override
@@ -142,29 +169,76 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			/* TODO new floor adding
 			 * 
 			 */
+			CoinFloor floor = new CoinFloor();
+			floor.setName("new floor");
+			floor.setBriefInfo("this is new added floor.");
+			floorList.add(floor);
+			mapListPanel.makeList(floorList);
+			buttonColorChange();
+			this.repaint();
 		}
 		else if(e.getSource() == deleteButton) {
 			/* TODO delete floor information
 			 * 
 			 */
+			System.out.println(selectedFloor.getName() + " is deleted");
+			int index = floorList.indexOf(selectedFloor);
+			floorList.remove(index);
+			mapListPanel.makeList(floorList);
+			mapPreviewPanel.updatePreview(null);
 		}
 		else if(e.getSource() == editButton) {
-			/* TODO edit floor plan of selected floor
+			/* TODO edit floor plan(map) of selected floor
 			 * 
 			 */
+		}
+		else if(e.getSource() == mapPreviewPanel.getSwitchButon()) {
+			if(mapPreviewPanel.isSwitchOn() == true) {
+				mapPreviewPanel.switchOff(selectedFloor);
+				mapPreviewPanel.saveData(selectedFloor);
+				mapListPanel.makeList(floorList);
+			}
+			else {
+				mapPreviewPanel.switchOn();
+			}
+		}
+		else if(e.getSource() == upButton) {
+			/* TODO change server data
+			 * 
+			 */
+			if(selectedFloor != null) {
+				int index = floorList.indexOf(selectedFloor);
+				if(index != 0) {
+					CoinFloor temp = floorList.get(index - 1);
+					floorList.set(index - 1, selectedFloor);
+					floorList.set(index, temp);
+				}
+				mapListPanel.makeList(floorList);
+				this.buttonColorChange();
+			}
+		}
+		else if(e.getSource() == downButton) {
+			/* TODO change server data
+			 * 
+			 */
+			if(selectedFloor != null) {
+				int index = floorList.indexOf(selectedFloor);
+				if(index != floorList.size() - 1) {
+					CoinFloor temp = floorList.get(index + 1);
+					floorList.set(index + 1, selectedFloor);
+					floorList.set(index, temp);
+				}
+				mapListPanel.makeList(floorList);
+				this.buttonColorChange();
+			}
 		}
 		else {
 			for(int i = 0; i < mapListPanel.getListButton().size(); i++) {
 				if(e.getSource() == mapListPanel.getListButton().get(i)) {
-					if(selectedButton != null) {
-						selectedButton.setBackground(CoinColor.WHITE);
-						selectedButton.setForeground(CoinColor.BLACK);
-					}
-					selectedButton = mapListPanel.getListButton().get(i);
-					selectedButton.setBackground(CoinColor.ORANGE);
-					selectedButton.setForeground(CoinColor.WHITE);
+					selectedFloor = floorList.get(i);
+					mapPreviewPanel.switchOff(selectedFloor);
 					mapPreviewPanel.updatePreview(floorList.get(i));
-					
+					buttonColorChange();
 					System.out.println(selectedButton.getText());
 					
 					this.repaint();

@@ -35,7 +35,10 @@ public class MapListPanel extends JPanel{
 	}
 	
 	public void makeList(ArrayList<CoinFloor> floorList) {
-		for(int i = 0; i < 10; i++) {
+		this.removeAll();
+		mapListButton.clear();
+		for(int i = 0; i < floorList.size(); i++) {
+			
 			CoinButton mapButton = new CoinButton(floorList.get(i).getName());
 			mapButton.setBackground(CoinColor.WHITE);
 			mapButton.setForeground(Color.BLACK);
@@ -50,8 +53,17 @@ public class MapListPanel extends JPanel{
 		this.repaint();
 	}
 	
-	public void addActionListner(ActionListener actionListener, CoinButton button){
-		button.addActionListener(actionListener);
+	public void addFloor(CoinFloor floor) {
+		CoinButton mapButton = new CoinButton(floor.getName());
+		mapButton.setBackground(CoinColor.WHITE);
+		mapButton.setForeground(Color.BLACK);
+		mapButton.setFont(CoinFont.BIG_FONT_2);
+		mapButton.addActionListener(actionListener);
+		mapListButton.add(mapButton);
+		this.add(mapButton).setBounds(0, (104 * (mapListButton.size() - 1)), 400, 102);
+		
+		this.setPreferredSize(new Dimension(400, 104 * mapListButton.size()));
+		//this.repaint();
 	}
 	
 	public ArrayList<CoinButton> getListButton() {
