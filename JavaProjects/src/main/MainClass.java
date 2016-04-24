@@ -6,7 +6,7 @@ import gui.selector.SelectionFrame;
 
 public class MainClass {
 	public static void main(String[] args) {
-		// CoinFrame coinEditorFrame = new CoinFrame("Coin Editor", 1280, 768);
+		//CoinFrame coinEditorFrame = new CoinFrame("Coin Editor", 1280, 768);
 		//LoginFrame loginFrmae = new LoginFrame();
 		SelectionFrame temp = new SelectionFrame();
 	}
