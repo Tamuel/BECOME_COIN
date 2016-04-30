@@ -12,7 +12,7 @@ import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinPasswordField;
 import gui.component.CoinTextField;
-import gui.selector.SelectionFrame;
+import gui.select.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
 
