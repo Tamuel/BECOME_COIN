@@ -10,7 +10,7 @@ import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconRegion;
 import com.perples.recosdk.RECOErrorCode;
 import com.perples.recosdk.RECORangingListener;
-import com.softwork.ydk.beacontestapp.MainActivity;
+import com.softwork.ydk.beacontestapp.BeaconActivity;
 
 import java.util.Collection;
 
@@ -23,6 +23,11 @@ public class BeaconRangingListener extends Service implements RECORangingListene
     public static double beacon2 = 0;
     public static double beacon3 = 0;
 
+    private int count = 1;
+    private int i = 0;
+
+    private double beaconAvg[][] = new double[3][count];
+
     public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoRegion) {
         //ranging 중인 region에서 1초 간격으로 감지된
         //RECOBeacon들 리스트와 함께 이 callback 메소드를 호출합니다.
@@ -32,19 +37,31 @@ public class BeaconRangingListener extends Service implements RECORangingListene
         for(RECOBeacon beacon : recoBeacons) {
             switch (beacon.getMinor()) {
                 case 100:
-                    beacon1 = beacon.getAccuracy();
+                    beaconAvg[0][i] = beacon.getAccuracy();
                     break;
 
                 case 200:
-                    beacon2 = beacon.getAccuracy();
+                    beaconAvg[1][i] = beacon.getAccuracy();
                     break;
 
                 case 300:
-                    beacon3 = beacon.getAccuracy();
+                    beaconAvg[2][i] = beacon.getAccuracy();
                     break;
             }
         }
-        MainActivity.dataView.setText(String.format("BEACON 100 : %.4fm\nBEACON 200 : %.4fm\nBEACON 300 : %.4fm\n", beacon1, beacon2, beacon3));
+        i++;
+        if(i == count) {
+            int j;
+            for(j = 0; j < 3; j++)
+                for (i = 1; i < count; i++)
+                    beaconAvg[j][0] += beaconAvg[j][i];
+            beacon1 = beaconAvg[0][0] / count;
+            beacon2 = beaconAvg[1][0] / count;
+            beacon3 = beaconAvg[2][0] / count;
+            i = 0;
+        }
+
+        BeaconActivity.dataView.setText(String.format("BEACON 100 : %.4fm\nBEACON 200 : %.4fm\nBEACON 300 : %.4fm\n", beacon1, beacon2, beacon3));
     }
 
     public void rangingBeaconsDidFailForRegion(RECOBeaconRegion recoRegion, RECOErrorCode errorCode) {

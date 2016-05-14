@@ -43,10 +43,16 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp" />
 
+    <TextView
+        android:id="@+id/SensorValueTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/DrawGrphicLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
     </RelativeLayout>
+
 </LinearLayout>
