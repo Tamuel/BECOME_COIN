@@ -56,6 +56,11 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(MFActivity);
                 break;
 
+            case R.id.IntertiaTestButton:
+                Intent intertiaActivity = new Intent(this, IntertiaActivity.class);
+                startActivity(intertiaActivity);
+                break;
+
             case R.id.GetMapButton:
                 break;
 

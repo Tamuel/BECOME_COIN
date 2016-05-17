@@ -90,6 +90,13 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/IntertiaTestButton"
+        android:text="Intertia Test"
+        android:onClick="onButtonClick"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/GetMapButton"
         android:text="Get Map"
         android:onClick="onButtonClick"

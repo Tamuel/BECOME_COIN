@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -25,7 +27,6 @@ import android.widget.TextView;
 
 import com.softwork.ydk.beacontestapp.Beacon.BeaconRangingListener;
 import com.softwork.ydk.beacontestapp.Beacon.BeaconService;
-import com.softwork.ydk.beacontestapp.Beacon.RefreshBeaconService;
 import com.softwork.ydk.beacontestapp.Room.RoomDataManager;
 
 import java.util.List;
@@ -72,26 +73,26 @@ public class BeaconActivity extends AppCompatActivity {
     private int x2 = 20 + RoomDataManager.getInstance().getRoomWidth();
     private int y2 = 20 + RoomDataManager.getInstance().getRoomHeight();
 
-    private int magnitude = 3;
+    private float magnitude = 3;
 
-    private int b1_coor[] = {(x2 - x1) / 2, y1};
-    private int b2_coor[] = {x1, y2};
-    private int b3_coor[] = {x2, y2};
+    private int beaconPos[][] = new int[BeaconRangingListener.numberOfBeacons][2];
 
-    private float BEACON_CLAMP_LENGTH = (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    private int BEACON_CLAMP_LENGTH = (int)(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 1.2);
 
     private int next_pos[] = {0, 0};
     private int cur_pos[] = {(x2 - x1) / 2, (y2 - y1) / 2};
 
+    private boolean setBeacon = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_beacon);
 
         dataView = (TextView) findViewById(R.id.BeaconDataTextView);
         curPosView = (TextView) findViewById(R.id.CurPos);
-        setSizeEditText = (EditText) findViewById(R.id.SetSizeEditText);
-        setBeaconLocationEditText = (EditText) findViewById(R.id.SetBeaconLocationEditText);
+//        setSizeEditText = (EditText) findViewById(R.id.SetSizeEditText);
+//        setBeaconLocationEditText = (EditText) findViewById(R.id.SetBeaconLocationEditText);
         drawGrphicLayout = (RelativeLayout) findViewById(R.id.DrawGrphicLayout);
         sensorValueTextView = (TextView) findViewById(R.id.SensorValueTextView);
 
@@ -134,8 +135,8 @@ public class BeaconActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        sensorManager.registerListener(sensorEventListener, gravitySensor, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(sensorEventListener, gyroSensor, SensorManager.SENSOR_DELAY_FASTEST);
+//        sensorManager.registerListener(sensorEventListener, gravitySensor, SensorManager.SENSOR_DELAY_FASTEST);
+//        sensorManager.registerListener(sensorEventListener, gyroSensor, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(sensorEventListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(sensorEventListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST);
     }
@@ -148,6 +149,9 @@ public class BeaconActivity extends AppCompatActivity {
     }
 
     public void resetBeacon(View v) {
+        if(!setBeacon)
+            setBeacon = true;
+        /*
         String regionSizeStr = setSizeEditText.getText().toString();
         int regionSize[] = {0, 0, 0};
         for(int i = 0; i < 3; i++)
@@ -160,16 +164,16 @@ public class BeaconActivity extends AppCompatActivity {
 
         String beaconLocationStr = setBeaconLocationEditText.getText().toString();
         int beaconLocation[] = {0, 0, 0, 0, 0, 0};
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < 8; i++)
             beaconLocation[i] = Integer.parseInt(beaconLocationStr.split(" ")[i]);
-        b1_coor[0] = beaconLocation[0];
-        b1_coor[1] = beaconLocation[1];
-        b2_coor[0] = beaconLocation[2];
-        b2_coor[1] = beaconLocation[3];
-        b3_coor[0] = beaconLocation[4];
-        b3_coor[1] = beaconLocation[5];
 
-        BEACON_CLAMP_LENGTH = (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 2; j++) {
+                beaconPos[i][j] = beaconLocation[i * 2 + j];
+            }
+        }
+        BEACON_CLAMP_LENGTH = (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        */
     }
 
     public void resetBeaconService() {
@@ -232,7 +236,7 @@ public class BeaconActivity extends AppCompatActivity {
         }
     };
 
-    protected class CanvasView extends View {
+    protected class CanvasView extends View implements View.OnTouchListener{
         private int directionBarSize = 200;
         private int directionCircleSize = 10;
         private int directionPos[] = {100, 500};
@@ -241,11 +245,101 @@ public class BeaconActivity extends AppCompatActivity {
         private int compassPos[] = {100, 800};
         private int compassSize = 50;
         private int compassCircleSize = 7;
+        private Path triangle;
 
-        private float points[] = new float[4];
+        private int beaconRange[] = new int[BeaconRangingListener.numberOfBeacons];
+
+        private int correctPos[] = {0, 0};
+
+        // For dragging
+        private int pressedPos[] = {0, 0};
+        private int movePos[] = {0,0};
+        private int criteriaPos[] = {0, 0};
+        private int prevPos[] = {0, 0};
+
+        // For zooming
+        private boolean zooming = false;
+        private int multitouchPos[][] = {{0, 0}, {0, 0}};
+        private float zoomRate = 0;
+        private int zoomingPos[] = {0, 0};
+
+        private float points[] = new float[6];
+
+        private int numOfArrangedBeacon = 0;
+
+        private int approximatePos[][] = new int[BeaconRangingListener.numberOfBeacons][2];
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (setBeacon) {
+                beaconPos[numOfArrangedBeacon][0] = (int)((event.getX() - criteriaPos[aX]) / magnitude);
+                beaconPos[numOfArrangedBeacon][1] = (int)((event.getY() - criteriaPos[aY]) / magnitude);
+
+                numOfArrangedBeacon++;
+
+                if (numOfArrangedBeacon == BeaconRangingListener.numberOfBeacons) {
+                    numOfArrangedBeacon = 0;
+                    setBeacon = false;
+                }
+                return false;
+            } else {
+                int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+                int fingerId = event.getPointerId(pointerIndex);
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                    case MotionEvent.ACTION_DOWN:
+                        multitouchPos[fingerId][aX] = (int)event.getX(pointerIndex);
+                        multitouchPos[fingerId][aY] = (int)event.getY(pointerIndex);
+                        if(event.getPointerCount() == 2) {
+                            zooming = true;
+                            zoomRate = (float)(magnitude / Math.sqrt(Math.pow(multitouchPos[0][aX] - multitouchPos[1][aX], 2) + Math.pow(multitouchPos[0][aY] - multitouchPos[1][aY], 2)));
+                            zoomingPos[aX] = (int)(magnitude * (multitouchPos[0][aX] + multitouchPos[1][aX]) / 2);
+                            zoomingPos[aY] = (int)(magnitude * (multitouchPos[0][aY] + multitouchPos[1][aY]) / 2);
+                            prevPos[aX] = criteriaPos[aX];
+                            prevPos[aY] = criteriaPos[aY];
+                        }
+
+                        if(!zooming) {
+                            pressedPos[aX] = (int) event.getX();
+                            pressedPos[aY] = (int) event.getY();
+
+                            prevPos[aX] = criteriaPos[aX];
+                            prevPos[aY] = criteriaPos[aY];
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        if(!zooming) {
+                            movePos[aX] = (int) event.getX() - pressedPos[aX];
+                            movePos[aY] = (int) event.getY() - pressedPos[aY];
+
+                            criteriaPos[aX] = prevPos[aX] + movePos[aX];
+                            criteriaPos[aY] = prevPos[aY] + movePos[aY];
+                        } else {
+                            multitouchPos[fingerId][aX] = (int)event.getX(pointerIndex);
+                            multitouchPos[fingerId][aY] = (int)event.getY(pointerIndex);
+                            criteriaPos[aX] = prevPos[aX] - (int)(magnitude * (multitouchPos[0][aX] + multitouchPos[1][aX]) / 2 - zoomingPos[aX]) / 2;
+                            criteriaPos[aY] = prevPos[aY] - (int)(magnitude * (multitouchPos[0][aY] + multitouchPos[1][aY]) / 2 - zoomingPos[aY]) / 2;
+                            if(event.getPointerCount() == 2) {
+                                magnitude = (float)(zoomRate * Math.sqrt(Math.pow(multitouchPos[0][aX] - multitouchPos[1][aX], 2) + Math.pow(multitouchPos[0][aY] - multitouchPos[1][aY], 2)));
+                            }
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_POINTER_UP:
+                        if(event.getPointerCount() == 1 && zooming)
+                            zooming = false;
+                        break;
+                }
+
+                return true;
+            }
+        }
 
         public CanvasView(Context context) {
             super(context);
+            this.setOnTouchListener(this);
         }
 
         public void onDraw(Canvas canvas) {
@@ -260,32 +354,84 @@ public class BeaconActivity extends AppCompatActivity {
             paint.setStrokeWidth(3);
             paint.setTextSize(50);
             paint.setStyle(Paint.Style.STROKE);
-            canvas.drawRect(x1, y1, x2 * magnitude, y2 * magnitude, paint);
-
-            canvas.drawText(String.format("b100(%d, %d) %.2fm", b1_coor[0], b1_coor[1], BeaconRangingListener.beacon1 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH / 100 : (float)BeaconRangingListener.beacon1),
-                    b1_coor[0] * magnitude - 100, b1_coor[1] * magnitude + 50, paint);
-            canvas.drawText(String.format("b200(%d, %d) %.2fm", b2_coor[0], b2_coor[1], BeaconRangingListener.beacon2 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH / 100 : (float)BeaconRangingListener.beacon2),
-                    b2_coor[0] * magnitude, b2_coor[1] * magnitude, paint);
-            canvas.drawText(String.format("b300(%d, %d) %.2fm", b3_coor[0], b3_coor[1], BeaconRangingListener.beacon3 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH / 100 : (float)BeaconRangingListener.beacon3),
-                    b3_coor[0] * magnitude - 400, b3_coor[1] * magnitude, paint);
-
-            canvas.drawCircle(
-                    b1_coor[0] * magnitude, b1_coor[1] * magnitude,
-                    BeaconRangingListener.beacon1 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : (float)BeaconRangingListener.beacon1 * 100 * magnitude,
-                    paint
-            );
-            canvas.drawCircle(
-                    b2_coor[0] * magnitude, b2_coor[1] * magnitude,
-                    BeaconRangingListener.beacon2 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : (float)BeaconRangingListener.beacon2 * 100 * magnitude,
-                    paint
-            );
-            canvas.drawCircle(
-                    b3_coor[0] * magnitude, b3_coor[1] * magnitude,
-                    BeaconRangingListener.beacon3 * 100 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : (float)BeaconRangingListener.beacon3 * 100 * magnitude,
+            canvas.drawRect(
+                    criteriaPos[aX] + x1,
+                    criteriaPos[aY] + y1,
+                    criteriaPos[aX] + x2 * magnitude,
+                    criteriaPos[aY] + y2 * magnitude,
                     paint
             );
 
 
+            // Draw beacons
+            for(int i = 0; i < BeaconRangingListener.numberOfBeacons; i++) {
+                canvas.drawText(
+                        String.format(
+                                "b%d(%d, %d)\n%5dcm",
+                                (i + 1) * 100,
+                                beaconPos[i][0], beaconPos[i][1],
+                                BeaconRangingListener.beacons[i] > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacons[i]
+                        ),
+                        criteriaPos[aX] + beaconPos[i][0] * magnitude - 100,
+                        criteriaPos[aY] + beaconPos[i][1] * magnitude + 50,
+                        paint
+                );
+
+                canvas.drawCircle(
+                        criteriaPos[aX] + beaconPos[i][0] * magnitude,
+                        criteriaPos[aY] + beaconPos[i][1] * magnitude,
+                        beaconRange[i] * magnitude,
+                        paint
+                );
+                beaconRange[i] += ((BeaconRangingListener.beacons[i] > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : (float) BeaconRangingListener.beacons[i]) - beaconRange[i]) / 10;
+            }
+
+
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(2);
+
+            for(int i = 0; i < BeaconRangingListener.numberOfBeacons; i++) {
+                paint.setColor(Color.GRAY);
+                canvas.drawText(
+                        String.format(
+                                "%d",
+                                (i + 1) * 100
+                        ),
+                        criteriaPos[aX] + approximatePos[i][0] * magnitude,
+                        criteriaPos[aY] + approximatePos[i][1] * magnitude,
+                        paint
+                );
+                paint.setColor(Color.RED);
+                canvas.drawCircle(
+                        criteriaPos[aX] + approximatePos[i][0] * magnitude,
+                        criteriaPos[aY] + approximatePos[i][1] * magnitude,
+                        compassCircleSize,
+                        paint
+                );
+            }
+
+            paint.setStrokeWidth(20);
+            paint.setColor(Color.BLACK);
+            for(int i = 0; i < BeaconRangingListener.numberOfBeacons; i++) {
+                canvas.drawPoint(
+                        criteriaPos[aX] + beaconPos[i][0] * magnitude,
+                        criteriaPos[aY] + beaconPos[i][1] * magnitude,
+                        paint
+                );
+            }
+
+            paint.setColor(Color.rgb(0, 175, 255));
+            canvas.drawCircle(
+                    criteriaPos[aX] + cur_pos[0] * magnitude,
+                    criteriaPos[aY] + cur_pos[1] * magnitude,
+                    20,
+                    paint
+            );
+            cur_pos[0] += (next_pos[0] - cur_pos[0]) / 30;
+            cur_pos[1] += (next_pos[1] - cur_pos[1]) / 30;
+
+
+            /*
             paint.setStrokeWidth(2);
             canvas.drawLine(
                     directionPos[aX] - directionBarSize / 2 * (accel[aX] / 9.8f),
@@ -310,8 +456,6 @@ public class BeaconActivity extends AppCompatActivity {
                     gyroPos[aY] + directionBarSize / 2 * (gyro[aY] / 9.8f),
                     paint
             );
-
-            paint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(
                     directionPos[aX] - directionBarSize / 2 * (accel[aX] / 9.8f),
                     directionPos[aY] - directionBarSize / 2 * (accel[aY] / 9.8f),
@@ -325,6 +469,9 @@ public class BeaconActivity extends AppCompatActivity {
                     directionCircleSize * (gyro[aZ] / 9.8f + 1.5f),
                     paint
             );
+            */
+
+            paint.setStyle(Paint.Style.FILL);
 
             // Compass North
             points[0] = compassPos[aX] - (float)Math.sin(orientation[0]) * compassSize;
@@ -334,21 +481,10 @@ public class BeaconActivity extends AppCompatActivity {
             points[2] = compassPos[aX] + (float)Math.sin(orientation[0]) * compassSize;
             points[3] = compassPos[aY] + (float)Math.cos(orientation[0]) * compassSize;
 
-            paint.setColor(Color.RED);
-            canvas.drawCircle(
-                    points[0],
-                    points[1],
-                    compassCircleSize,
-                    paint
-            );
+            // Compass Front
+            points[4] = compassPos[aX] - (float)Math.cos(orientation[0] - Math.toRadians(90)) * compassSize;
+            points[5] = compassPos[aY] - (float)Math.sin(orientation[0] - Math.toRadians(90)) * compassSize;
 
-            paint.setColor(Color.BLUE);
-            canvas.drawCircle(
-                    points[2],
-                    points[3],
-                    compassCircleSize,
-                    paint
-            );
 
             paint.setColor(Color.GRAY);
             canvas.drawCircle(
@@ -358,30 +494,132 @@ public class BeaconActivity extends AppCompatActivity {
                     paint
             );
 
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(20);
-            canvas.drawPoint(b1_coor[0] * magnitude, b1_coor[1] * magnitude, paint);
-            canvas.drawPoint(b2_coor[0] * magnitude, b2_coor[1] * magnitude, paint);
-            canvas.drawPoint(b3_coor[0] * magnitude, b3_coor[1] * magnitude, paint);
+            paint.setColor(Color.BLUE);
 
-            paint.setStrokeWidth(50);
-            canvas.drawPoint(cur_pos[0] * magnitude, cur_pos[1] * magnitude, paint);
-            cur_pos[0] += (next_pos[0] - cur_pos[0]) / 10;
-            cur_pos[1] += (next_pos[1] - cur_pos[1]) / 10;
+            triangle = new Path();
+
+            triangle.moveTo(
+                    points[4],
+                    points[5]
+            );
+
+            triangle.lineTo(
+                    points[4] - (float) Math.cos(orientation[0] - Math.toRadians(180)) * compassSize / 3,
+                    points[5] - (float) Math.sin(orientation[0] - Math.toRadians(180)) * compassSize / 3
+            );
+
+            triangle.lineTo(
+                    compassPos[aX] + (points[4] - compassPos[aX]) * 2,
+                    compassPos[aY] + (points[5] - compassPos[aY]) * 2
+            );
+
+            triangle.lineTo(
+                    points[4] - (float) Math.cos(orientation[0]) * compassSize / 3,
+                    points[5] - (float) Math.sin(orientation[0]) * compassSize / 3
+            );
+
+            triangle.close();
+
+            canvas.drawPath(triangle, paint);
+
             invalidate();
+//            paint.setColor(Color.RED);
+//
+//            canvas.drawCircle(
+//                    points[0],
+//                    points[1],
+//                    compassCircleSize,
+//                    paint
+//            );
+//
+//            canvas.drawCircle(
+//                    correctPos[0],
+//                    correctPos[1],
+//                    15,
+//                    paint
+//            );
+
+//            canvas.drawCircle(
+//                    points[2],
+//                    points[3],
+//                    compassCircleSize,
+//                    paint
+//            );
         }
 
         public void calculateCurPos() {
-            int magPow = 100;
-            int mag = (b2_coor[0] - b3_coor[0]) / (b1_coor[0] - b2_coor[0]);
+            int range[] = new int[BeaconRangingListener.numberOfBeacons];
+            int closestBeacon = 0;
+
+            // 공간보다 크게 잡히는 것을 방지
+            for(int i = 0; i < BeaconRangingListener.numberOfBeacons; i++)
+                range[i] = BeaconRangingListener.beacons[i] > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacons[i];
+
+            // 가장 근접한 비콘 탐지
+            for(int i = 1; i < BeaconRangingListener.numberOfBeacons; i++)
+                if(range[i] < range[closestBeacon])
+                    closestBeacon = i;
+
+            // 근접한 비콘을 제외한 비콘들의 신호 세기에 비례해 위치 설정
+            double gradient;
+            double distance;
+            double distanceFromClosestBeacon;
+            double newPositions[] = {0, 0};
+            for (int b_index = 0; b_index < BeaconRangingListener.numberOfBeacons; b_index++) {
+                if (b_index != closestBeacon) {
+                    try {
+                        // 두 비콘 사이의 기울기
+                        gradient = (double)(beaconPos[b_index][aY] - beaconPos[closestBeacon][aY]) / (double)(beaconPos[b_index][aX] - beaconPos[closestBeacon][aX]);
+                    } catch (ArithmeticException e) {
+                        gradient = 10000;
+                    }
+                    // 두 비콘 사이의 거리
+                    distance = Math.sqrt(Math.pow(beaconPos[b_index][aX] - beaconPos[closestBeacon][aX], 2) + Math.pow(beaconPos[b_index][aY] - beaconPos[closestBeacon][aY], 2));
+                    distanceFromClosestBeacon = range[b_index] - distance;
+                    if(beaconPos[b_index][aX] > beaconPos[closestBeacon][aX])
+                        distanceFromClosestBeacon = -distanceFromClosestBeacon;
+
+                    double bias = distanceFromClosestBeacon / (distanceFromClosestBeacon + Math.abs(gradient) * distanceFromClosestBeacon);
+                    newPositions[aX] += distanceFromClosestBeacon * bias;
+                    newPositions[aY] += distanceFromClosestBeacon * bias * gradient;
+
+                    approximatePos[b_index][aX] = beaconPos[closestBeacon][aX] + (int)(distanceFromClosestBeacon * bias);
+                    approximatePos[b_index][aY] = beaconPos[closestBeacon][aY] + (int)(distanceFromClosestBeacon * bias * gradient);
+                } else {
+                    int _x = (x2 - x1) / 2;
+                    int _y = (y2 - y1) / 2;
+                    try {
+                        // 두 비콘 사이의 기울기
+                        gradient = (double)(beaconPos[b_index][aY] - _y) / (double)(beaconPos[b_index][aX] - _x);
+                    } catch (ArithmeticException e) {
+                        gradient = 10000;
+                    }
+                    distance = Math.sqrt(Math.pow(beaconPos[b_index][aX] - _x, 2) + Math.pow(beaconPos[b_index][aY] - _y, 2));
+                    distanceFromClosestBeacon = range[b_index];
+                    if(beaconPos[b_index][aX] > _x)
+                        distanceFromClosestBeacon = -distanceFromClosestBeacon;
+
+                    double bias = distanceFromClosestBeacon / (distanceFromClosestBeacon + Math.abs(gradient) * distanceFromClosestBeacon);
+                    newPositions[aX] += distanceFromClosestBeacon * bias * 2;
+                    newPositions[aY] += distanceFromClosestBeacon * bias * gradient * 2;
+
+                    approximatePos[b_index][aX] = beaconPos[closestBeacon][aX] + (int)(distanceFromClosestBeacon * bias * 2);
+                    approximatePos[b_index][aY] = beaconPos[closestBeacon][aY] + (int)(distanceFromClosestBeacon * bias * gradient * 2);
+                }
+            }
+            next_pos[aX] = beaconPos[closestBeacon][aX] + (int) newPositions[aX] / (BeaconRangingListener.numberOfBeacons - 1);
+            next_pos[aY] = beaconPos[closestBeacon][aY] + (int) newPositions[aY] / (BeaconRangingListener.numberOfBeacons - 1);
+
+
+            /*
             double  distance[] = {
                     Math.sqrt(Math.pow(b1_coor[0] - b2_coor[0], 2) + Math.pow(b1_coor[1] - b2_coor[1], 2)),
                     Math.sqrt(Math.pow(b1_coor[0] - b3_coor[0], 2) + Math.pow(b1_coor[1] - b3_coor[1], 2)),
                     Math.sqrt(Math.pow(b3_coor[0] - b2_coor[0], 2) + Math.pow(b3_coor[1] - b2_coor[1], 2)),
             };
-            double range1 = BeaconRangingListener.beacon1 * magPow > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon1 * magPow;
-            double range2 = BeaconRangingListener.beacon2 * magPow > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon2 * magPow;
-            double range3 = BeaconRangingListener.beacon3 * magPow > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon3 * magPow;
+            double range1 = BeaconRangingListener.beacon1 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon1;
+            double range2 = BeaconRangingListener.beacon2 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon2;
+            double range3 = BeaconRangingListener.beacon3 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon3;
 
             if(range1 + range2 > distance[0]) {
                 double bias = (range1 - ((range1 + range2) - distance[0]) / 2) / distance[0];
@@ -402,6 +640,8 @@ public class BeaconActivity extends AppCompatActivity {
                 next_pos[aX] = b1_coor[aX] + (int)((_x - b1_coor[aX]) * (range1 / distance[0]));
                 next_pos[aY] = b1_coor[aY] + (int)((_y - b1_coor[aY]) * (range1 / distance[0]));
             }
+            */
+
         }
     }
 }

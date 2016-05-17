@@ -92,15 +92,16 @@ public class ConstructMFActivity extends AppCompatActivity {
                     magnetic = event.values.clone();
                     break;
             }
-            float R[] = new float[9];
-            float l[] = new float[9];
-            SensorManager.getRotationMatrix(R, l, gravity, magnetic);
-            float A_D[] = event.values.clone();
-            float A_W[] = new float[3];
-            A_W[0] = R[0] * A_D[0] + R[1] * A_D[1] + R[2] * A_D[2];
-            A_W[1] = R[3] * A_D[0] + R[4] * A_D[1] + R[5] * A_D[2];
-            A_W[2] = R[6] * A_D[0] + R[7] * A_D[1] + R[8] * A_D[2];
-            sumMagnetic = (float)Math.sqrt(Math.pow(A_W[0], 2) + Math.pow(A_W[1], 2) + Math.pow(A_W[2], 2));
+//            float R[] = new float[9];
+//            float l[] = new float[9];
+//            SensorManager.getRotationMatrix(R, l, gravity, magnetic);
+//            float A_D[] = event.values.clone();
+//            float A_W[] = new float[3];
+//            A_W[0] = R[0] * A_D[0] + R[1] * A_D[1] + R[2] * A_D[2];
+//            A_W[1] = R[3] * A_D[0] + R[4] * A_D[1] + R[5] * A_D[2];
+//            A_W[2] = R[6] * A_D[0] + R[7] * A_D[1] + R[8] * A_D[2];
+//            sumMagnetic = (float)Math.sqrt(Math.pow(A_W[0], 2) + Math.pow(A_W[1], 2) + Math.pow(A_W[2], 2));
+            sumMagnetic = (float)Math.sqrt(Math.pow(magnetic[0], 2) + Math.pow(magnetic[1], 2) + Math.pow(magnetic[2], 2));
             if(trackingPosition) {
                 accumulateSensorData += sumMagnetic;
                 dataIndex++;
@@ -108,17 +109,18 @@ public class ConstructMFActivity extends AppCompatActivity {
                     avgSensorData = accumulateSensorData / accumulateRate;
                     dataIndex = 0;
                     accumulateSensorData = 0;
-                    MFbuttons[position[0]][position[1]].setBackgroundColor(Color.LTGRAY);
+                    MFbuttons[position[0]][position[1]].setBackgroundColor(Color.WHITE);
                     int nextOffset = 0;
-                    int offset[][] = {{-1, -1}, {-1, 0}, {-1, +1}, {0, +1}, {+1, +1}, {+1, 0}, {+1, -1}, {0, -1}};
+                    int offset[][] = {{0, 0}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}, {+1, +1}, {+1, 0}, {+1, -1}, {0, -1}};
                     float min = 100000;
-                    float temp[] = new float[8];
-                    for(int i = 0; i < 8; i++) {
-                        temp[i] = position[0] + offset[i][0] >= 0 && position[1] + offset[i][1] >= 0 &&
-                                position[0] + offset[i][0] < rm.getHorizontalSells() && position[1] + offset[i][1] < rm.getVerticalSells()?
+                    float temp[] = new float[9];
+                    for(int i = 0; i < 9; i++) {
+                        temp[i] =
+                                position[0] + offset[i][0] >= 0 && position[0] + offset[i][0] < rm.getHorizontalSells() &&
+                                position[1] + offset[i][1] >= 0 && position[1] + offset[i][1] < rm.getVerticalSells() ?
                                 rm.getMFAvgValue()[position[0] + offset[i][0]][position[1] + offset[i][1]] : 100000;
                     };
-                    for(int i = 0; i < 8; i++) {
+                    for(int i = 0; i < 9; i++) {
                         if(Math.abs(temp[i] - avgSensorData) < min) {
                             min = Math.abs(temp[i] - avgSensorData);
                             nextOffset = i;
@@ -132,8 +134,8 @@ public class ConstructMFActivity extends AppCompatActivity {
             }
             MFValueTextView.setText(
                     String.format(
-                            "MF : (%8.5f,%8.5f,%8.5f) Y + Z (%8.5f) AVG : %8.5f",
-                            A_W[0], A_W[1], A_W[2], A_W[1] + A_W[2], avgSensorData
+                            "MF : (%8.5f,%8.5f,%8.5f) SUM (%8.5f) AVG : %8.5f",
+                            magnetic[0], magnetic[1], magnetic[2], sumMagnetic, avgSensorData
                     )
             );
         }
@@ -164,7 +166,7 @@ public class ConstructMFActivity extends AppCompatActivity {
                 Button tempButton = new Button(this);
                 tempButton.setLayoutParams(blp);
                 tempButton.setText("0");
-                tempButton.setBackgroundColor(Color.LTGRAY);
+                tempButton.setBackgroundColor(Color.WHITE);
                 final int _x = j;
                 final int _y = i;
                 tempButton.setOnClickListener(new View.OnClickListener() {

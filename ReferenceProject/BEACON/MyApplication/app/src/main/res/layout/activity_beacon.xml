@@ -14,22 +14,10 @@
         android:id="@+id/SetLocationButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="RESET BEACON"
+        android:text="SET BEACON"
         android:onClick="resetBeacon"/>
 
-    <TextView
-        android:id="@+id/BeaconDataTextView"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:textSize="10dp"/>
-
-    <TextView
-        android:id="@+id/CurPos"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:textSize="10dp"/>
-
-    <EditText
+    <!--<EditText
         android:id="@+id/SetSizeEditText"
         android:hint="Region size {x, y, mag}"
         android:textSize="15dp"
@@ -42,11 +30,23 @@
         android:textSize="15dp"
         android:layout_width="fill_parent"
         android:layout_height="50dp" />
-
+-->
     <TextView
         android:id="@+id/SensorValueTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/BeaconDataTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textSize="10dp"/>
+
+    <TextView
+        android:id="@+id/CurPos"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:textSize="10dp"/>
 
     <RelativeLayout
         android:id="@+id/DrawGrphicLayout"

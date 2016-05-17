@@ -19,14 +19,13 @@ import java.util.Collection;
  */
 public class BeaconRangingListener extends Service implements RECORangingListener {
 
-    public static double beacon1 = 0;
-    public static double beacon2 = 0;
-    public static double beacon3 = 0;
+    public static final int numberOfBeacons = 5;
+    public static int beacons[] = new int[numberOfBeacons];
 
     private int count = 1;
     private int i = 0;
 
-    private double beaconAvg[][] = new double[3][count];
+    private int beaconAvg[][] = new int[numberOfBeacons][count];
 
     public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoRegion) {
         //ranging 중인 region에서 1초 간격으로 감지된
@@ -35,33 +34,20 @@ public class BeaconRangingListener extends Service implements RECORangingListene
         Log.i("aa", "==================================");
         Log.i("REGION ", recoRegion.getUniqueIdentifier() + " " + recoRegion.getRegionExpirationTimeMillis());
         for(RECOBeacon beacon : recoBeacons) {
-            switch (beacon.getMinor()) {
-                case 100:
-                    beaconAvg[0][i] = beacon.getAccuracy();
-                    break;
-
-                case 200:
-                    beaconAvg[1][i] = beacon.getAccuracy();
-                    break;
-
-                case 300:
-                    beaconAvg[2][i] = beacon.getAccuracy();
-                    break;
-            }
+            beaconAvg[beacon.getMinor() / 100 - 1][i] = ((int)(beacon.getAccuracy() * 10)) * 10;
         }
         i++;
         if(i == count) {
             int j;
-            for(j = 0; j < 3; j++)
+            for(j = 0; j < numberOfBeacons; j++)
                 for (i = 1; i < count; i++)
                     beaconAvg[j][0] += beaconAvg[j][i];
-            beacon1 = beaconAvg[0][0] / count;
-            beacon2 = beaconAvg[1][0] / count;
-            beacon3 = beaconAvg[2][0] / count;
+            for (i = 0; i < numberOfBeacons; i++)
+                beacons[i] = beaconAvg[i][0] / count;
             i = 0;
         }
 
-        BeaconActivity.dataView.setText(String.format("BEACON 100 : %.4fm\nBEACON 200 : %.4fm\nBEACON 300 : %.4fm\n", beacon1, beacon2, beacon3));
+        BeaconActivity.dataView.setText(String.format("BEACON 100 : %5dcm\nBEACON 200 : %5dcm\nBEACON 300 : %5dcm\nBEACON 400 : %5dcm\n", beacons[0], beacons[1], beacons[2], beacons[3]));
     }
 
     public void rangingBeaconsDidFailForRegion(RECOBeaconRegion recoRegion, RECOErrorCode errorCode) {
