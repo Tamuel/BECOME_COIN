@@ -6,11 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.border.LineBorder;
 
 import gui.component.CoinFrame;
+import resource.CoinColor;
 import resource.CoinFont;
 
 public class CoinDrawingFrame extends CoinFrame implements ActionListener{
+	
+	private CoinCanvasPanel coinCanvasPanel;
+	private CoinToolPanel coinToolPanel;
+	private CoinToolAttribPanel coinToolAttribPanel;
 	
 	private JLabel markLabel;
 	private JLabel nameLabel;
@@ -23,6 +29,7 @@ public class CoinDrawingFrame extends CoinFrame implements ActionListener{
 	
 	public void addComponents() {
 		addLogo();
+		addPanels();
 	}
 	
 	public void addLogo() {
@@ -36,6 +43,20 @@ public class CoinDrawingFrame extends CoinFrame implements ActionListener{
 		
 		this.exitButton.addActionListener(this);
 		this.minimizeButton.addActionListener(this);
+	}
+	
+	public void addPanels() {
+		coinCanvasPanel = new CoinCanvasPanel();
+		coinCanvasPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
+		this.add(coinCanvasPanel).setBounds(50, 140, 950, 580);
+		
+		coinToolPanel = new CoinToolPanel();
+		coinToolPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
+		this.add(coinToolPanel).setBounds(1033, 140, 200, 280);
+		
+		coinToolAttribPanel = new CoinToolAttribPanel();
+		coinToolAttribPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
+		this.add(coinToolAttribPanel).setBounds(1033, 440, 200, 280);
 	}
 
 	@Override
