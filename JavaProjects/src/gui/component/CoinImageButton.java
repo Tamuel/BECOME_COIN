@@ -7,6 +7,10 @@ import resource.CoinColor;
 
 public class CoinImageButton extends JButton{
 
+	ImageIcon defaultIcon;
+	ImageIcon pressedIcon;
+	ImageIcon selectedIcon;
+	
 	public CoinImageButton() {
 		addComponents();
 	}
@@ -17,8 +21,20 @@ public class CoinImageButton extends JButton{
 	}
 	
 	public void setIcons(String iconPath) {
-		this.setIcon(new ImageIcon(iconPath + "_Default.png"));
-		this.setPressedIcon(new ImageIcon(iconPath + "_Pressed.png"));
+		defaultIcon = new ImageIcon(iconPath + "_Default.png");
+		pressedIcon = new ImageIcon(iconPath + "_Pressed.png");
+		selectedIcon = new ImageIcon(iconPath + "_Selected.png");
+		
+		this.setIcon(defaultIcon);
+		this.setPressedIcon(pressedIcon);
+	}
+	
+	public void changeIcon() {
+		if(this.getIcon() == defaultIcon) {
+			this.setIcon(selectedIcon);
+		}
+		else
+			this.setIcon(defaultIcon);
 	}
 	
 	public void addComponents() {

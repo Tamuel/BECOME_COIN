@@ -52,13 +52,14 @@ public class CoinDrawingFrame extends CoinFrame implements ActionListener{
 		
 		coinToolPanel = new CoinToolPanel();
 		coinToolPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
-		this.add(coinToolPanel).setBounds(1033, 140, 200, 280);
+		this.add(coinToolPanel).setBounds(1033, 140, 200, 300);
 		
 		coinToolAttribPanel = new CoinToolAttribPanel();
 		coinToolAttribPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
-		this.add(coinToolAttribPanel).setBounds(1033, 440, 200, 280);
+		this.add(coinToolAttribPanel).setBounds(1033, 460, 200, 260);
+		
+		coinToolPanel.addListener(this);
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == exitButton) {
@@ -67,6 +68,10 @@ public class CoinDrawingFrame extends CoinFrame implements ActionListener{
 		else if(e.getSource() == minimizeButton) {
 			setState(Frame.ICONIFIED);
 		}
+		else {
+			coinCanvasPanel.setToolMode(coinToolPanel.getMode());
+			coinToolAttribPanel.showAttributes(coinToolPanel.getMode());
+			System.out.println("mode: " + coinToolPanel.getMode());
+		}
 	}
-
 }
