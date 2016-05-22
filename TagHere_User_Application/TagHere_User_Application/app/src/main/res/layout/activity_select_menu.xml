@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="taghere.project.helloworld.taghere.SelectMenuActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imageView3"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/coin"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/memberInfoButton"
+                android:background="@drawable/memberinfo_button"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="120dp"
+                android:id="@+id/imageView4" />
+
+            <ImageButton
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/QAbutton"
+                android:background="@drawable/qa_button"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="137dp">
+
+            <ImageButton
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/buildingButton"
+                android:background="@drawable/build_button"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="120dp"
+                android:id="@+id/imageView5" />
+
+            <ImageButton
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/optionButton"
+                android:background="@drawable/option_button"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/googleMapButton"
+                android:background="@drawable/coin_position_mark"
+                android:onClick="onClickGoogleMapButton"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/imageButton2"
+                android:background="@drawable/qr_code"
+                android:onClick="onClickQRCodeButton"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

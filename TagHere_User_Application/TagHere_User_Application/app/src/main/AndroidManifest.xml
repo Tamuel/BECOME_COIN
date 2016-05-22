@@ -55,7 +55,8 @@
         <activity
             android:name=".LogIn.LogInActivity"
             android:label="@string/title_activity_log_in"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SelectMenuActivity"></activity>
     </application>
 
 </manifest>

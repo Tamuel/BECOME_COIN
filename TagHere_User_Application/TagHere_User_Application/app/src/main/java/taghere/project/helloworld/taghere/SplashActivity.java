@@ -40,8 +40,8 @@ public class SplashActivity extends Activity {
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         //아래줄 수정 필요
-                        Intent scanActivity = new Intent(SplashActivity.this, LogInActivity.class);
-                        startActivity(scanActivity);
+                        Intent loginActivity = new Intent(SplashActivity.this, LogInActivity.class);
+                        startActivity(loginActivity);
                         SplashActivity.this.finish();
                     }
                 })

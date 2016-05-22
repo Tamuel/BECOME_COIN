@@ -9,8 +9,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="taghere.project.helloworld.taghere.GoogleMap.CoinPositionActivity">
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Coin1"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공대9호관"
+            android:textSize="30dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/horizontalScrollView"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+        </HorizontalScrollView>
+
+    </LinearLayout>
 </RelativeLayout>
