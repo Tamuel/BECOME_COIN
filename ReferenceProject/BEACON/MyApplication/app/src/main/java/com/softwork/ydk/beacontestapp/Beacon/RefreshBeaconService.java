@@ -2,17 +2,17 @@ package com.softwork.ydk.beacontestapp.Beacon;
 
 import android.content.Context;
 
-import com.softwork.ydk.beacontestapp.MainActivity;
+import com.softwork.ydk.beacontestapp.BeaconActivity;
 
 /**
  * Created by DongKyu on 2016-04-24.
  */
 public class RefreshBeaconService extends Thread {
 
-    private MainActivity mainActivity;
+    private BeaconActivity mainActivity;
 
     public RefreshBeaconService(Context context) {
-        mainActivity = (MainActivity)context;
+        mainActivity = (BeaconActivity)context;
     }
 
     public void run() {

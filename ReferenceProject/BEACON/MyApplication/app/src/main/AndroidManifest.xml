@@ -5,12 +5,14 @@
     <!-- Bluetooth Permission for Beacon -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <!-- Location Permission for Android version 23(Marshmallow) or higher -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <application
         android:allowBackup="true"
@@ -21,12 +23,19 @@
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         <service android:name=".Beacon.BeaconMonitoringListener" />
         <service android:name=".Beacon.BeaconRangingListener" />
-        <activity android:name=".MainActivity" >
+
+        <activity android:name=".StartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".BeaconActivity" >
+        </activity>
+        <activity android:name=".ConstructMFActivity" >
+        </activity>
+        <activity android:name=".IntertiaActivity" >
         </activity>
     </application>
 

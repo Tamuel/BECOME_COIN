@@ -20,11 +20,11 @@ public class BeaconService implements RECOServiceConnectListener {
     private int mMinor = 100;
 
     private int regionExpirationTime = 60 * 1000;
-    private int managerScanPeriod = 1000;
-    private int managerSleepPeriod = 3000;
+    private int managerScanPeriod = 3000;
+    private int managerSleepPeriod = 500;
 
     private boolean mScanRecoOnly = true;
-    private boolean mEnableBackgroundTimeout = true;
+    private boolean mEnableBackgroundTimeout = false;
 
     private RECOBeaconManager recoManager;
     private ArrayList<RECOBeaconRegion> monitoringRegions;
