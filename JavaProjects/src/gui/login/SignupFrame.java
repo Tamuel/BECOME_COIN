@@ -62,11 +62,11 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 		
 		markLabel = new JLabel();
 		markLabel.setIcon(new ImageIcon("resources/images/Mark_Transparent_100x100.png"));
-		this.add(markLabel).setBounds(50, 20, 100, 100);
+		this.add(markLabel).setBounds(60, 20, 100, 100);
 		
 		nameLabel = new JLabel("Coin Signup");
 		nameLabel.setFont(CoinFont.VERY_BIG_FONT);
-		this.add(nameLabel).setBounds(150, 44, 200, 50);
+		this.add(nameLabel).setBounds(160, 44, 200, 50);
 		
 		idLabel = new JLabel("¾ÆÀÌµð");
 		idLabel.setFont(CoinFont.BIG_FONT);

@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import drawingObjects.DrawingObject;
 import gui.component.CoinImageButton;
 import resource.CoinColor;
 
-public class CoinToolPanel extends JPanel implements ActionListener {
+public class ToolPanel extends JPanel implements ActionListener {
 	
 	private static final int LEFT = 30;
 	private static final int RIGHT = 120;
+	
+	private DrawingObject drawingObject;
 	
 	private CoinImageButton selectButton;
 	private CoinImageButton lineButton;
@@ -28,11 +31,13 @@ public class CoinToolPanel extends JPanel implements ActionListener {
 	
 	private CoinImageButton selectedButton;
 	
-	private CoinToolMode toolMode = null;
+	private ToolMode toolMode = null;
 	
-	public CoinToolPanel() {
+	public ToolPanel(DrawingObject drawingObject) {
 		this.setBackground(CoinColor.WHITE);
 		this.setLayout(null);
+		
+		this.drawingObject = drawingObject;
 		
 		addComponents();
 	}
@@ -87,30 +92,36 @@ public class CoinToolPanel extends JPanel implements ActionListener {
 		currentButton.changeIcon();
 		switch(buttonList.indexOf(selectedButton)) {
 		case 0:
-			this.toolMode = CoinToolMode.SELECT;
+			this.toolMode = ToolMode.SELECT;
 			break;
 		case 1:
-			this.toolMode = CoinToolMode.LINE;
+			this.toolMode = ToolMode.LINE;
 			break;
 		case 2:
-			this.toolMode = CoinToolMode.RECT;
+			this.toolMode = ToolMode.RECT;
 			break;
 		case 3:
-			this.toolMode = CoinToolMode.CIRCLE;
+			this.toolMode = ToolMode.CIRCLE;
 			break;
 		case 4:
-			this.toolMode = CoinToolMode.ICON;
+			this.toolMode = ToolMode.ICON;
 			break;
 		case 5:
-			this.toolMode = CoinToolMode.TAG;
+			this.toolMode = ToolMode.TAG;
 			break;
 		case 6:
-			this.toolMode = CoinToolMode.BEACON;
+			this.toolMode = ToolMode.BEACON;
 			break;
 		}
+		
+		drawingObject.setToolMode(toolMode);
 	}
 	
-	public CoinToolMode getMode() {
+	public ToolMode getMode() {
 		return this.toolMode;
+	}
+	
+	public void setDrawingObject(DrawingObject drawingObject) {
+		this.drawingObject = drawingObject;
 	}
 }

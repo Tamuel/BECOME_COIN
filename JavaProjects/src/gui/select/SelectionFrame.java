@@ -18,7 +18,7 @@ import dataObjects.CoinFloor;
 import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinScrollPane;
-import gui.draw.CoinDrawingFrame;
+import gui.draw.DrawingFrame;
 import gui.login.LoginFrame;
 import gui.login.SignupFrame;
 import resource.CoinColor;
@@ -186,6 +186,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			int index = floorList.indexOf(selectedFloor);
 			floorList.remove(index);
 			mapListPanel.makeList(floorList);
+			mapPreviewPanel.getSwitchButon().setVisible(false);
 			mapPreviewPanel.updatePreview(null);
 		}
 		else if(e.getSource() == editButton) {
@@ -193,7 +194,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			 * 
 			 */
 			if(selectedFloor != null) {
-				CoinDrawingFrame drawingFrame = new CoinDrawingFrame();
+				DrawingFrame drawingFrame = new DrawingFrame();
 				this.dispose();
 			}
 		}
@@ -241,6 +242,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			for(int i = 0; i < mapListPanel.getListButton().size(); i++) {
 				if(e.getSource() == mapListPanel.getListButton().get(i)) {
 					selectedFloor = floorList.get(i);
+					mapPreviewPanel.getSwitchButon().setVisible(true);
 					mapPreviewPanel.switchOff(selectedFloor);
 					mapPreviewPanel.updatePreview(floorList.get(i));
 					buttonColorChange();

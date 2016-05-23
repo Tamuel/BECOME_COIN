@@ -57,11 +57,11 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 		
 		markLabel = new JLabel();
 		markLabel.setIcon(new ImageIcon("resources/images/Mark_Transparent_100x100.png"));
-		this.add(markLabel).setBounds(xBorder * 5, yBorder * 2, 100, 100);
+		this.add(markLabel).setBounds(xBorder * 7, yBorder * 2, 100, 100);
 		
 		nameLabel = new JLabel("Coin Editor");
 		nameLabel.setFont(CoinFont.VERY_BIG_FONT);
-		this.add(nameLabel).setBounds(xBorder * 15, yBorder * 4 + 4, 200, 50);
+		this.add(nameLabel).setBounds(xBorder * 17, yBorder * 4 + 4, 200, 50);
 		
 		this.exitButton.addActionListener(this);
 		this.minimizeButton.addActionListener(this);

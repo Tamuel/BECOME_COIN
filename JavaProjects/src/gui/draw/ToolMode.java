@@ -1,6 +1,6 @@
 package gui.draw;
 
-public enum CoinToolMode {
+public enum ToolMode {
 	SELECT(0),
 	LINE(1),
 	RECT(2),
@@ -11,9 +11,9 @@ public enum CoinToolMode {
 
 	private int value;
 	
-	private CoinToolMode() {}
+	private ToolMode() {}
 	
-	private CoinToolMode(int value) {
+	private ToolMode(int value) {
 		this.value = value;
 	}
 	

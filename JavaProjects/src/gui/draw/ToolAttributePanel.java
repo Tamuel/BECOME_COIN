@@ -14,9 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import drawingObjects.DrawingObject;
 import resource.CoinColor;
 
-public class CoinToolAttribPanel extends JPanel implements ActionListener{
+public class ToolAttributePanel extends JPanel implements ActionListener{
 	
 	private static final Color[] colorList = {CoinColor.BLACK, CoinColor.THEME_COLOR, CoinColor.OBJECT_COLOR_1, CoinColor.OBJECT_COLOR_2};
 	
@@ -35,6 +36,8 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 	private static final int FILL_COLOR_X = 25;
 	private static final int FILL_COLOR_Y = 220;
 	
+	private DrawingObject drawingObject;
+	
 	private Color lineColor;
 	private Color fillColor;
 	private int thickness;
@@ -49,9 +52,11 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 	private JLabel lineColorLabel;
 	private JLabel fillColorLabel;
 	
-	public CoinToolAttribPanel() {
+	public ToolAttributePanel(DrawingObject drawingObject) {
 		this.setBackground(CoinColor.WHITE);
 		this.setLayout(null);
+		
+		this.drawingObject = drawingObject;
 		
 		setup();
 	}
@@ -111,27 +116,31 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 			fillColorButtonList.add(button);
 			
 			if(i == 0) {
-				this.lineColor = colorList[0];
+				this.fillColor = colorList[0];
 				selectedFillColorButton = button;
 				button.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 			}
 		}
+		
+		this.drawingObject.setThickness(thickness);
+		this.drawingObject.setLineColor(lineColor);
+		this.drawingObject.setFillColor(fillColor);
 	}
 	
-	public void showAttributes(CoinToolMode toolMode) {
+	public void showAttributes() {
 		this.removeAll();
-		switch(toolMode) {
+		switch(drawingObject.getToolMode()) {
 		case SELECT:
 			select();
 			break;
 		case LINE:
-			primitives(toolMode);
+			primitives();
 			break;
 		case RECT:
-			primitives(toolMode);
+			primitives();
 			break;
 		case CIRCLE:
-			primitives(toolMode);
+			primitives();
 			break;
 		case ICON:
 			icon();
@@ -148,14 +157,14 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 		this.repaint();
 	}
 	
-	private void primitives(CoinToolMode toolMode) {
+	private void primitives() {
 		for(int i = 0; i < 4; i++) {
 			ThickLabel label = new ThickLabel(1 + (i * 2));
 			this.add(label).setBounds(THICK_LABEL_X, THICK_LABEL_Y + (i * THICK_PADDING), THICK_LABEL_WIDTH, THICK_LABEL_HEIGHT);
 			this.add(thickButtonList.get(i)).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
 			this.add(lineColorButtonList.get(i)).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			this.add(lineColorLabel);
-			if(toolMode != CoinToolMode.LINE) {
+			if(drawingObject.getToolMode() != ToolMode.LINE) {
 				this.add(fillColorLabel);
 				this.add(fillColorButtonList.get(i)).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			}
@@ -190,6 +199,14 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 			g2.drawLine(0, 0, 130, 0);
 		}
 	}
+	
+	public void addListener(ActionListener listener) {
+		for(int i = 0; i < 4; i++) {
+			thickButtonList.get(i).addActionListener(listener);
+			lineColorButtonList.get(i).addActionListener(listener);
+			fillColorButtonList.get(i).addActionListener(listener);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -219,5 +236,25 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 				break;
 			}
 		}
+		this.drawingObject.setThickness(thickness);
+		this.drawingObject.setLineColor(lineColor);
+		this.drawingObject.setFillColor(fillColor);
 	}
+
+	public Color getLineColor() {
+		return lineColor;
+	}
+
+	public Color getFillColor() {
+		return fillColor;
+	}
+	
+	public int getThickness() {
+		return thickness;
+	}
+	
+	public void setDrawingObject(DrawingObject drawingObject) {
+		this.drawingObject = drawingObject;
+	}
+	
 }
