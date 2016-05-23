@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import resource.CoinColor;
@@ -19,28 +20,67 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 	
 	private static final Color[] colorList = {CoinColor.BLACK, CoinColor.THEME_COLOR, CoinColor.OBJECT_COLOR_1, CoinColor.OBJECT_COLOR_2};
 	
-	private Color color;
+	private static final int THICK_PADDING = 30;
+	private static final int THICK_LABEL_X = 50;
+	private static final int THICK_LABEL_Y = 30;
+	private static final int THICK_LABEL_WIDTH = 130;
+	private static final int THICK_LABEL_HEIGHT = 50;
+	private static final int THICK_BUTTON_X = 20;
+	private static final int THICK_BUTTON_Y = 20;
+	private static final int THICK_BUTTON_SIZE = 20;
+	private static final int COLOR_PADDING = 40;
+	private static final int COLOR_BUTTON_SIZE = 30;
+	private static final int LINE_COLOR_X = 25;
+	private static final int LINE_COLOR_Y = 160;
+	private static final int FILL_COLOR_X = 25;
+	private static final int FILL_COLOR_Y = 220;
+	
+	private Color lineColor;
+	private Color fillColor;
 	private int thickness;
 	
 	private ArrayList<JButton> thickButtonList;
-	private ArrayList<JButton> colorButtonList;
-	private JButton selectedColorButton = null;
+	private ArrayList<JButton> lineColorButtonList;
+	private ArrayList<JButton> fillColorButtonList;
+	private JButton selectedLineColorButton = null;
+	private JButton selectedFillColorButton = null;
 	private JButton selectedThickButton = null;
+	
+	private JLabel lineColorLabel;
+	private JLabel fillColorLabel;
 	
 	public CoinToolAttribPanel() {
 		this.setBackground(CoinColor.WHITE);
 		this.setLayout(null);
 		
+		setup();
+	}
+	
+	public void setup() {
+		setupPrimitive();
+		this.removeAll();
+	}
+	
+	public void setupPrimitive() {
 		thickButtonList = new ArrayList<JButton>();
-		colorButtonList = new ArrayList<JButton>();
+		lineColorButtonList = new ArrayList<JButton>();
+		fillColorButtonList = new ArrayList<JButton>();
+		
+		lineColorLabel = new JLabel("Line Color");
+		lineColorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lineColorLabel.setBounds(50, 120, 100, 50);
+		
+		fillColorLabel = new JLabel("Fill Color");
+		fillColorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		fillColorLabel.setBounds(50, 180, 100, 50);
 		
 		for(int i = 0; i < 4; i++) {
 			ThickLabel label = new ThickLabel(1 + (i * 2));
-			this.add(label).setBounds(50, 30 + (i * 40), 130, 50);
+			this.add(label).setBounds(THICK_LABEL_X, THICK_LABEL_Y + (i * THICK_PADDING), THICK_LABEL_WIDTH, THICK_LABEL_HEIGHT);
 			
 			JButton button = new JButton();
 			button.setBackground(null);
-			this.add(button).setBounds(20, 20 + (40* i), 20, 20);
+			this.add(button).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
 			button.addActionListener(this);
 			thickButtonList.add(button);
 			
@@ -53,13 +93,26 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 			button = new JButton();
 			button.setBackground(colorList[i]);
 			button.setBorder(null);
-			this.add(button).setBounds(25 + (40 * i), 200, 30, 30);
+			this.add(button).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			button.addActionListener(this);
-			colorButtonList.add(button);
+			lineColorButtonList.add(button);
 			
 			if(i == 0) {
-				this.color = colorList[0];
-				selectedColorButton = button;
+				this.lineColor = colorList[0];
+				selectedLineColorButton = button;
+				button.setBorder(new LineBorder(CoinColor.ORANGE, 3));
+			}
+			
+			button = new JButton();
+			button.setBackground(colorList[i]);
+			button.setBorder(null);
+			this.add(button).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+			button.addActionListener(this);
+			fillColorButtonList.add(button);
+			
+			if(i == 0) {
+				this.lineColor = colorList[0];
+				selectedFillColorButton = button;
 				button.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 			}
 		}
@@ -72,13 +125,13 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 			select();
 			break;
 		case LINE:
-			primitives();
+			primitives(toolMode);
 			break;
 		case RECT:
-			primitives();
+			primitives(toolMode);
 			break;
 		case CIRCLE:
-			primitives();
+			primitives(toolMode);
 			break;
 		case ICON:
 			icon();
@@ -95,12 +148,17 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 		this.repaint();
 	}
 	
-	private void primitives() {
+	private void primitives(CoinToolMode toolMode) {
 		for(int i = 0; i < 4; i++) {
 			ThickLabel label = new ThickLabel(1 + (i * 2));
-			this.add(label).setBounds(50, 30 + (i * 40), 130, 50);
-			this.add(thickButtonList.get(i)).setBounds(20, 20 + (40* i), 20, 20);
-			this.add(colorButtonList.get(i)).setBounds(25 + (40 * i), 200, 30, 30);
+			this.add(label).setBounds(THICK_LABEL_X, THICK_LABEL_Y + (i * THICK_PADDING), THICK_LABEL_WIDTH, THICK_LABEL_HEIGHT);
+			this.add(thickButtonList.get(i)).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
+			this.add(lineColorButtonList.get(i)).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+			this.add(lineColorLabel);
+			if(toolMode != CoinToolMode.LINE) {
+				this.add(fillColorLabel);
+				this.add(fillColorButtonList.get(i)).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+			}
 		}
 	}
 	
@@ -144,12 +202,20 @@ public class CoinToolAttribPanel extends JPanel implements ActionListener{
 				selectedThickButton.setBackground(CoinColor.ORANGE);
 				break;
 			}
-			if(e.getSource() == colorButtonList.get(i)) {
-				this.color = colorList[i];
-				if(selectedColorButton != null)
-					selectedColorButton.setBorder(null);
-				selectedColorButton = colorButtonList.get(i);
-				selectedColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
+			if(e.getSource() == lineColorButtonList.get(i)) {
+				this.lineColor = colorList[i];
+				if(selectedLineColorButton != null)
+					selectedLineColorButton.setBorder(null);
+				selectedLineColorButton = lineColorButtonList.get(i);
+				selectedLineColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
+				break;
+			}
+			if(e.getSource() == fillColorButtonList.get(i)) {
+				this.fillColor = colorList[i];
+				if(selectedFillColorButton != null)
+					selectedFillColorButton.setBorder(null);
+				selectedFillColorButton = fillColorButtonList.get(i);
+				selectedFillColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 				break;
 			}
 		}
