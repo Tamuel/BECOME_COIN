@@ -56,7 +56,12 @@
             android:name=".LogIn.LogInActivity"
             android:label="@string/title_activity_log_in"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SelectMenuActivity"></activity>
+        <activity android:name=".Menu.SelectMenuActivity" />
+        <activity android:name=".LogIn.CreateAccountActivity" />
+        <activity android:name=".Menu.MemberInfoActivity" />
+        <activity android:name=".Menu.QAActivity" />
+        <activity android:name=".Menu.BuildingActivity" />
+        <activity android:name=".Menu.OptionActivity"></activity>
     </application>
 
 </manifest>

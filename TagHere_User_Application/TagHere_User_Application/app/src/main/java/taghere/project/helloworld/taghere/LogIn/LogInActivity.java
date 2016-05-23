@@ -10,7 +10,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import taghere.project.helloworld.taghere.R;
-import taghere.project.helloworld.taghere.SelectMenuActivity;
+import taghere.project.helloworld.taghere.Menu.SelectMenuActivity;
 
 public class LogInActivity extends AppCompatActivity {
     //임시 아이디와 패스워드
@@ -43,16 +43,6 @@ public class LogInActivity extends AppCompatActivity {
 
         System.out.print(id + password + editId + editPassword);
 
-        /*
-        if (id.equals(storeId) && password.equals(storePassword)) {
-            Intent menuIntent = new Intent(LogInActivity.this, SelectMenuActivity.class);
-            startActivity(menuIntent);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Login Error", Toast.LENGTH_SHORT).show();
-        }
-        */
-
         if (accountHash.containsKey(id)) {
             if (password.equals(accountHash.get(id))) {
                 Intent menuIntent = new Intent(LogInActivity.this, SelectMenuActivity.class);
@@ -68,5 +58,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void onClickMemberButton(View v) {
+        Intent createAccountIntent = new Intent(LogInActivity.this, CreateAccountActivity.class);
+        startActivity(createAccountIntent);
     }
 }
