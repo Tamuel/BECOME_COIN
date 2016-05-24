@@ -1,13 +1,19 @@
 package gui.draw;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import dataObjects.CoinData;
@@ -18,7 +24,7 @@ import gui.select.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
 
-public class DrawingFrame extends CoinFrame implements ActionListener, MouseWheelListener{
+public class DrawingFrame extends CoinFrame implements ActionListener, MouseWheelListener, MouseListener, KeyListener{
 	
 	private CoinData coinData;
 	
@@ -33,6 +39,7 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	
 	private JLabel scaleLabel;
 	private JLabel greedLabel;
+	private JLabel infoLabel;
 
 	private CoinButton greedUpButton;
 	private CoinButton greedDownButton;
@@ -69,6 +76,8 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	public void addPanels() {
 		canvasPanel = new CanvasPanel(coinData);
 		canvasPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
+		canvasPanel.addMouseListener(this);
+		canvasPanel.addKeyListener(this);
 		this.add(canvasPanel).setBounds(50, 140, 950, 580);
 		
 		toolPanel = new ToolPanel(coinData);
@@ -92,6 +101,12 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		greedLabel = new JLabel("Greed " + canvasPanel.getGreed());
 		greedLabel.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(greedLabel).setBounds(110, 720, 300, 50);
+		
+		infoLabel = new JLabel("");
+		infoLabel.setFont(CoinFont.BIG_FONT_BOLD);
+		infoLabel.setForeground(CoinColor.ORANGE);
+		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.add(infoLabel).setBounds(400, 720, 300, 50);
 	}
 	
 	public void addButtons() {
@@ -102,11 +117,13 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		greedUpButton = new CoinButton("¡â");
 		greedUpButton.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(greedUpButton).setBounds(185, 735, 20, 20);
+		greedUpButton.setVisible(false);
 		greedUpButton.addActionListener(this);
 		
 		greedDownButton = new CoinButton("¡ä");
 		greedDownButton.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(greedDownButton).setBounds(210, 735, 20, 20);
+		greedDownButton.setVisible(false);
 		greedDownButton.addActionListener(this);
 	}
 	
@@ -132,20 +149,21 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 			}
 			else
 				exitCheckFrame.setVisible(true);
-		}
+		}/*
 		else if(e.getSource() == greedUpButton) {
-			canvasPanel.setGreed(canvasPanel.getGreed() + 5);
+			canvasPanel.setGreed(canvasPanel.getGreed() + 10);
 			greedLabel.setText("Greed " + canvasPanel.getGreed());
 			repaint();
 		}
 		else if(e.getSource() == greedDownButton) {
-			canvasPanel.setGreed(canvasPanel.getGreed() - 5);
+			canvasPanel.setGreed(canvasPanel.getGreed() - 10);
 			greedLabel.setText("Greed " + canvasPanel.getGreed());
 			repaint();
-		}
+		}*/
 		else {
 			if(coinData.getDrawingObject().getToolMode() != null)
 				toolAttribPanel.showAttributes();
+			canvasPanel.repaint();
 		}
 		
 		if(exitCheckFrame != null) {
@@ -162,6 +180,51 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		scaleLabel.setText("X " +  Double.toString(canvasPanel.getScaleOffset() / 10));
+		greedLabel.setText("Greed " + canvasPanel.getGreed());
 		this.repaint();
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		super.mousePressed(e);
+		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
+			toolAttribPanel.showAttributes();
+			toolAttribPanel.repaint();
+		}
+		canvasPanel.repaint();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode() == KeyEvent.VK_CONTROL) {
+			this.scaleLabel.setForeground(CoinColor.ORANGE);
+			this.infoLabel.setText("Scale Offset Change");
+		}
+		else if(arg0.getKeyCode() == KeyEvent.VK_SHIFT) {
+			this.greedLabel.setForeground(CoinColor.ORANGE);
+			this.infoLabel.setText("Greed Offset Change");
+		}
+		else if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			this.infoLabel.setText("Screen Move");
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			this.scaleLabel.setForeground(CoinColor.BLACK);
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
+			this.greedLabel.setForeground(CoinColor.BLACK);
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			
+		}
+		this.infoLabel.setText("");
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 }

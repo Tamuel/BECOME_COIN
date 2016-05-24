@@ -194,7 +194,19 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	}
 	
 	private void select() {
-		
+		if(coinData.getSelectedObject() != null) {
+			for(int i = 0; i < 4; i++) {
+				ThickLabel label = new ThickLabel(1 + (i * 2));
+				this.add(label).setBounds(THICK_LABEL_X, THICK_LABEL_Y + (i * THICK_PADDING), THICK_LABEL_WIDTH, THICK_LABEL_HEIGHT);
+				this.add(thickButtonList.get(i)).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
+				this.add(lineColorButtonList.get(i)).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+				this.add(lineColorLabel);
+				if(coinData.getSelectedObject().getToolMode() != ToolMode.LINE) {
+					this.add(fillColorLabel);
+					this.add(fillColorButtonList.get(i)).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+				}
+			}
+		}
 	}
 	
 	private void icon() {
@@ -270,9 +282,16 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 				break;
 			}
 		}
-		this.coinData.getDrawingObject().setThickness(thickness);
-		this.coinData.getDrawingObject().setLineColor(lineColor);
-		this.coinData.getDrawingObject().setFillColor(fillColor);
+		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
+			this.coinData.getSelectedObject().setThickness(thickness);
+			this.coinData.getSelectedObject().setLineColor(lineColor);
+			this.coinData.getSelectedObject().setFillColor(fillColor);
+		}
+		else {
+			this.coinData.getDrawingObject().setThickness(thickness);
+			this.coinData.getDrawingObject().setLineColor(lineColor);
+			this.coinData.getDrawingObject().setFillColor(fillColor);
+		}
 	}
 
 	public Color getLineColor() {

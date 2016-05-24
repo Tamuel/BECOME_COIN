@@ -31,16 +31,16 @@ public class DrawingObject {
 		return beginPoint;
 	}
 
-	public void setBeginPoint(Point beginPosition) {
-		this.beginPoint = beginPosition;
+	public void setBeginPoint(Point beginPoint) {
+		this.beginPoint = beginPoint;
 	}
 
 	public Point getEndPoint() {
 		return endPoint;
 	}
 
-	public void setEndPoint(Point endPosition) {
-		this.endPoint = endPosition;
+	public void setEndPoint(Point endPoint) {
+		this.endPoint = endPoint;
 	}
 
 	public Color getLineColor() {

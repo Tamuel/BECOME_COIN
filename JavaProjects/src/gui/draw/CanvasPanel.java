@@ -17,6 +17,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.JPanel;
 
@@ -30,7 +31,8 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	
 	private ToolMode toolMode;
 	
-	private boolean isScalable;
+	private boolean scalable;
+	private boolean greedControl;
 	
 	private int scaleOffset;
 	private double scale;
@@ -38,10 +40,22 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	private int greed;
 	private int pressedX;
 	private int pressedY;
+	private int greedPressedX;
+	private int greedPressedY;
 	private int draggedX;
 	private int draggedY;
+	private int greedDraggedX;
+	private int greedDraggedY;
 	private int releasedX;
 	private int releasedY;
+	private int greedReleasedX;
+	private int greedReleasedY;
+	private int currentX;
+	private int currentY;
+	private int greedCurrentX;
+	private int greedCurrentY;
+	
+	private boolean dragging;
 	
 	private DrawingObject selectedObject;
 
@@ -55,9 +69,13 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		this.addMouseMotionListener(this);
 		this.addFocusListener(this);
 		
-		isScalable = false;
+		scalable = false;
+		greedControl = false;
 		scaleOffset = 10;
-		greed = 5;
+		greed = 10;
+		
+		dragging = false;
+		
 		this.coinData = coinData;
 	}
 
@@ -70,8 +88,12 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	public void setGreed(int greed) {
-		if(greed >= 5 && greed <= 30)
+		if(greed >= 10 && greed <= 100)
 			this.greed = greed;
+	}
+	
+	public Point getCurrentMousePoint() {
+		return new Point(currentX, currentY);
 	}
 	
 	public Point getGreedPoint(int x, int y) {
@@ -90,15 +112,50 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		return point;
 	}
 	
+	public Point getObjectCenter(DrawingObject object) {
+		Point centerPoint;
+		
+		if(object.getToolMode() == ToolMode.LINE) {
+			double x1 = object.getBeginPoint().getX();
+			double y1 = object.getBeginPoint().getY();
+			double x2 = object.getEndPoint().getX();
+			double y2 = object.getEndPoint().getY();
+			
+			centerPoint = new Point((int)Math.abs(x2 - x1), (int)Math.abs(y2 - y1));
+		}
+		else {
+			double x = object.getBeginPoint().getX();
+			double y = object.getBeginPoint().getY();
+			double width = object.getEndPoint().getX();
+			double height = object.getEndPoint().getY();
+			
+			centerPoint = new Point((int)(x + width/2), (int)(y + height/2));
+		}
+		
+		return centerPoint;
+	}
+	
+	public double distanceFromCenter(DrawingObject object, Point point) {
+		double distance;
+		
+		Point centerPoint = getObjectCenter(object);
+		
+		distance = Math.sqrt(
+				Math.pow(centerPoint.getX() - point.getX(), 2) +
+				Math.pow(centerPoint.getY() - point.getY(), 2));
+		
+		return distance;
+	}
+	
 	public Area getLineCollisionArea(DrawingObject line) {
 		double dist = Math.sqrt(
 				(Math.pow(Math.abs(line.getBeginPoint().getX() - line.getEndPoint().getX()), 2)) +
 				(Math.pow(Math.abs(line.getBeginPoint().getY() - line.getEndPoint().getY()), 2))) +
 				10;
 		Rectangle rect = new Rectangle((int)line.getBeginPoint().getX() - 5 - (line.getThickness() / 2),
-				(int)line.getBeginPoint().getY() - 5 - (line.getThickness() / 2),
+				(int)line.getBeginPoint().getY() - 10 - (line.getThickness() / 2),
 				(int)dist + line.getThickness(),
-				10 + line.getThickness());
+				20 + line.getThickness());
 		double vecy = line.getEndPoint().getY() - line.getBeginPoint().getY();
 		double vecx = line.getEndPoint().getX() - line.getBeginPoint().getX();
 		double theta = Math.atan2(vecy, vecx);
@@ -110,6 +167,28 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		return a;
 	}
 	
+	public Area getRectCollisionArea(DrawingObject rect) {
+		double x = rect.getBeginPoint().getX() - 10;
+		double y = rect.getBeginPoint().getY() - 10;
+		double width = rect.getEndPoint().getX() + 20;
+		double height = rect.getEndPoint().getY() + 20;
+		
+		Area a = new Area(new Rectangle((int)x, (int)y, (int)width, (int)height));
+		
+		return a;
+	}
+	
+	public Area getCircleCollisionArea(DrawingObject circle) {
+		double x = circle.getBeginPoint().getX() - 10;
+		double y = circle.getBeginPoint().getY() - 10;
+		double width = circle.getEndPoint().getX() + 20;
+		double height = circle.getEndPoint().getY() + 20;
+		
+		Area a = new Area(new Ellipse2D.Double(x, y, width, height));
+		
+		return a;
+	}
+	
 	public boolean checkCollision(DrawingObject object) {
 		switch(object.getToolMode()) {
 		case LINE:
@@ -117,8 +196,12 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 				return true;
 			break;
 		case RECT:
+			if(getRectCollisionArea(object).contains(getMousePosition()))
+				return true;
 			break;
 		case CIRCLE:
+			if(getCircleCollisionArea(object).contains(getMousePosition()))
+				return true;
 			break;
 		case ICON:
 			break;
@@ -137,34 +220,29 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		pressedX = (int)getMousePosition().getX();
 		pressedY = (int)getMousePosition().getY();
 		
-		pressedX = (int)getGreedPoint(pressedX, pressedY).getX();
-		pressedY = (int)getGreedPoint(pressedX, pressedY).getY();
+		greedPressedX = (int)getGreedPoint(pressedX, pressedY).getX();
+		greedPressedY = (int)getGreedPoint(pressedX, pressedY).getY();
 		
 		Point point = new Point();
-		point.setLocation(pressedX, pressedY);
+		point.setLocation(greedPressedX, greedPressedY);
 		
 		coinData.getDrawingObject().setBeginPoint(point);
 		coinData.getDrawingObject().setEndPoint(point);
 	}
 	
 	public void draggedLine() {
-		draggedX = (int)getMousePosition().getX();
-		draggedY = (int)getMousePosition().getY();
-		
-		draggedX = (int)getGreedPoint(draggedX, draggedY).getX();
-		draggedY = (int)getGreedPoint(draggedX, draggedY).getY();
+		greedDraggedX = (int)getGreedPoint(draggedX, draggedY).getX();
+		greedDraggedY = (int)getGreedPoint(draggedX, draggedY).getY();
 		
 		Point point = new Point();
-		point.setLocation(draggedX, draggedY);
+		point.setLocation(greedDraggedX, greedDraggedY);
 		
 		coinData.getDrawingObject().setEndPoint(point);
 	}
 	
 	public void releasedLine() {
-		releasedX = (int)getMousePosition().getX();
-		releasedY = (int)getMousePosition().getY();
-		releasedX = (int)getGreedPoint(releasedX, releasedY).getX();
-		releasedY = (int)getGreedPoint(releasedX, releasedY).getY();
+		greedReleasedX = (int)getGreedPoint(releasedX, releasedY).getX();
+		greedReleasedY = (int)getGreedPoint(releasedX, releasedY).getY();
 	}
 	
 	// RECT
@@ -172,33 +250,29 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		pressedX = (int)getMousePosition().getX();
 		pressedY = (int)getMousePosition().getY();
 		
-		pressedX = (int)getGreedPoint(pressedX, pressedY).getX();
-		pressedY = (int)getGreedPoint(pressedX, pressedY).getY();
+		greedPressedX = (int)getGreedPoint(pressedX, pressedY).getX();
+		greedPressedY = (int)getGreedPoint(pressedX, pressedY).getY();
 		
 		Point point = new Point();
-		point.setLocation(pressedX, pressedY);
+		point.setLocation(greedPressedX, greedPressedY);
 		
 		coinData.getDrawingObject().setBeginPoint(point);
 		coinData.getDrawingObject().setEndPoint(new Point(0, 0));
 	}
 	
 	public void draggedRect() {
-		draggedX = (int)getMousePosition().getX();
-		draggedY = (int)getMousePosition().getY();
-		
-		draggedX = Math.abs((int)getGreedPoint(draggedX, draggedY).getX());
-		draggedY = Math.abs((int)getGreedPoint(draggedX, draggedY).getY());
+		greedDraggedX = Math.abs((int)getGreedPoint(draggedX, draggedY).getX());
+		greedDraggedY = Math.abs((int)getGreedPoint(draggedX, draggedY).getY());
 		
 		Point point = new Point();
-		point.setLocation(Math.min(pressedX, draggedX), Math.min(pressedY, draggedY));
+		point.setLocation(Math.min(greedPressedX, greedDraggedX), Math.min(greedPressedY, greedDraggedY));
 		coinData.getDrawingObject().setBeginPoint(point);
 
-		draggedX = Math.abs(draggedX - (int)pressedX);
-		draggedY = Math.abs(draggedY - (int)pressedY);
-
+		greedDraggedX = Math.abs(greedDraggedX - (int)greedPressedX);
+		greedDraggedY = Math.abs(greedDraggedY - (int)greedPressedY);
 		
 		point = new Point();
-		point.setLocation(draggedX, draggedY);
+		point.setLocation(greedDraggedX, greedDraggedY);
 		coinData.getDrawingObject().setEndPoint(point);
 	}
 	
@@ -221,23 +295,18 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	
 	// SELECT
 	public void pressedSelect() {
-		// TODO
-		pressedX = (int)getMousePosition().getX();
-		pressedY = (int)getMousePosition().getY();
-		
+		DrawingObject temp = coinData.getSelectedObject();
 		coinData.setSelectedObject(null);
 		
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
 			DrawingObject object = coinData.getDrawingObjectList().get(i);
 			switch(object.getToolMode()) {
-			case LINE:
+			case LINE: case RECT: case CIRCLE:
 				if(checkCollision(object) == true) {
+					if(temp == object)
+						dragging = true;
 					coinData.setSelectedObject(object);
 				}
-				break;
-			case RECT:
-				break;
-			case CIRCLE:
 				break;
 			case ICON:
 				break;
@@ -246,18 +315,30 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 			case BEACON:
 				break;
 			default:
-				
 				break;
 			}
 		}
 	}
 	
 	public void draggedSelect() {
-		// TODO
+		if(dragging == true) {
+			DrawingObject object = coinData.getSelectedObject();
+			int diffX = pressedX - draggedX;
+			int diffY = pressedY - draggedY;
+			Point beginPoint = new Point(
+					(int)object.getBeginPoint().getX() - diffX,
+					(int)object.getBeginPoint().getY() - diffY);
+			Point endPoint = new Point(
+					(int)object.getEndPoint().getX() - diffX,
+					(int)object.getEndPoint().getY() - diffY);
+			
+			coinData.getSelectedObject().setBeginPoint(beginPoint);
+			coinData.getSelectedObject().setEndPoint(endPoint);
+		}
 	}
 	
 	public void releasedSelect() {
-		// TODO
+		dragging = false;
 		this.repaint();
 	}
 	
@@ -321,6 +402,9 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		pressedX = (int)getMousePosition().getX();
+		pressedY = (int)getMousePosition().getY();
+		
 		if(coinData.getDrawingObject().getToolMode() != null) {
 			switch(coinData.getDrawingObject().getToolMode()) {
 			case SELECT:
@@ -347,12 +431,16 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 			default:
 				break;
 			}
+			if(coinData.getDrawingObject().getToolMode() != ToolMode.SELECT)
+				coinData.getDrawingObjectList().add(coinData.getDrawingObject());	
 		}
-		coinData.getDrawingObjectList().add(coinData.getDrawingObject());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		releasedX = (int)getMousePosition().getX();
+		releasedY = (int)getMousePosition().getY();
+		
 		if(coinData.getDrawingObject().getToolMode() != null) {
 			switch(coinData.getDrawingObject().getToolMode()) {
 			case SELECT:
@@ -388,7 +476,7 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 				newObject.setThickness(tempObject.getThickness());
 				newObject.setKey(tempObject.getKey());
 			}
-			if(pressedX == releasedX && pressedY == releasedY) {
+			if(greedPressedX == greedReleasedX && greedPressedY == greedReleasedY) {
 				coinData.getDrawingObjectList().remove(coinData.getDrawingObjectList().size() - 1);
 			}
 			coinData.setDrawingObject(newObject);
@@ -397,9 +485,13 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		draggedX = (int)getMousePosition().getX();
+		draggedY = (int)getMousePosition().getY();
+		
 		if(coinData.getDrawingObject().getToolMode() != null) {
 			switch(coinData.getDrawingObject().getToolMode()) {
 			case SELECT:
+				draggedSelect();
 				break;
 			case LINE:
 				draggedLine();
@@ -428,7 +520,7 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent arg0) {
-		if(isScalable == true) {
+		if(scalable == true) {
 			if(arg0.getWheelRotation() < 0) {
 				if(getScaleOffset() < 100) {
 					if(getScaleOffset() >= 10) {
@@ -452,28 +544,52 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 			scale = getScaleOffset();
 			this.repaint();
 		}
+		if(greedControl == true) {
+			if(arg0.getWheelRotation() < 0) {
+				setGreed(getGreed() + 10);
+			}
+			else if(arg0.getWheelRotation() > 0) {
+				setGreed(getGreed() - 10);
+			}
+		}
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		currentX = (int)this.getMousePosition().getX();
+		currentY = (int)this.getMousePosition().getY();
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode() == KeyEvent.VK_ALT) {
-			isScalable = true;
+		if(arg0.getKeyCode() == KeyEvent.VK_CONTROL) {
+			scalable = true;
+		}
+		else if(arg0.getKeyCode() == KeyEvent.VK_SHIFT) {
+			greedControl = true;
+		}
+		else if(arg0.getKeyCode() == KeyEvent.VK_DELETE) {
+			if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
+				coinData.getDrawingObjectList().remove(coinData.getSelectedObject());
+				coinData.setSelectedObject(null);
+			}
+			repaint();
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if(arg0.getKeyCode() == KeyEvent.VK_ALT) {
-			isScalable = false;
+		if(arg0.getKeyCode() == KeyEvent.VK_CONTROL) {
+			scalable = false;
+		}
+		else if(arg0.getKeyCode() == KeyEvent.VK_SHIFT) {
+			greedControl = false;
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+		
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -483,20 +599,32 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
+		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
+			if(coinData.getSelectedObject() != null) {
+				DrawingObject object = coinData.getSelectedObject();
+				g2.setColor(CoinColor.ORANGE);
+				switch(coinData.getSelectedObject().getToolMode()) {
+				case LINE:
+					drawRotatedRect(g2, object);
+					break;
+				case RECT:
+					g2.draw(getRectCollisionArea(object));
+					break;
+				case CIRCLE:
+					g2.drawOval(
+							(int)getCircleCollisionArea(object).getBounds().getX(),
+							(int)getCircleCollisionArea(object).getBounds().getY(),
+							(int)getCircleCollisionArea(object).getBounds().getWidth(),
+							(int)getCircleCollisionArea(object).getBounds().getHeight());
+					break;
+				}
+			}
+		}
+		
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
 			DrawingObject object = coinData.getDrawingObjectList().get(i);
 			g2.setStroke(new BasicStroke(object.getThickness()));
 			switch(object.getToolMode()) {
-			case SELECT:
-				if(coinData.getSelectedObject() != null) {
-					g2.setColor(CoinColor.ORANGE);
-					switch(coinData.getSelectedObject().getToolMode()) {
-					case LINE:
-						this.drawRotatedRect(g2, coinData.getSelectedObject());
-						break;
-					}
-				}
-				break;
 			case LINE:
 				g2.setColor(object.getLineColor());
 				g2.drawLine((int)object.getBeginPoint().getX(),
@@ -571,5 +699,7 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void focusLost(FocusEvent arg0) {
+		//coinData.setSelectedObject(null);
+		//repaint();
 	}
 }

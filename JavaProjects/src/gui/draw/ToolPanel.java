@@ -115,6 +115,7 @@ public class ToolPanel extends JPanel implements ActionListener {
 			break;
 		}
 		coinData.getDrawingObject().setToolMode(toolMode);
+		coinData.setSelectedObject(null);
 	}
 	
 	public ToolMode getMode() {
