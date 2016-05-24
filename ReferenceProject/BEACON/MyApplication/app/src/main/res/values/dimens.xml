@@ -8,5 +8,7 @@
 
     <dimen name="mark_size"> 150dp </dimen>
     <dimen name="mark_size_small"> 100dp </dimen>
-    <dimen name="edit_text_padding">10dp</dimen>
+    <dimen name="edit_text_padding"> 10dp </dimen>
+
+    <dimen name="floor_plan_list_view_height"> 100dp </dimen>
 </resources>

@@ -44,6 +44,8 @@
         <activity android:name=".LoginActivity"
             android:theme="@style/BlueThemeNoActionBar">
         </activity>
+        <activity android:name=".FloorPlanListActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -59,6 +59,7 @@
             android:background="@drawable/blue_simple_button"
             android:text="@string/login"
             android:textColor="@drawable/blue_simple_button_text"
+            android:onClick="login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -67,6 +68,7 @@
             android:background="@color/transparent"
             android:text="@string/sign_up"
             android:textColor="@drawable/white_simple_text_button"
+            android:onClick="join"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
