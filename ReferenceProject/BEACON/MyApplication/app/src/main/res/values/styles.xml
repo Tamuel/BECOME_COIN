@@ -1,11 +1,26 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="WhiteTheme" parent="@android:style/Theme.Material.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:colorPrimaryDark">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/gray_text</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="WhiteThemeNoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimaryDark">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="BlueThemeNoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimaryDark">@color/blue</item>
+        <item name="android:statusBarColor">@color/blue</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

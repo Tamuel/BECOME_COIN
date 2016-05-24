@@ -6,4 +6,8 @@
     <string name="sign_up">Not a member? Please sign up now!</string>
 
     <string name="team_name">Team BE:COME</string>
+    <string name="floorplan_list">도면 리스트</string>
+
+    <string name="action_settings">설정</string>
+    <string name="action_user">계정</string>
 </resources>

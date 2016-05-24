@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/WhiteTheme" >
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         <service android:name=".Beacon.BeaconMonitoringListener" />
         <service android:name=".Beacon.BeaconRangingListener" />
@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:theme="@style/WhiteThemeNoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar">
+            android:theme="@style/BlueThemeNoActionBar">
         </activity>
     </application>
 
