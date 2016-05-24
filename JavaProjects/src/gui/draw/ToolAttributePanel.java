@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,11 +17,18 @@ import javax.swing.border.LineBorder;
 
 import dataObjects.CoinData;
 import drawingObjects.DrawingObject;
+import gui.component.CoinImageButton;
 import resource.CoinColor;
+import resource.CoinIcon;
 
 public class ToolAttributePanel extends JPanel implements ActionListener{
 	
-	private static final Color[] colorList = {CoinColor.BLACK, CoinColor.THEME_COLOR, CoinColor.OBJECT_COLOR_1, CoinColor.OBJECT_COLOR_2};
+	private static final Color[] COLOR_LIST = {CoinColor.BLACK, CoinColor.THEME_COLOR, CoinColor.OBJECT_COLOR_1, CoinColor.OBJECT_COLOR_2};
+	private static final int[] ICON_POSITION = {10, 75, 140, 205};
+	private static final ImageIcon[] ICON_LIST = {
+			CoinIcon.TOILET.getImageIcon(),
+			CoinIcon.TAG.getImageIcon(),
+			CoinIcon.BEACON.getImageIcon()};
 	
 	private static final int THICK_PADDING = 30;
 	private static final int THICK_LABEL_X = 50;
@@ -53,6 +61,9 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	private JLabel lineColorLabel;
 	private JLabel fillColorLabel;
 	
+	private ArrayList<CoinImageButton> iconButtonList;
+	private CoinImageButton selectedIconButton;
+	
 	public ToolAttributePanel(CoinData coinData) {
 		this.setBackground(CoinColor.WHITE);
 		this.setLayout(null);
@@ -64,7 +75,22 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	
 	public void setup() {
 		setupPrimitive();
+		setupIcon();
 		this.removeAll();
+	}
+	
+	public void setupIcon() {
+		iconButtonList = new ArrayList<CoinImageButton>();
+		
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 3; j++) {
+				CoinImageButton button = new CoinImageButton();
+				button.setIcon(ICON_LIST[j]);
+				this.add(button).setBounds(ICON_POSITION[j], ICON_POSITION[i], 50, 50);
+				button.addActionListener(this);
+				iconButtonList.add(button);
+			}
+		}
 	}
 	
 	public void setupPrimitive() {
@@ -89,7 +115,6 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 			this.add(button).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
 			button.addActionListener(this);
 			thickButtonList.add(button);
-			//button.setBorder(null);
 			
 			if(i == 0) {
 				this.thickness = 1;
@@ -98,7 +123,7 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 			}
 			
 			button = new JButton();
-			button.setBackground(colorList[i]);
+			button.setBackground(COLOR_LIST[i]);
 			button.setBorder(null);
 			this.add(button).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			button.addActionListener(this);
@@ -106,13 +131,13 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 			button.setBorder(null);
 			
 			if(i == 0) {
-				this.lineColor = colorList[0];
+				this.lineColor = COLOR_LIST[0];
 				selectedLineColorButton = button;
 				button.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 			}
 			
 			button = new JButton();
-			button.setBackground(colorList[i]);
+			button.setBackground(COLOR_LIST[i]);
 			button.setBorder(null);
 			this.add(button).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			button.addActionListener(this);
@@ -173,7 +198,9 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	}
 	
 	private void icon() {
-		
+		for(int i = 0; i < iconButtonList.size(); i++) {
+			this.add(iconButtonList.get(i));
+		}
 	}
 	
 	private void tag() {
@@ -217,7 +244,7 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 				break;
 			}
 			if(e.getSource() == lineColorButtonList.get(i)) {
-				this.lineColor = colorList[i];
+				this.lineColor = COLOR_LIST[i];
 				if(selectedLineColorButton != null)
 					selectedLineColorButton.setBorder(null);
 				selectedLineColorButton = lineColorButtonList.get(i);
@@ -230,13 +257,13 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 					if(selectedFillColorButton == fillColorButtonList.get(i))
 						this.fillColor = null;
 					else {
-						this.fillColor = colorList[i];
+						this.fillColor = COLOR_LIST[i];
 						selectedFillColorButton = fillColorButtonList.get(i);
 						selectedFillColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 					}
 				}
 				else {
-					this.fillColor = colorList[i];
+					this.fillColor = COLOR_LIST[i];
 					selectedFillColorButton = fillColorButtonList.get(i);
 					selectedFillColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
 				}

@@ -182,7 +182,6 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			/* TODO delete floor information
 			 * 
 			 */
-			System.out.println(selectedFloor.getName() + " is deleted");
 			int index = floorList.indexOf(selectedFloor);
 			floorList.remove(index);
 			mapListPanel.makeList(floorList);
@@ -246,7 +245,6 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 					mapPreviewPanel.switchOff(selectedFloor);
 					mapPreviewPanel.updatePreview(floorList.get(i));
 					buttonColorChange();
-					System.out.println(selectedButton.getText());
 					
 					this.repaint();
 				}

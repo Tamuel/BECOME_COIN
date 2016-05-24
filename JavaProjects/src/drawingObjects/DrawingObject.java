@@ -16,6 +16,7 @@ public class DrawingObject {
 	private int key;
 	
 	public DrawingObject() {
+		thickness = 1;
 	}
 
 	public ToolMode getToolMode() {
@@ -26,19 +27,19 @@ public class DrawingObject {
 		this.toolMode = toolMode;
 	}
 
-	public Point getBeginPosition() {
+	public Point getBeginPoint() {
 		return beginPoint;
 	}
 
-	public void setBeginPosition(Point beginPosition) {
+	public void setBeginPoint(Point beginPosition) {
 		this.beginPoint = beginPosition;
 	}
 
-	public Point getEndPosition() {
+	public Point getEndPoint() {
 		return endPoint;
 	}
 
-	public void setEndPosition(Point endPosition) {
+	public void setEndPoint(Point endPosition) {
 		this.endPoint = endPosition;
 	}
 

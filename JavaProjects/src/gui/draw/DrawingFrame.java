@@ -32,7 +32,10 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	private JLabel nameLabel;
 	
 	private JLabel scaleLabel;
+	private JLabel greedLabel;
 
+	private CoinButton greedUpButton;
+	private CoinButton greedDownButton;
 	private CoinButton exitSaveButton;
 	
 	public DrawingFrame() {
@@ -83,14 +86,28 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	
 	public void addLabels() {
 		scaleLabel = new JLabel("X " +  Double.toString(canvasPanel.getScaleOffset() / 10));
-		scaleLabel.setFont(CoinFont.BIG_FONT);
+		scaleLabel.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(scaleLabel).setBounds(60, 720, 200, 50);
+		
+		greedLabel = new JLabel("Greed " + canvasPanel.getGreed());
+		greedLabel.setFont(CoinFont.BIG_FONT_BOLD);
+		this.add(greedLabel).setBounds(110, 720, 300, 50);
 	}
 	
 	public void addButtons() {
 		exitSaveButton = new CoinButton("저장 / 종료");
 		this.add(exitSaveButton).setBounds(900, 100, 100, 30);
 		exitSaveButton.addActionListener(this);
+		
+		greedUpButton = new CoinButton("△");
+		greedUpButton.setFont(CoinFont.BIG_FONT_BOLD);
+		this.add(greedUpButton).setBounds(185, 735, 20, 20);
+		greedUpButton.addActionListener(this);
+		
+		greedDownButton = new CoinButton("▽");
+		greedDownButton.setFont(CoinFont.BIG_FONT_BOLD);
+		this.add(greedDownButton).setBounds(210, 735, 20, 20);
+		greedDownButton.addActionListener(this);
 	}
 	
 	public void exitProcedure() {
@@ -115,6 +132,16 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 			}
 			else
 				exitCheckFrame.setVisible(true);
+		}
+		else if(e.getSource() == greedUpButton) {
+			canvasPanel.setGreed(canvasPanel.getGreed() + 5);
+			greedLabel.setText("Greed " + canvasPanel.getGreed());
+			repaint();
+		}
+		else if(e.getSource() == greedDownButton) {
+			canvasPanel.setGreed(canvasPanel.getGreed() - 5);
+			greedLabel.setText("Greed " + canvasPanel.getGreed());
+			repaint();
 		}
 		else {
 			if(coinData.getDrawingObject().getToolMode() != null)
