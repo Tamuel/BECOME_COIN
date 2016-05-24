@@ -12,7 +12,6 @@ import taghere.project.helloworld.taghere.R;
 import taghere.project.helloworld.taghere.Menu.SelectMenuActivity;
 
 public class LogInActivity extends AppCompatActivity {
-    //임시 아이디와 패스워드
     private Account account;
 
     //입력된 아이디와 패스워드
@@ -30,6 +29,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void onClickLoginButton(View v) {
+        //디비에서 아이디와 비밀번호가 맞는지 확인 후 로그인 성공
         Intent selectIntent = new Intent(LogInActivity.this, SelectMenuActivity.class);
         startActivity(selectIntent);
         LogInActivity.this.finish();

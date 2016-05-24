@@ -30,7 +30,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void onClickNewAccountButton(View v) {
-        //AccountManagement를 통해서 똑같은 id가 없을 시 계정 생성 구현
+        //디비에서 아이디가 겹치는지 확인 후 계정 생성하고 디비에 추가
         Intent LoginIntent = new Intent(CreateAccountActivity.this, LogInActivity.class);
         startActivity(LoginIntent);
         CreateAccountActivity.this.finish();
