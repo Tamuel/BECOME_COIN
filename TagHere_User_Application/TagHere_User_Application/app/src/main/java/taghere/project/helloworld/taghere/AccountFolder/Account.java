@@ -6,13 +6,16 @@ package taghere.project.helloworld.taghere.AccountFolder;
 
 //계정과 관련된 클래스
 public class Account {
+    public static Account instance = null;
+
     private String id;
     private String password;
     private String name;
     private String phoneNumber;
     private String email;
 
-    Account() {    }
+    public Account() {    }
+    public Account(String id, String password) {setId(id); setPassword(password);}
 
     public void setId(String id) {this.id = id;}
     public void setPassword(String password) {this.password = password;}
@@ -25,4 +28,11 @@ public class Account {
     public String getName() {return name;}
     public String getPhoneNumber() {return phoneNumber;}
     public String getEmail() {return email;}
+
+    public static Account getInstance() {
+        if (instance == null) {
+            instance = new Account();
+        }
+        return instance;
+    }
 }
