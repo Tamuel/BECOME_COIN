@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import dataObjects.CoinData;
 import drawingObjects.DrawingObject;
 import gui.component.CoinImageButton;
 import resource.CoinColor;
@@ -16,7 +17,7 @@ public class ToolPanel extends JPanel implements ActionListener {
 	private static final int LEFT = 30;
 	private static final int RIGHT = 120;
 	
-	private DrawingObject drawingObject;
+	private CoinData coinData;
 	
 	private CoinImageButton selectButton;
 	private CoinImageButton lineButton;
@@ -33,11 +34,11 @@ public class ToolPanel extends JPanel implements ActionListener {
 	
 	private ToolMode toolMode = null;
 	
-	public ToolPanel(DrawingObject drawingObject) {
+	public ToolPanel(CoinData coinData) {
 		this.setBackground(CoinColor.WHITE);
 		this.setLayout(null);
 		
-		this.drawingObject = drawingObject;
+		this.coinData = coinData;
 		
 		addComponents();
 	}
@@ -113,15 +114,10 @@ public class ToolPanel extends JPanel implements ActionListener {
 			this.toolMode = ToolMode.BEACON;
 			break;
 		}
-		
-		drawingObject.setToolMode(toolMode);
+		coinData.getDrawingObject().setToolMode(toolMode);
 	}
 	
 	public ToolMode getMode() {
 		return this.toolMode;
-	}
-	
-	public void setDrawingObject(DrawingObject drawingObject) {
-		this.drawingObject = drawingObject;
 	}
 }

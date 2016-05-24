@@ -3,8 +3,6 @@ package gui.draw;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
@@ -12,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
+import dataObjects.CoinData;
 import drawingObjects.DrawingObject;
 import gui.component.CoinButton;
 import gui.component.CoinFrame;
@@ -19,9 +18,9 @@ import gui.select.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
 
-public class DrawingFrame extends CoinFrame implements ActionListener, MouseListener, MouseWheelListener{
+public class DrawingFrame extends CoinFrame implements ActionListener, MouseWheelListener{
 	
-	private DrawingObject drawingObject;
+	private CoinData coinData;
 	
 	private ExitCheckFrame exitCheckFrame;
 	
@@ -39,7 +38,7 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseList
 	public DrawingFrame() {
 		super("Coin Drawing Frame", 1280, 800);
 		
-		drawingObject = new DrawingObject();
+		coinData = new CoinData();
 		
 		addComponents();
 	}
@@ -65,15 +64,15 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseList
 	}
 	
 	public void addPanels() {
-		canvasPanel = new CanvasPanel(drawingObject);
+		canvasPanel = new CanvasPanel(coinData);
 		canvasPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
 		this.add(canvasPanel).setBounds(50, 140, 950, 580);
 		
-		toolPanel = new ToolPanel(drawingObject);
+		toolPanel = new ToolPanel(coinData);
 		toolPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
 		this.add(toolPanel).setBounds(1033, 140, 200, 300);
 		
-		toolAttribPanel = new ToolAttributePanel(drawingObject);
+		toolAttribPanel = new ToolAttributePanel(coinData);
 		toolAttribPanel.setBorder(new LineBorder(CoinColor.DARK_GRAY, 2));
 		this.add(toolAttribPanel).setBounds(1033, 460, 200, 260);
 		
@@ -118,15 +117,8 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseList
 				exitCheckFrame.setVisible(true);
 		}
 		else {
-			toolAttribPanel.showAttributes();
-			try {
-				this.wait();
-			} catch(Exception ex) {}
-			/*System.out.println("mode: " + drawingObject.getToolMode());
-			System.out.println("thickness: " + drawingObject.getThickness());
-			System.out.println("line color: " + drawingObject.getLineColor());
-			System.out.println("fill color: " + drawingObject.getFillColor());
-			System.out.println("");*/
+			if(coinData.getDrawingObject().getToolMode() != null)
+				toolAttribPanel.showAttributes();
 		}
 		
 		if(exitCheckFrame != null) {
@@ -144,20 +136,5 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseList
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		scaleLabel.setText("X " +  Double.toString(canvasPanel.getScaleOffset() / 10));
 		this.repaint();
-	}
-	
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		canvasPanel.setReady(false);
-		DrawingObject temp = drawingObject; 
-		drawingObject = new DrawingObject();
-		drawingObject.setFillColor(temp.getFillColor());
-		drawingObject.setLineColor(temp.getLineColor());
-		drawingObject.setThickness(temp.getThickness());
-		drawingObject.setToolMode(temp.getToolMode());
-		canvasPanel.setDrawingObject(drawingObject);
-		toolPanel.setDrawingObject(drawingObject);
-		toolAttribPanel.setDrawingObject(drawingObject);
-		canvasPanel.setReady(true);
 	}
 }
