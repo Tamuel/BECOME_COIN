@@ -11,4 +11,10 @@
     <dimen name="edit_text_padding"> 10dp </dimen>
 
     <dimen name="floor_plan_list_view_height"> 100dp </dimen>
+    <dimen name="user_info_icon_size"> 50dp </dimen>
+    <dimen name="user_info_height"> 80dp </dimen>
+
+    <dimen name="font_size_big">20dp</dimen>
+    <dimen name="font_size_middle">15dp</dimen>
+    <dimen name="font_size_small">12dp</dimen>
 </resources>

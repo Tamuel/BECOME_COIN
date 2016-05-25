@@ -41,10 +41,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-            android:theme="@style/BlueThemeNoActionBar">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/BlueThemeNoActionBar" >
         </activity>
-        <activity android:name=".FloorPlanListActivity">
+        <activity android:name=".FloorPlanList.FloorPlanListActivity" >
+        </activity>
+        <activity android:name=".FloorPlanActivity" >
         </activity>
     </application>
 

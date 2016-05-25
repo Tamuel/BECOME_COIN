@@ -1,4 +1,4 @@
-package com.softwork.ydk.beacontestapp;
+package com.softwork.ydk.beacontestapp.FloorPlanList;
 
 import android.graphics.drawable.Drawable;
 

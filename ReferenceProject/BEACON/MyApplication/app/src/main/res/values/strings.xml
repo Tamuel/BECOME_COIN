@@ -10,4 +10,6 @@
 
     <string name="action_settings">설정</string>
     <string name="action_user">계정</string>
+    <string name="user_authority"> 사용자 권한 </string>
+
 </resources>

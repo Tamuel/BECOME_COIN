@@ -39,7 +39,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/idEditText"
             android:hint="@string/id"
-            android:textColor="@color/gray_text"
+            android:textColor="@color/gray"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -50,7 +50,7 @@
             android:id="@+id/passwordEditText"
             android:inputType="textPassword"
             android:hint="@string/password"
-            android:textColor="@color/gray_text"
+            android:textColor="@color/gray"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 

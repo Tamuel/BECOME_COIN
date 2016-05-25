@@ -1,12 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="WhiteTheme" parent="@android:style/Theme.Material.Light">
+    <style name="WhiteTheme" parent="Base.Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="android:colorPrimary">@color/white</item>
         <item name="android:colorPrimaryDark">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/gray_text</item>
+        <item name="android:textColorPrimary">@color/gray</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

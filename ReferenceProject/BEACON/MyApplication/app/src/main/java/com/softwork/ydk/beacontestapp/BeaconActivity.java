@@ -115,7 +115,7 @@ public class BeaconActivity extends AppCompatActivity {
             startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 Log.i("BA", "The location permission (ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION) is not granted.");
                 this.requestLocationPermission();

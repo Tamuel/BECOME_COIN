@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.softwork.ydk.beacontestapp.FloorPlanListActivity">
+    tools:context="com.softwork.ydk.beacontestapp.FloorPlanList.FloorPlanListActivity">
 
-    <ListView
-        android:id="@+id/floorPlanListView"
-        android:dividerHeight="@dimen/activity_vertical_margin"
-        android:divider="@color/transparent"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    </ListView>
+        <android.support.design.widget.TabLayout
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/blue"
+            app:tabSelectedTextColor="@color/blue"
+            app:tabTextColor="@color/gray"
+            android:id="@+id/FloorPlanTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.design.widget.TabLayout>
 
-    <LinearLayout
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_weight="4"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    </android.support.design.widget.AppBarLayout>
 
-    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/FloorPlanViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
 
 </LinearLayout>

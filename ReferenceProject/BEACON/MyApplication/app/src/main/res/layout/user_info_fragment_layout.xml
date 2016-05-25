@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_info_height">
+
+        <ImageView
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:src="@drawable/ic_account_circle_black_48dp"
+            android:layout_width="@dimen/user_info_icon_size"
+            android:layout_height="@dimen/user_info_icon_size" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/user_info_height">
+
+            <TextView
+                android:id="@+id/userIDTextView"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="userIdHere"
+                android:textSize="@dimen/font_size_big"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/userEmailTextView"
+                android:layout_weight="1"
+                android:text="userEmail@here.com"
+                android:textSize="@dimen/font_size_middle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:id="@+id/userAuthorityTextView"
+        android:textSize="@dimen/font_size_middle"
+        android:text="@string/user_authority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

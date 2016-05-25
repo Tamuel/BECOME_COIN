@@ -1,15 +1,11 @@
 package com.softwork.ydk.beacontestapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
 
+import com.softwork.ydk.beacontestapp.FloorPlanList.FloorPlanListActivity;
 import com.softwork.ydk.beacontestapp.Server.ServerManager;
 
 public class LoginActivity extends Activity {

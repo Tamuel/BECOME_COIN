@@ -1,4 +1,4 @@
-package com.softwork.ydk.beacontestapp;
+package com.softwork.ydk.beacontestapp.FloorPlanList;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.softwork.ydk.beacontestapp.R;
 
 import java.util.ArrayList;
 
@@ -48,6 +50,7 @@ public class FloorPlanListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
+
     @Override
     public Object getItem(int position) {
         return listViewItemList.get(position);
@@ -68,4 +71,6 @@ public class FloorPlanListViewAdapter extends BaseAdapter {
 
         listViewItemList.add(item);
     }
+
+
 }

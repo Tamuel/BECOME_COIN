@@ -29,7 +29,7 @@
         <TextView
             android:textAlignment="center"
             android:text="@string/team_name"
-            android:textColor="@color/gray_text"
+            android:textColor="@color/gray"
             android:textSize="15dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
