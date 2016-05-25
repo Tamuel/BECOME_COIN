@@ -26,9 +26,9 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	private static final Color[] COLOR_LIST = {CoinColor.BLACK, CoinColor.THEME_COLOR, CoinColor.OBJECT_COLOR_1, CoinColor.OBJECT_COLOR_2};
 	private static final int[] ICON_POSITION = {10, 75, 140, 205};
 	private static final ImageIcon[] ICON_LIST = {
-			CoinIcon.TOILET.getImageIcon(),
-			CoinIcon.TAG.getImageIcon(),
-			CoinIcon.BEACON.getImageIcon()};
+			CoinIcon.COIN_TOILET.getImageIcon(),
+			CoinIcon.COIN_TAG.getImageIcon(),
+			CoinIcon.CON_BEACON.getImageIcon()};
 	
 	private static final int THICK_PADDING = 30;
 	private static final int THICK_LABEL_X = 50;
@@ -266,8 +266,10 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 			if(e.getSource() == fillColorButtonList.get(i)) {
 				if(selectedFillColorButton != null) {
 					selectedFillColorButton.setBorder(null);
-					if(selectedFillColorButton == fillColorButtonList.get(i))
+					if(selectedFillColorButton == fillColorButtonList.get(i)){
+						selectedFillColorButton = null;
 						this.fillColor = null;
+					}
 					else {
 						this.fillColor = COLOR_LIST[i];
 						selectedFillColorButton = fillColorButtonList.get(i);

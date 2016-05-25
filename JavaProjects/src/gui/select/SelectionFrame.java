@@ -34,7 +34,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private MapPreviewPanel mapPreviewPanel;
 	
 	private CoinButton logoutButton;
-	private CoinButton selectedButton = null;
+	private CoinButton selectedButton;
 	private CoinButton newButton;
 	private CoinButton deleteButton;
 	private CoinButton editButton;
@@ -44,10 +44,13 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private CoinScrollPane scroll;
 	
 	private ArrayList<CoinFloor> floorList;
-	private CoinFloor selectedFloor = null;
+	private CoinFloor selectedFloor;
 	
 	public SelectionFrame() {
 		super("Selection Frame", 1280, 800);
+		
+		selectedButton = null;
+		selectedFloor = null;
 		
 		loadFloors();
 		
@@ -187,6 +190,8 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			mapListPanel.makeList(floorList);
 			mapPreviewPanel.getSwitchButon().setVisible(false);
 			mapPreviewPanel.updatePreview(null);
+			selectedFloor = null;
+			selectedButton = null;
 		}
 		else if(e.getSource() == editButton) {
 			/* TODO edit floor plan(map) of selected floor

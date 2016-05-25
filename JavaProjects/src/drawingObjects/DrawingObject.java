@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import gui.draw.ToolMode;
+import resource.CoinIcon;
 
 public class DrawingObject {
 
@@ -13,10 +14,14 @@ public class DrawingObject {
 	private Color lineColor;
 	private Color fillColor;
 	private int thickness;
-	private int key;
+	private CoinIcon icon;
+	private String majorKey;
+	private String minorKey;
+	private double theta;
 	
 	public DrawingObject() {
 		thickness = 1;
+		theta = 0;
 	}
 
 	public ToolMode getToolMode() {
@@ -67,13 +72,35 @@ public class DrawingObject {
 		this.thickness = thickness;
 	}
 
-	public int getKey() {
-		return key;
+	public String getMajorKey() {
+		return majorKey;
 	}
 
-	public void setKey(int key) {
-		this.key = key;
+	public void setMajorKey(String majorKey) {
+		this.majorKey = majorKey;
 	}
-	
-	
+
+	public String getMinorKey() {
+		return minorKey;
+	}
+
+	public void setMinorKey(String minorKey) {
+		this.minorKey = minorKey;
+	}
+
+	public CoinIcon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(CoinIcon icon) {
+		this.icon = icon;
+	}
+
+	public double getTheta() {
+		return theta;
+	}
+
+	public void setTheta(double theta) {
+		this.theta = theta;
+	}
 }

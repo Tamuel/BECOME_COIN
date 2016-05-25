@@ -127,6 +127,47 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		greedDownButton.addActionListener(this);
 	}
 	
+	public void saveData() {
+		// TODO save procedure
+		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
+			DrawingObject object = coinData.getDrawingObjectList().get(i);
+			System.out.print(object.getToolMode() + ":");
+			if(object.getToolMode() == ToolMode.ICON) {
+				try {
+					System.out.print(object.getIcon() + ":");
+				} catch (Exception e) {
+					System.out.print("null" + ":");
+				}
+			}
+			else {
+				System.out.print(object.getThickness() + ":");
+			}
+			System.out.print((int)object.getBeginPoint().getX() + ":");
+			System.out.print((int)object.getBeginPoint().getY() + ":");
+			System.out.print((int)object.getEndPoint().getX() + ":");
+			System.out.print((int)object.getEndPoint().getY() + ":");
+			if(object.getToolMode() == ToolMode.LINE ||
+					object.getToolMode() == ToolMode.RECT ||
+					object.getToolMode() == ToolMode.CIRCLE) {
+				System.out.print(object.getLineColor().getRGB() + ":");
+				try {
+					System.out.print(object.getFillColor().getRGB());
+				} catch (Exception e) {
+					System.out.print("null");
+				}
+			}
+			else if(object.getToolMode() == ToolMode.ICON) {
+				System.out.print(object.getTheta() + ":");
+				System.out.print("null");
+			}
+			else {
+				System.out.print(object.getMajorKey() + ":");
+				System.out.print(object.getMinorKey());
+			}
+			System.out.println("");
+		}
+	}
+	
 	public void exitProcedure() {
 		SelectionFrame selectionFrame = new SelectionFrame();
 		if(exitCheckFrame != null)
@@ -168,7 +209,7 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		
 		if(exitCheckFrame != null) {
 			if(e.getSource() == exitCheckFrame.getExitWithSaveButton()) {
-				// TODO save procedure
+				saveData();
 				exitProcedure();
 			}
 			else if(e.getSource() == exitCheckFrame.getExitWithoutSaveButton()) {

@@ -3,9 +3,9 @@ package resource;
 import javax.swing.ImageIcon;
 
 public enum CoinIcon {
-	TAG(new ImageIcon("resources/images/coin_tag.png")),
-	BEACON(new ImageIcon("resources/images/coin_beacon.png")),
-	TOILET(new ImageIcon("resources/images/icon_toilet.png"))
+	COIN_TAG(new ImageIcon("resources/images/coin_tag.png")),
+	CON_BEACON(new ImageIcon("resources/images/coin_beacon.png")),
+	COIN_TOILET(new ImageIcon("resources/images/icon_toilet.png"))
 	;
 
 	private ImageIcon icon;
