@@ -234,29 +234,16 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode() == KeyEvent.VK_CONTROL) {
-			this.scaleLabel.setForeground(CoinColor.ORANGE);
-			this.infoLabel.setText("Scale Offset Change");
-		}
-		else if(arg0.getKeyCode() == KeyEvent.VK_SHIFT) {
+		if(arg0.getKeyCode() == KeyEvent.VK_SHIFT) {
 			this.greedLabel.setForeground(CoinColor.ORANGE);
 			this.infoLabel.setText("Greed Offset Change");
-		}
-		else if(arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-			this.infoLabel.setText("Screen Move");
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
-			this.scaleLabel.setForeground(CoinColor.BLACK);
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
+		if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			this.greedLabel.setForeground(CoinColor.BLACK);
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			
 		}
 		this.infoLabel.setText("");
 	}

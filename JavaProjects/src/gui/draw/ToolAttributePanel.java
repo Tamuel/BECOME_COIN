@@ -155,30 +155,32 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	
 	public void showAttributes() {
 		this.removeAll();
-		switch(coinData.getDrawingObject().getToolMode()) {
-		case SELECT:
-			select();
-			break;
-		case LINE:
-			primitives();
-			break;
-		case RECT:
-			primitives();
-			break;
-		case CIRCLE:
-			primitives();
-			break;
-		case ICON:
-			icon();
-			break;
-		case TAG:
-			tag();
-			break;
-		case BEACON:
-			beacon();
-			break;
-		default:
-			break;
+		if(coinData.getDrawingObject().getToolMode() != null) {
+			switch(coinData.getDrawingObject().getToolMode()) {
+			case SELECT:
+				select();
+				break;
+			case LINE:
+				primitives();
+				break;
+			case RECT:
+				primitives();
+				break;
+			case CIRCLE:
+				primitives();
+				break;
+			case ICON:
+				icon();
+				break;
+			case TAG:
+				tag();
+				break;
+			case BEACON:
+				beacon();
+				break;
+			default:
+				break;
+			}
 		}
 		this.repaint();
 	}
