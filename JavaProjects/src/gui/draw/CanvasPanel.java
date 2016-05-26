@@ -27,6 +27,8 @@ import resource.CoinColor;
 
 public class CanvasPanel extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, FocusListener {
 
+	private static final int COLL_PADD = 12;
+	
 	private CoinData coinData;
 	
 	private ToolMode toolMode;
@@ -172,14 +174,14 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		double x = line.getBeginPoint().getX();
 		double y = line.getBeginPoint().getY();
 		
-		return new Area(new Ellipse2D.Double(x - 10, y - 10, 20, 20));
+		return new Area(new Ellipse2D.Double(x - COLL_PADD/2, y - COLL_PADD/2, COLL_PADD, COLL_PADD));
 	}
 	
 	public Area getLineEndCollisionArea(DrawingObject line) {
 		double x = line.getEndPoint().getX();
 		double y = line.getEndPoint().getY();
 		
-		return new Area(new Ellipse2D.Double(x - 10, y - 10, 20, 20));
+		return new Area(new Ellipse2D.Double(x - COLL_PADD/2, y - COLL_PADD/2, COLL_PADD, COLL_PADD));
 	}
 	
 	public Area getRectCollisionArea(DrawingObject rect) {
@@ -191,6 +193,42 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		Area a = new Area(new Rectangle((int)x, (int)y, (int)width, (int)height));
 		
 		return a;
+	}
+	
+	public Area getUpperCollisionArea(DrawingObject object) {
+		double x = object.getBeginPoint().getX() - 10;
+		double y = object.getBeginPoint().getY();
+		double width = object.getEndPoint().getX() + 20;
+		double height = object.getEndPoint().getY() + 20;
+		
+		return new Area(new Ellipse2D.Double(x + width/2 - COLL_PADD/2, y - COLL_PADD/2, COLL_PADD, COLL_PADD));
+	}
+	
+	public Area getLowerCollisionArea(DrawingObject object) {
+		double x = object.getBeginPoint().getX() - 10;
+		double y = object.getBeginPoint().getY() - 20;
+		double width = object.getEndPoint().getX() + 20;
+		double height = object.getEndPoint().getY() + 20;
+		
+		return new Area(new Ellipse2D.Double(x + width/2 - COLL_PADD/2, y + height - COLL_PADD/2, COLL_PADD, COLL_PADD));
+	}
+	
+	public Area getLeftCollisionArea(DrawingObject object) {
+		double x = object.getBeginPoint().getX();
+		double y = object.getBeginPoint().getY() - 10;
+		double width = object.getEndPoint().getX() + 20;
+		double height = object.getEndPoint().getY() + 20;
+		
+		return new Area(new Ellipse2D.Double(x - COLL_PADD/2, y + height/2 - COLL_PADD/2, COLL_PADD, COLL_PADD));
+	}
+	
+	public Area getRightCollisionArea(DrawingObject object) {
+		double x = object.getBeginPoint().getX() - 20;
+		double y = object.getBeginPoint().getY() - 10;
+		double width = object.getEndPoint().getX() + 20;
+		double height = object.getEndPoint().getY() + 20;
+		
+		return new Area(new Ellipse2D.Double(x + width - COLL_PADD/2, y + height/2 - COLL_PADD/2, COLL_PADD, COLL_PADD));
 	}
 	
 	public Area getCircleCollisionArea(DrawingObject circle) {
@@ -249,6 +287,9 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	public void releasedLine() {
 		greedReleasedX = (int)getGreedPoint(releasedX, releasedY).getX();
 		greedReleasedY = (int)getGreedPoint(releasedX, releasedY).getY();
+		if(greedPressedX == greedReleasedX && greedPressedY == greedReleasedY) {
+			coinData.getDrawingObjectList().remove(coinData.getDrawingObjectList().size() - 1);
+		}
 	}
 	
 	// RECT
@@ -305,17 +346,26 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		greedPressedX = (int)getGreedPoint(pressedX, pressedY).getX();
 		greedPressedY = (int)getGreedPoint(pressedX, pressedY).getY();
 		
+		DrawingObject object = null;
 		DrawingObject temp = coinData.getSelectedObject();
 		coinData.setSelectedObject(null);
 		
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
-			DrawingObject object = coinData.getDrawingObjectList().get(i);
+			object = coinData.getDrawingObjectList().get(i);
 			if(checkCollision(object) == true) {
 				prevBeginPoint = object.getBeginPoint().getLocation();
 				prevEndPoint = object.getEndPoint().getLocation();
 				selectMode = SelectMode.MOVE;
+				if(object.getToolMode() == ToolMode.LINE && object == temp) {
+					coinData.setSelectedObject(temp);
+					break;
+				}
 				coinData.setSelectedObject(object);
 			}
+		}
+		
+		object = coinData.getSelectedObject();
+		if(object != null) {
 			switch(object.getToolMode()) {
 			case LINE:
 				if(getLineBeginCollisionArea(object).contains(getMousePosition())) {
@@ -326,6 +376,18 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 				}
 				break;
 			case ICON: case RECT: case CIRCLE:
+				if(getUpperCollisionArea(object).contains(getMousePosition())) {
+					selectMode = SelectMode.UPPER_SIDE;
+				}
+				else if(getLowerCollisionArea(object).contains(getMousePosition())) {
+					selectMode = SelectMode.LOWER_SIDE;
+				}
+				else if(getLeftCollisionArea(object).contains(getMousePosition())) {
+					selectMode = SelectMode.LEFT_SIDE;
+				}
+				else if(getRightCollisionArea(object).contains(getMousePosition())) {
+					selectMode = SelectMode.RIGHT_SIDE;
+				}
 				break;
 			case TAG: case BEACON:
 				break;
@@ -342,12 +404,13 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 		int diffX = greedPressedX - greedDraggedX;
 		int diffY = greedPressedY - greedDraggedY;
 		
+		DrawingObject object = coinData.getSelectedObject();
+		Point beginPoint;
+		Point endPoint;
+		
 		switch(selectMode) {
 		case MOVE:
-			DrawingObject object = coinData.getSelectedObject();
-			Point beginPoint;
-			Point endPoint;
-			
+			System.out.println("move");
 			beginPoint = new Point(
 					(int)prevBeginPoint.getX() - diffX,
 					(int)prevBeginPoint.getY() - diffY);
@@ -363,10 +426,29 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 			coinData.getSelectedObject().setEndPoint(endPoint);
 			break;
 		case LINE_BEGIN:
+			System.out.println("begin");
+			beginPoint = new Point(
+					(int)prevBeginPoint.getX() - diffX,
+					(int)prevBeginPoint.getY() - diffY);
+			coinData.getSelectedObject().setBeginPoint(beginPoint);
 			break;
 		case LINE_END:
+			System.out.println("end");
+			endPoint = new Point(
+					(int)prevEndPoint.getX() - diffX,
+					(int)prevEndPoint.getY() - diffY);
+			coinData.getSelectedObject().setEndPoint(endPoint);
 			break;
 		case UPPER_SIDE:
+			System.out.println("upper");
+			beginPoint = new Point(
+					(int)prevBeginPoint.getX(),
+					(int)prevBeginPoint.getY() - diffY);
+			endPoint = new Point(
+					(int)prevEndPoint.getX(),
+					(int)prevEndPoint.getY() + diffY);
+			coinData.getSelectedObject().setBeginPoint(beginPoint);
+			coinData.getSelectedObject().setEndPoint(endPoint);
 			break;
 		case LOWER_SIDE:
 			break;
@@ -380,6 +462,22 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	public void releasedSelect() {
+		if(coinData.getSelectedObject() != null) {
+			if(coinData.getSelectedObject().getToolMode() == ToolMode.LINE) {
+				if((int)coinData.getSelectedObject().getBeginPoint().getX() == (int)coinData.getSelectedObject().getEndPoint().getX() &&
+						(int)coinData.getSelectedObject().getBeginPoint().getY() == (int)coinData.getSelectedObject().getEndPoint().getY()) {
+					coinData.getDrawingObjectList().remove(coinData.getSelectedObject());
+					coinData.setSelectedObject(null);
+				}
+			}
+			else {
+				if((int)coinData.getSelectedObject().getEndPoint().getX() == 0 &&
+						(int)coinData.getSelectedObject().getEndPoint().getY() == 0) {
+					coinData.getDrawingObjectList().remove(coinData.getSelectedObject());
+					coinData.setSelectedObject(null);
+				}
+			}
+		}
 		selectMode = SelectMode.NONE;
 		this.repaint();
 	}
@@ -518,9 +616,6 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 				newObject.setThickness(tempObject.getThickness());
 				newObject.setMajorKey(tempObject.getMajorKey());
 				newObject.setMinorKey(tempObject.getMinorKey());
-			}
-			if(greedPressedX == greedReleasedX && greedPressedY == greedReleasedY) {
-				coinData.getDrawingObjectList().remove(coinData.getDrawingObjectList().size() - 1);
 			}
 			coinData.setDrawingObject(newObject);
 		}
@@ -701,15 +796,23 @@ public class CanvasPanel extends JPanel implements MouseListener, MouseMotionLis
 				g2.setStroke(new BasicStroke(2));
 				switch(coinData.getSelectedObject().getToolMode()) {
 				case LINE:
-					drawRotatedRect(g2, object);
+					//drawRotatedRect(g2, object);
 					g2.draw(getLineBeginCollisionArea(object));
 					g2.draw(getLineEndCollisionArea(object));
 					break;
 				case RECT:
-					g2.draw(getRectCollisionArea(object));
+					//g2.draw(getRectCollisionArea(object));
+					g2.draw(getUpperCollisionArea(object));
+					g2.draw(getLowerCollisionArea(object));
+					g2.draw(getLeftCollisionArea(object));
+					g2.draw(getRightCollisionArea(object));
 					break;
 				case CIRCLE:
-					g2.draw(getCircleCollisionArea(object));
+					//g2.draw(getCircleCollisionArea(object));
+					g2.draw(getUpperCollisionArea(object));
+					g2.draw(getLowerCollisionArea(object));
+					g2.draw(getLeftCollisionArea(object));
+					g2.draw(getRightCollisionArea(object));
 					break;
 				default:
 					break;

@@ -190,20 +190,9 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 			}
 			else
 				exitCheckFrame.setVisible(true);
-		}/*
-		else if(e.getSource() == greedUpButton) {
-			canvasPanel.setGreed(canvasPanel.getGreed() + 10);
-			greedLabel.setText("Greed " + canvasPanel.getGreed());
-			repaint();
 		}
-		else if(e.getSource() == greedDownButton) {
-			canvasPanel.setGreed(canvasPanel.getGreed() - 10);
-			greedLabel.setText("Greed " + canvasPanel.getGreed());
-			repaint();
-		}*/
 		else {
-			if(coinData.getDrawingObject().getToolMode() != null)
-				toolAttribPanel.showAttributes();
+			toolAttribPanel.showAttributes();
 			canvasPanel.repaint();
 		}
 		
@@ -233,6 +222,14 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 			toolAttribPanel.repaint();
 		}
 		canvasPanel.repaint();
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
+			toolAttribPanel.showAttributes();
+			toolAttribPanel.repaint();
+		}
 	}
 
 	@Override

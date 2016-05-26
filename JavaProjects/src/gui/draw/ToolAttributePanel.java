@@ -51,6 +51,10 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 	private Color fillColor;
 	private int thickness;
 	
+	private Color lineColorSelect;
+	private Color fillColorSelect;
+	private int thicknessSelect;
+	
 	private ArrayList<JButton> thickButtonList;
 	private ArrayList<JButton> lineColorButtonList;
 	private ArrayList<JButton> fillColorButtonList;
@@ -186,24 +190,59 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 			this.add(thickButtonList.get(i)).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
 			this.add(lineColorButtonList.get(i)).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 			this.add(lineColorLabel);
+			if(thickness == 1 + (i * 2))
+				thickButtonList.get(i).setBackground(CoinColor.ORANGE);
+			else
+				thickButtonList.get(i).setBackground(null);
+			if(lineColor.getRGB() == COLOR_LIST[i].getRGB())
+				lineColorButtonList.get(i).setBorder(new LineBorder(CoinColor.ORANGE, 3));
+			else
+				lineColorButtonList.get(i).setBorder(null);
 			if(coinData.getDrawingObject().getToolMode() != ToolMode.LINE) {
 				this.add(fillColorLabel);
 				this.add(fillColorButtonList.get(i)).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+				if(fillColor != null) {
+					if(fillColor.getRGB() == COLOR_LIST[i].getRGB())
+						fillColorButtonList.get(i).setBorder(new LineBorder(CoinColor.ORANGE, 3));
+					else
+						fillColorButtonList.get(i).setBorder(null);
+				}
+				else
+					fillColorButtonList.get(i).setBorder(null);
 			}
 		}
 	}
 	
 	private void select() {
 		if(coinData.getSelectedObject() != null) {
+			lineColorSelect = coinData.getSelectedObject().getLineColor();
+			fillColorSelect = coinData.getSelectedObject().getFillColor();
+			thicknessSelect = coinData.getSelectedObject().getThickness();
 			for(int i = 0; i < 4; i++) {
 				ThickLabel label = new ThickLabel(1 + (i * 2));
 				this.add(label).setBounds(THICK_LABEL_X, THICK_LABEL_Y + (i * THICK_PADDING), THICK_LABEL_WIDTH, THICK_LABEL_HEIGHT);
 				this.add(thickButtonList.get(i)).setBounds(THICK_BUTTON_X, THICK_BUTTON_Y + (i * THICK_PADDING), THICK_BUTTON_SIZE, THICK_BUTTON_SIZE);
 				this.add(lineColorButtonList.get(i)).setBounds(LINE_COLOR_X + (i * COLOR_PADDING), LINE_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
 				this.add(lineColorLabel);
+				if(thicknessSelect == 1 + (i * 2))
+					thickButtonList.get(i).setBackground(CoinColor.ORANGE);
+				else
+					thickButtonList.get(i).setBackground(null);
+				if(lineColorSelect.getRGB() == COLOR_LIST[i].getRGB())
+					lineColorButtonList.get(i).setBorder(new LineBorder(CoinColor.ORANGE, 3));
+				else
+					lineColorButtonList.get(i).setBorder(null);
 				if(coinData.getSelectedObject().getToolMode() != ToolMode.LINE) {
 					this.add(fillColorLabel);
 					this.add(fillColorButtonList.get(i)).setBounds(FILL_COLOR_X + (i * COLOR_PADDING), FILL_COLOR_Y, COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+					if(fillColorSelect != null) {
+						if(fillColorSelect.getRGB() == COLOR_LIST[i].getRGB())
+							fillColorButtonList.get(i).setBorder(new LineBorder(CoinColor.ORANGE, 3));
+						else
+							fillColorButtonList.get(i).setBorder(null);
+					}
+					else
+						fillColorButtonList.get(i).setBorder(null);
 				}
 			}
 		}
@@ -246,54 +285,41 @@ public class ToolAttributePanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		int thicknessTemp = 0;
+		Color lineColorTemp = null;
+		Color fillColorTemp = null;
+		
 		for(int i = 0; i < 4; i++) {
 			if(e.getSource() == thickButtonList.get(i)) {
-				this.thickness = 1 + (i * 2);
-				if(selectedThickButton != null)
-					selectedThickButton.setBackground(null);
-				selectedThickButton = thickButtonList.get(i);
-				selectedThickButton.setBackground(CoinColor.ORANGE);
+				thicknessTemp = 1 + (i * 2);
 				break;
 			}
-			if(e.getSource() == lineColorButtonList.get(i)) {
-				this.lineColor = COLOR_LIST[i];
-				if(selectedLineColorButton != null)
-					selectedLineColorButton.setBorder(null);
-				selectedLineColorButton = lineColorButtonList.get(i);
-				selectedLineColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
+			else if(e.getSource() == lineColorButtonList.get(i)) {
+				lineColorTemp = COLOR_LIST[i];
 				break;
 			}
-			if(e.getSource() == fillColorButtonList.get(i)) {
-				if(selectedFillColorButton != null) {
-					selectedFillColorButton.setBorder(null);
-					if(selectedFillColorButton == fillColorButtonList.get(i)){
-						selectedFillColorButton = null;
-						this.fillColor = null;
-					}
-					else {
-						this.fillColor = COLOR_LIST[i];
-						selectedFillColorButton = fillColorButtonList.get(i);
-						selectedFillColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
-					}
-				}
-				else {
-					this.fillColor = COLOR_LIST[i];
-					selectedFillColorButton = fillColorButtonList.get(i);
-					selectedFillColorButton.setBorder(new LineBorder(CoinColor.ORANGE, 3));
-				}
+			else if(e.getSource() == fillColorButtonList.get(i)) {
+				fillColorTemp = COLOR_LIST[i];
 				break;
 			}
 		}
 		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
-			this.coinData.getSelectedObject().setThickness(thickness);
-			this.coinData.getSelectedObject().setLineColor(lineColor);
-			this.coinData.getSelectedObject().setFillColor(fillColor);
+			if(thicknessTemp != 0) thicknessSelect = thicknessTemp;
+			if(lineColorTemp != null) lineColorSelect = lineColorTemp;
+			if(fillColorTemp != null) fillColorSelect = fillColorTemp;
+			coinData.getSelectedObject().setThickness(thicknessSelect);
+			coinData.getSelectedObject().setLineColor(lineColorSelect);
+			coinData.getSelectedObject().setFillColor(fillColorSelect);
 		}
 		else {
-			this.coinData.getDrawingObject().setThickness(thickness);
-			this.coinData.getDrawingObject().setLineColor(lineColor);
-			this.coinData.getDrawingObject().setFillColor(fillColor);
+			if(thicknessTemp != 0) thickness = thicknessTemp;
+			if(lineColorTemp != null) lineColor = lineColorTemp;
+			if(fillColorTemp != null) fillColor = fillColorTemp;
+			coinData.getDrawingObject().setThickness(thickness);
+			coinData.getDrawingObject().setLineColor(lineColor);
+			coinData.getDrawingObject().setFillColor(fillColor);
 		}
+		this.showAttributes();
 	}
 
 	public Color getLineColor() {
