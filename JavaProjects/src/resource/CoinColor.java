@@ -14,4 +14,6 @@ public class CoinColor {
 	public static final Color BUTTON_COLOR = new Color(111, 186, 255);
 	public static final Color TITLE_BAR_COLOR = new Color(250, 250, 250);
 	public static final Color TITLE_COLOR = new Color(255, 121, 12);
+	public static final Color OBJECT_COLOR_1 = new Color(239, 228, 176);
+	public static final Color OBJECT_COLOR_2 = new Color(192, 192, 192);
 }

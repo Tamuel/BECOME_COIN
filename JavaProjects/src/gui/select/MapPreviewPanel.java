@@ -57,6 +57,7 @@ public class MapPreviewPanel extends JPanel {
 		
 		editButton = new CoinButton("내용 수정");
 		this.add(editButton).setBounds(10, 540, 100, 30);
+		editButton.setVisible(false);
 	}
 	
 	public CoinButton getSwitchButon() {

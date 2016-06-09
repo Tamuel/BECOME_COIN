@@ -18,7 +18,7 @@ import dataObjects.CoinFloor;
 import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import gui.component.CoinScrollPane;
-import gui.draw.CoinDrawingFrame;
+import gui.draw.DrawingFrame;
 import gui.login.LoginFrame;
 import gui.login.SignupFrame;
 import resource.CoinColor;
@@ -34,7 +34,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private MapPreviewPanel mapPreviewPanel;
 	
 	private CoinButton logoutButton;
-	private CoinButton selectedButton = null;
+	private CoinButton selectedButton;
 	private CoinButton newButton;
 	private CoinButton deleteButton;
 	private CoinButton editButton;
@@ -44,10 +44,13 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private CoinScrollPane scroll;
 	
 	private ArrayList<CoinFloor> floorList;
-	private CoinFloor selectedFloor = null;
+	private CoinFloor selectedFloor;
 	
 	public SelectionFrame() {
 		super("Selection Frame", 1280, 800);
+		
+		selectedButton = null;
+		selectedFloor = null;
 		
 		loadFloors();
 		
@@ -182,18 +185,20 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			/* TODO delete floor information
 			 * 
 			 */
-			System.out.println(selectedFloor.getName() + " is deleted");
 			int index = floorList.indexOf(selectedFloor);
 			floorList.remove(index);
 			mapListPanel.makeList(floorList);
+			mapPreviewPanel.getSwitchButon().setVisible(false);
 			mapPreviewPanel.updatePreview(null);
+			selectedFloor = null;
+			selectedButton = null;
 		}
 		else if(e.getSource() == editButton) {
 			/* TODO edit floor plan(map) of selected floor
 			 * 
 			 */
 			if(selectedFloor != null) {
-				CoinDrawingFrame drawingFrame = new CoinDrawingFrame();
+				DrawingFrame drawingFrame = new DrawingFrame();
 				this.dispose();
 			}
 		}
@@ -241,10 +246,10 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			for(int i = 0; i < mapListPanel.getListButton().size(); i++) {
 				if(e.getSource() == mapListPanel.getListButton().get(i)) {
 					selectedFloor = floorList.get(i);
+					mapPreviewPanel.getSwitchButon().setVisible(true);
 					mapPreviewPanel.switchOff(selectedFloor);
 					mapPreviewPanel.updatePreview(floorList.get(i));
 					buttonColorChange();
-					System.out.println(selectedButton.getText());
 					
 					this.repaint();
 				}
