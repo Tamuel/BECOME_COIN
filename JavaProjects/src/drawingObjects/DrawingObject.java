@@ -20,6 +20,8 @@ public class DrawingObject {
 	private double theta;
 	
 	public DrawingObject() {
+		majorKey = "";
+		minorKey = "";
 		thickness = 1;
 		theta = 0;
 	}
@@ -98,6 +100,9 @@ public class DrawingObject {
 
 	public double getTheta() {
 		return theta;
+	}
+	
+	public void addTheta(double theta) {
 	}
 
 	public void setTheta(double theta) {
