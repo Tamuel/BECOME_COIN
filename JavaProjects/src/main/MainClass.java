@@ -7,7 +7,6 @@ import gui.select.SelectionFrame;
 
 public class MainClass {
 	public static void main(String[] args) {
-		//LoginFrame loginFrmae = new LoginFrame();
-		DrawingFrame coinDrawingPanel = new DrawingFrame();
+		LoginFrame loginFrmae = new LoginFrame();
 	}
 }

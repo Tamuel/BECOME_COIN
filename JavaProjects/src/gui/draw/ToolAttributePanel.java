@@ -319,8 +319,6 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 					}
 					break;
 			case ICON:
-				//icon();
-				//selectedIconButton.setBackground(null);
 				break;
 			case TAG:
 				tag();
@@ -429,7 +427,24 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 				break;
 			}
 			else if(e.getSource() == fillColorButtonList.get(i)) {
-				fillColorTemp = COLOR_LIST[i];
+				if(coinData.getDrawingObject().getToolMode() != ToolMode.SELECT) {
+					if(coinData.getDrawingObject().getFillColor() == null) {
+						fillColorTemp = COLOR_LIST[i];
+					}
+					else {
+						if(coinData.getDrawingObject().getFillColor().getRGB() != COLOR_LIST[i].getRGB())
+							fillColorTemp = COLOR_LIST[i];
+					}
+				}
+				else {
+					if(coinData.getSelectedObject().getFillColor() == null) {
+						fillColorTemp = COLOR_LIST[i];
+					}
+					else {
+						if(coinData.getSelectedObject().getFillColor().getRGB() != COLOR_LIST[i].getRGB())
+							fillColorTemp = COLOR_LIST[i];
+					}
+				}
 				break;
 			}
 		}
@@ -455,7 +470,8 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 		if(coinData.getDrawingObject().getToolMode() == ToolMode.SELECT) {
 			if(thicknessTemp != 0) thicknessSelect = thicknessTemp;
 			if(lineColorTemp != null) lineColorSelect = lineColorTemp;
-			if(fillColorTemp != null) fillColorSelect = fillColorTemp;
+			//if(fillColorTemp != null) fillColorSelect = fillColorTemp;
+			fillColorSelect = fillColorTemp;
 			coinData.getSelectedObject().setThickness(thicknessSelect);
 			coinData.getSelectedObject().setLineColor(lineColorSelect);
 			coinData.getSelectedObject().setFillColor(fillColorSelect);
@@ -464,7 +480,8 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 		else {
 			if(thicknessTemp != 0) thickness = thicknessTemp;
 			if(lineColorTemp != null) lineColor = lineColorTemp;
-			if(fillColorTemp != null) fillColor = fillColorTemp;
+			//if(fillColorTemp != null) fillColor = fillColorTemp;
+			fillColor = fillColorTemp;
 			coinData.getDrawingObject().setThickness(thickness);
 			coinData.getDrawingObject().setLineColor(lineColor);
 			coinData.getDrawingObject().setFillColor(fillColor);
@@ -492,7 +509,6 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if(coinData.getDrawingObject().getToolMode() == ToolMode.TAG ||
 				coinData.getDrawingObject().getToolMode() == ToolMode.BEACON) {
 			coinData.getDrawingObject().setMajorKey(this.majorTextField.getText().toString());
@@ -508,6 +524,11 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 			coinData.getDrawingObject().setMajorKey("");
 			coinData.getDrawingObject().setMinorKey("");
 		}
+	}
+	
+	public void resetKeys() {
+		this.majorTextField.setText("");
+		this.minorTextField.setText("");
 	}
 
 	@Override
