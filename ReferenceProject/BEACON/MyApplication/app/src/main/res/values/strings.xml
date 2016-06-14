@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeaconTestApp</string>
+    <string name="app_name">COIN manager</string>
     <string name="id">ID</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -10,6 +10,27 @@
 
     <string name="action_settings">설정</string>
     <string name="action_user">계정</string>
-    <string name="user_authority"> 사용자 권한 </string>
+    <string name="user_authority">사용자 권한</string>
+
+    <string name="add_information">정보 추가</string>
+    <string name="add_tag">태그 추가</string>
+    <string name="add_beacon">비콘 추가</string>
+    <string name="okay">확인</string>
+    <string name="add">추가</string>
+    <string name="cancel">취소</string>
+    <string name="title">타이틀</string>
+    <string name="content">내용</string>
+    <string name="major_key">Major key</string>
+    <string name="minor_key">Minor key</string>
+    <string name="tag_key">Tag Key</string>
+    <string name="tag_data">Tag Data</string>
+    <string name="delete">삭제</string>
+    <string name="save">저장</string>
+    <string name="exit">나가기</string>
+
+    <string name="long_click_to_select">길게 눌러서 위치 선택</string>
+
+    <string name="maps">지도</string>
+    <string name="set_location">위치 설정</string>
 
 </resources>

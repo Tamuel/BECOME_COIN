@@ -9,7 +9,8 @@ import java.util.ArrayList;
 /**
  * Created by DongKyu on 2016-05-25.
  */
-public class FloorPlanListFragmentAdapter extends FragmentPagerAdapter {
+public class
+        FloorPlanListFragmentAdapter extends FragmentPagerAdapter {
     private final ArrayList<Fragment> mFragments = new ArrayList<>();
     private final ArrayList<String> mFragmentTitles = new ArrayList<>();
 

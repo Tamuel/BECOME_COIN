@@ -1,10 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/floor_plan_parent_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.softwork.ydk.beacontestapp.FloorPlanActivity">
+
+    <RelativeLayout
+        android:id="@+id/floor_plan_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/canvas_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/banner_layout"
+            android:orientation="horizontal"
+            android:background="@drawable/white_background_gray_stroke_round_border"
+            android:padding="@dimen/font_size_middle"
+            android:layout_margin="@dimen/font_size_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/banner_text_view"
+                android:text="Banner here"
+                android:textSize="@dimen/font_size_big"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.softwork.ydk.beacontestapp.FloorPlanInfoLayout
+        android:id="@+id/floor_plan_info_view"
+        android:background="@drawable/white_background_gray_stroke"
+        android:orientation="vertical"
+        android:padding="@dimen/font_size_middle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/info_layout_height"
+        >
+
+        <TextView
+            android:id="@+id/InfoTitleTextView"
+            android:text="Title Here!"
+            android:textSize="@dimen/font_size_big"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/InfoContentTextView"
+            android:text="Content Hereeeeeeeeeef asfas"
+            android:textSize="@dimen/font_size_middle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.softwork.ydk.beacontestapp.FloorPlanInfoLayout>
 
 </RelativeLayout>

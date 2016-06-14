@@ -5,6 +5,7 @@
     <!-- Bluetooth Permission for Beacon -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -13,6 +14,7 @@
     <!-- Location Permission for Android version 23(Marshmallow) or higher -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -47,8 +49,20 @@
         </activity>
         <activity android:name=".FloorPlanList.FloorPlanListActivity" >
         </activity>
-        <activity android:name=".FloorPlanActivity" >
+        <activity android:name=".FloorPlanActivity.FloorPlanActivity" >
         </activity>
+        <activity android:name=".FloorPlanActivity.FloorPlanEditActivity" >
+        </activity>
+        <activity android:name=".GoogleMaps.GoogleMapActivity" >
+        </activity>
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCnZgN6GEO7CL_lAmMLGpOYg-ILope-9rI"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

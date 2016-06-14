@@ -10,7 +10,8 @@ public enum ToolMode {
     CIRCLE(3),
     ICON(4),
     TAG(5),
-    BEACON(6);
+    BEACON(6),
+    TEXT(7);
 
     private int value;
 
