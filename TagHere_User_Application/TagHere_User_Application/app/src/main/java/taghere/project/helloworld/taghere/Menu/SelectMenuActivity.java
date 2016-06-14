@@ -1,17 +1,23 @@
 package taghere.project.helloworld.taghere.Menu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import taghere.project.helloworld.taghere.GoogleMap.GoogleMapActivity;
+import taghere.project.helloworld.taghere.GoogleMap.NearAlarmActivity;
 import taghere.project.helloworld.taghere.R;
 import taghere.project.helloworld.taghere.ScanActivity;
 
 //메뉴 액티비티
 public class SelectMenuActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,7 +26,6 @@
         android:name="taghere.project.helloworld.taghere.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/tag_here_icon"
@@ -60,7 +59,10 @@
         <activity android:name=".Menu.QAActivity" />
         <activity android:name=".Menu.BuildingRankActivity" />
         <activity android:name=".Menu.OptionActivity" />
-        <activity android:name=".GoogleMap.GoogleBuildingInfoActivity"
+        <activity
+            android:name=".GoogleMap.GoogleBuildingInfoActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".GoogleMap.NearAlarmActivity"
             android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
