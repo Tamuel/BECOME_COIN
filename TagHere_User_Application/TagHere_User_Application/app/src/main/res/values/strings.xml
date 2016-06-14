@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Tag Here!</string>
+    <string name="scac_button_text">Scan QR Code</string>
+    <string name="notice">QR 코드를 찍거나 \n NFC 태그에 스마트폰을 가져다 대어 주세요</string>
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="title_activity_member">MemberActivity</string>
+    <string name="title_activity_select_menu">SelectMenuActivity</string>
+</resources>

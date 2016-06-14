@@ -1,13 +1,13 @@
 package main;
 
 import gui.component.CoinFrame;
+import gui.draw.DrawingFrame;
 import gui.login.LoginFrame;
-import gui.selector.SelectionFrame;
+import gui.select.SelectionFrame;
 
 public class MainClass {
 	public static void main(String[] args) {
-		//CoinFrame coinEditorFrame = new CoinFrame("Coin Editor", 1280, 768);
 		//LoginFrame loginFrmae = new LoginFrame();
-		SelectionFrame temp = new SelectionFrame();
+		DrawingFrame coinDrawingPanel = new DrawingFrame();
 	}
 }
