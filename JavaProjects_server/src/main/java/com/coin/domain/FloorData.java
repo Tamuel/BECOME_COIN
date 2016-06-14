@@ -1,22 +1,21 @@
 package com.coin.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class FloorData {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String name;
 	
 	private String description;
 	private String position;
 	private String multiMediaData;
 	
-	@OneToOne
-	private FloorPlan floorPlan;
-
 	public FloorData() {
 		// TODO Auto-generated constructor stub
 	}
@@ -52,14 +51,5 @@ public class FloorData {
 	public void setMultiMediaData(String multiMediaData) {
 		this.multiMediaData = multiMediaData;
 	}
-
-	public FloorPlan getFloorPlan() {
-		return floorPlan;
-	}
-
-	public void setFloorPlan(FloorPlan floorPlan) {
-		this.floorPlan = floorPlan;
-	}
-	
 	
 }

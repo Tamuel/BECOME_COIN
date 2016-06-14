@@ -1,17 +1,15 @@
 package com.coin.domain;
 
-import java.util.List;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class FloorPlan {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 	
 	private String name;
@@ -21,15 +19,6 @@ public class FloorPlan {
 	private String thumbNail;
 	private String description;
 	
-	@ManyToOne
-	private User user;
-	
-	@OneToMany( mappedBy = "floorPlan")
-	private List<Object> objects;
-	
-	@OneToOne
-	private FloorData floorData;
-
 	public FloorPlan() {
 		// TODO Auto-generated constructor stub
 	}
@@ -88,21 +77,5 @@ public class FloorPlan {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Object> getObjects() {
-		return objects;
-	}
-
-	public void setObjects(List<Object> objects) {
-		this.objects = objects;
-	}
-
-	public FloorData getFloorData() {
-		return floorData;
-	}
-
-	public void setFloorData(FloorData floorData) {
-		this.floorData = floorData;
 	}
 }

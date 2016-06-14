@@ -1,23 +1,20 @@
 package com.coin.domain;
 
-import java.util.List;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 	
 	private String password;
 	private String name;
 	
-	@OneToMany( mappedBy = "user")
-	private List<FloorPlan> floorPlans;
-
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -44,13 +41,5 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<FloorPlan> getFloorPlans() {
-		return floorPlans;
-	}
-
-	public void setFloorPlans(List<FloorPlan> floorPlans) {
-		this.floorPlans = floorPlans;
 	}
 }
