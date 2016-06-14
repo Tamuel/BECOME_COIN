@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.softwork.ydk.beacontestapp.FloorPlan.FloorPlan;
+import com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanActivity;
 import com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanEditActivity;
 import com.softwork.ydk.beacontestapp.R;
 import com.softwork.ydk.beacontestapp.Server.ServerManager;
@@ -40,8 +41,8 @@ public class FloorPlanListFragment extends Fragment {
         floorPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent floorPlanActivity = new Intent(FloorPlanListFragment.this.getActivity(), FloorPlanEditActivity.class);
-                floorPlanActivity.putExtra("FLOOR_PLAN", ServerManager.getInstance().getFloorPlans().get(position));
+                Intent floorPlanActivity = new Intent(FloorPlanListFragment.this.getActivity(), FloorPlanActivity.class);
+                floorPlanActivity.putExtra("FLOOR_PLAN", position);
                 startActivity(floorPlanActivity);
             }
         });

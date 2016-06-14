@@ -9,7 +9,10 @@ public enum IconMode {
     COIN_ELEVATOR(2),
     COIN_ESCALATOR(3),
     COIN_STAIR(4),
-    COIN_UAAA(5);
+    COIN_UAAA(5),
+    CON_BEACON(6),
+    COIN_TAG(7),
+    COIN_TEXT(8);
 
     private int value;
 

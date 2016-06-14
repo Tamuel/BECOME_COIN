@@ -33,6 +33,7 @@ import com.softwork.ydk.beacontestapp.FloorPlan.IconMode;
 import com.softwork.ydk.beacontestapp.FloorPlan.ToolMode;
 import com.softwork.ydk.beacontestapp.GoogleMaps.GoogleMapActivity;
 import com.softwork.ydk.beacontestapp.R;
+import com.softwork.ydk.beacontestapp.Server.ServerManager;
 
 public class FloorPlanEditActivity extends Activity {
     private RelativeLayout floorPlanView;
@@ -44,7 +45,7 @@ public class FloorPlanEditActivity extends Activity {
     public static final int GET_LOCATION = 0;
 
     // Floor Plan
-    private FloorPlan floorPlan = new FloorPlan();
+    private FloorPlan floorPlan;
     private DrawingObject selectedObject = null;
 
     // Sensors
@@ -69,10 +70,6 @@ public class FloorPlanEditActivity extends Activity {
     private int criteriaPos[] = {0, 0};
 
     private String objectData =
-            "RECT:1:0:0:800:500:-16777216:null\n" +
-            "RECT:1:410:100:230:130:-16777216:null\n" +
-            "RECT:1:520:370:240:160:-16777216:null\n" +
-            "RECT:1:330:280:210:110:-16777216:-14898960\n" +
             "RECT:7:118:43:780:460:-16777216:null\n" +
             "RECT:3:116:43:290:170:-16777216:null\n" +
             "RECT:3:626:43:270:170:-16777216:null\n" +
@@ -113,7 +110,7 @@ public class FloorPlanEditActivity extends Activity {
             "LINE:3:810:440:810:470:-16777216:null\n" +
             "LINE:3:810:470:840:470:-16777216:null\n" +
             "LINE:3:830:440:830:480:-16777216:null\n" +
-            "TEXT:0:170:270:0:0:Hello!:The other data";
+            "TEXT:COIN_TEXT:170:270:0:0:Hello!:The other data";
 
 
     @Override
@@ -144,95 +141,10 @@ public class FloorPlanEditActivity extends Activity {
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        floorPlan = (FloorPlan)getIntent().getSerializableExtra("FLOOR_PLAN");
+        floorPlan = ServerManager.getInstance().getFloorPlans().get(getIntent().getIntExtra("FLOOR_PLAN", 0));
         setBanner();
-        getObjects();
-    }
-
-    public void getObjects() {
-        // Get Objects
-        String line[] = objectData.split("\n");
-
-        int lineColor, fillColor;
-        for(String temp : line) {
-            String data[] = temp.split(":");
-            DrawingObject newObject = new DrawingObject();
-            switch (data[0]) {
-                case "RECT":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.RECT);
-                case "CIRCLE":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.CIRCLE);
-                case "LINE":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.LINE);
-
-                    newObject.setThickness(Integer.parseInt(data[1]));
-                    newObject.setBeginPoint(
-                            new Point(
-                                    Integer.parseInt(data[2]),
-                                    Integer.parseInt(data[3])
-                            )
-                    );
-                    if(newObject.getToolMode() != ToolMode.LINE) {
-                        newObject.setEndPoint(
-                                new Point(
-                                        Integer.parseInt(data[4]) + Integer.parseInt(data[2]),
-                                        Integer.parseInt(data[5]) + Integer.parseInt(data[3])
-                                )
-                        );
-                    } else {
-                        newObject.setEndPoint(
-                                new Point(
-                                        Integer.parseInt(data[4]),
-                                        Integer.parseInt(data[5])
-                                )
-                        );
-                    }
-                    if(!data[6].equals("null")) {
-                        lineColor = Integer.parseInt(data[6]);
-                        newObject.setLineColor(lineColor);
-                        newObject.setLine(true);
-                    }
-                    if(!data[7].equals("null")) {
-                        fillColor = Integer.parseInt(data[7]);
-                        newObject.setFillColor(fillColor);
-                        newObject.setFill(true);
-                    }
-                    newObject.setIsIcon(false);
-                    break;
-
-                case "TEXT":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.TEXT);
-                case "ICON":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.ICON);
-                case "BEACON":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.BEACON);
-                case "TAG":
-                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.TAG);
-                    newObject.setBeginPoint(
-                            new Point(
-                                    Integer.parseInt(data[2]) + 25,
-                                    Integer.parseInt(data[3]) + 25
-                            )
-                    );
-                    newObject.setEndPoint(
-                            new Point(
-                                    Integer.parseInt(data[2]) + DrawingObject.iconSize[0] + 25,
-                                    Integer.parseInt(data[3]) + DrawingObject.iconSize[1] + 25
-                            )
-                    );
-                    if(newObject.getToolMode() != ToolMode.ICON) {
-                        newObject.setMajorKey(data[6]);
-                        newObject.setMinorKey(data[7]);
-                    } else if(newObject.getToolMode() == ToolMode.ICON) {
-                        newObject.setIconMode(IconMode.valueOf(data[1]));
-                    }
-                    newObject.setLine(true);
-                    newObject.setIsIcon(true);
-                    break;
-            }
-            if(newObject.getToolMode() != null)
-                floorPlan.addObject(newObject);
-        }
+        if(floorPlan.getObjects().size() == 0)
+            floorPlan.setObjects(ServerManager.getInstance().getObject(objectData));
     }
 
     @Override
@@ -303,7 +215,7 @@ public class FloorPlanEditActivity extends Activity {
     }
 
     public void setBanner() {
-        bannerEditText.setText(floorPlan.getName());
+        bannerEditText.setText(floorPlan.getBuildingName() + " " + floorPlan.getName() + " " + floorPlan.getFloor() + "층");
         locationTextView.setText("(" + String.format("%.6f", floorPlan.getLatitude()) + ", " + String.format("%.6f", floorPlan.getLongitude()) + ")");
     }
 

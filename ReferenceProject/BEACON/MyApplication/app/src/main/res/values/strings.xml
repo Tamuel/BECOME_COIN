@@ -27,10 +27,18 @@
     <string name="delete">삭제</string>
     <string name="save">저장</string>
     <string name="exit">나가기</string>
+    <string name="join_coin">COIN 서비스 가입</string>
+    <string name="join">가입</string>
+    <string name="nickname">닉네임</string>
+
 
     <string name="long_click_to_select">길게 눌러서 위치 선택</string>
 
-    <string name="maps">지도</string>
+    <string name="modify">수정</string>
     <string name="set_location">위치 설정</string>
+    <string name="location">위치</string>
+
+
+    <string name="location_is">위치는</string>
 
 </resources>

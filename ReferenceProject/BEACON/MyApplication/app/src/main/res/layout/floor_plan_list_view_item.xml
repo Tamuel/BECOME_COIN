@@ -33,10 +33,10 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/showGoogleMapsButton"
+                    android:id="@+id/modifyFloorPlanButton"
                     android:focusable="false"
                     android:background="@drawable/blue_simple_button"
-                    android:text="@string/maps"
+                    android:text="@string/modify"
                     android:textColor="@drawable/blue_simple_button_text"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"

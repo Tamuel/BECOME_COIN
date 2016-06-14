@@ -26,6 +26,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/google_map_buttons_linear_layout"
             android:orientation="horizontal"
             android:paddingTop="10dp"
             android:layout_width="match_parent"

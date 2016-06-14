@@ -46,8 +46,6 @@ public class BeaconRangingListener extends Service implements RECORangingListene
                 beacons[i] = beaconAvg[i][0] / count;
             i = 0;
         }
-
-        BeaconActivity.dataView.setText(String.format("BEACON 100 : %5dcm\nBEACON 200 : %5dcm\nBEACON 300 : %5dcm\nBEACON 400 : %5dcm\n", beacons[0], beacons[1], beacons[2], beacons[3]));
     }
 
     public void rangingBeaconsDidFailForRegion(RECOBeaconRegion recoRegion, RECOErrorCode errorCode) {

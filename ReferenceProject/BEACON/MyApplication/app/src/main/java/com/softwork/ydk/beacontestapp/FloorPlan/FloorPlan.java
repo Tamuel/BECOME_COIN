@@ -10,8 +10,9 @@ import java.util.ArrayList;
  */
 public class FloorPlan implements Serializable{
     private String name;
+    private String buildingName;
     private String description;
-    private String floorPlanSize;
+    private int floor;
     private double longitude;
     private double latitude;
     private Drawable floorPlanImage;
@@ -20,6 +21,22 @@ public class FloorPlan implements Serializable{
 
     public void FloorPlan() {
 
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public void addObject(DrawingObject newObject) {
@@ -50,13 +67,6 @@ public class FloorPlan implements Serializable{
         this.description = description;
     }
 
-    public String getFloorPlanSize() {
-        return floorPlanSize;
-    }
-
-    public void setFloorPlanSize(String floorPlanSize) {
-        this.floorPlanSize = floorPlanSize;
-    }
 
     public double getLongitude() {
         return longitude;

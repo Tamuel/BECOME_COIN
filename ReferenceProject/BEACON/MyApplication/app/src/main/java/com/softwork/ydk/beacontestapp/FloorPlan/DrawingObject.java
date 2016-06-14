@@ -24,20 +24,20 @@ public class DrawingObject {
     @ColorInt private int lineColor;
     @ColorInt private int fillColor;
     private int thickness = 0;
-    private float rotate;
     private String majorKey;
     private String minorKey;
+    private double theta;
 
     public DrawingObject() {
         thickness = 1;
     }
 
-    public float getRotate() {
-        return rotate;
+    public double getTheta() {
+        return theta;
     }
 
-    public void setRotate(float rotate) {
-        this.rotate = rotate;
+    public void setTheta(double theta) {
+        this.theta = theta;
     }
 
     public IconMode getIconMode() {

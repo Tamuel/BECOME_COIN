@@ -8,6 +8,9 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:textColorPrimary">@color/gray</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <item name="colorControlHighlight">@color/blue</item>
     </style>
 
     <style name="WhiteThemeNoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
@@ -15,6 +18,9 @@
         <item name="android:colorPrimaryDark">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <item name="colorControlHighlight">@color/blue</item>
     </style>
 
     <style name="BlueThemeNoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
@@ -22,5 +28,8 @@
         <item name="android:colorPrimaryDark">@color/blue</item>
         <item name="android:statusBarColor">@color/blue</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <item name="colorControlHighlight">@color/blue</item>
     </style>
 </resources>

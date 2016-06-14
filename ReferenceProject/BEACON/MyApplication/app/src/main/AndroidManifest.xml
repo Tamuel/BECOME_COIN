@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -56,13 +55,15 @@
         <activity android:name=".GoogleMaps.GoogleMapActivity" >
         </activity>
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCnZgN6GEO7CL_lAmMLGpOYg-ILope-9rI"/>
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCnZgN6GEO7CL_lAmMLGpOYg-ILope-9rI" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".JoinActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ public class FloorPlanListActivity extends FragmentActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.FloorPlanViewPager);
         FloorPlanListFragmentAdapter adapter = new FloorPlanListFragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(new FloorPlanListFragment(), getString(R.string.floorplan_list));
-        adapter.addFragment(new FloorPlanListFragment(), "Category 2");
+//        adapter.addFragment(new FloorPlanListFragment(), "Category 2");
         adapter.addFragment(new FloorPlanUserInfoFragment(), getString(R.string.action_user));
         viewPager.setAdapter(adapter);
 
