@@ -5,4 +5,5 @@
     <string name="title_activity_log_in">LogInActivity</string>
     <string name="title_activity_member">MemberActivity</string>
     <string name="title_activity_select_menu">SelectMenuActivity</string>
+    <string name="title_activity_build_info">BuildInfoActivity</string>
 </resources>

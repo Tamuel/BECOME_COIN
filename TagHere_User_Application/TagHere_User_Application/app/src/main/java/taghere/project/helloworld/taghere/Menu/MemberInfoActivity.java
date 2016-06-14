@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import taghere.project.helloworld.taghere.R;
 
+//회원 정보를 보여주는 액티비티
 public class MemberInfoActivity extends AppCompatActivity {
 
     @Override

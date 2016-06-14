@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import taghere.project.helloworld.taghere.R;
 
+//질문게시판 액티비티
 public class QAActivity extends AppCompatActivity {
 
     @Override

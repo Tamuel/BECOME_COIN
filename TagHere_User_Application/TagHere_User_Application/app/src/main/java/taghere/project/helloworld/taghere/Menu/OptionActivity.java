@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import taghere.project.helloworld.taghere.R;
 
+//설정 액티비티
 public class OptionActivity extends AppCompatActivity {
 
     @Override

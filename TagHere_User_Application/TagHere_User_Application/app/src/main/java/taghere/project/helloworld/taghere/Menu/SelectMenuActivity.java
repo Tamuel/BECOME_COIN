@@ -1,6 +1,5 @@
 package taghere.project.helloworld.taghere.Menu;
 
-import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import taghere.project.helloworld.taghere.GoogleMap.GoogleMapActivity;
 import taghere.project.helloworld.taghere.R;
 import taghere.project.helloworld.taghere.ScanActivity;
 
+//메뉴 액티비티
 public class SelectMenuActivity extends AppCompatActivity {
 
     @Override
@@ -32,7 +32,7 @@ public class SelectMenuActivity extends AppCompatActivity {
 
     //건물 평가 실행
     public void onClickBuildingButton(View v) {
-        Intent BuildingIntent = new Intent(SelectMenuActivity.this, BuildingActivity.class);
+        Intent BuildingIntent = new Intent(SelectMenuActivity.this, BuildingRankActivity.class);
         startActivity(BuildingIntent);
     }
 

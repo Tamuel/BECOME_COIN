@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -22,12 +26,6 @@
         android:name="taghere.project.helloworld.taghere.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -51,7 +49,7 @@
             -- android:screenOrientation="landscape">
         </activity>
         <activity android:name=".GoogleMap.GoogleMapActivity" />
-        <activity android:name=".GoogleMap.CoinPositionActivity" />
+        <activity android:name=".GoogleMap.BuildingInfoActivity" />
         <activity
             android:name=".LogIn.LogInActivity"
             android:label="@string/title_activity_log_in"
@@ -60,8 +58,10 @@
         <activity android:name=".LogIn.CreateAccountActivity" />
         <activity android:name=".Menu.MemberInfoActivity" />
         <activity android:name=".Menu.QAActivity" />
-        <activity android:name=".Menu.BuildingActivity" />
-        <activity android:name=".Menu.OptionActivity"></activity>
+        <activity android:name=".Menu.BuildingRankActivity" />
+        <activity android:name=".Menu.OptionActivity" />
+        <activity android:name=".GoogleMap.GoogleBuildingInfoActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>
