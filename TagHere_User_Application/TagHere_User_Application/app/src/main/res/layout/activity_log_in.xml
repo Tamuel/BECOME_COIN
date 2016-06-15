@@ -30,12 +30,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="ID"
+                android:text="아이디"
                 android:id="@+id/textView"
                 android:layout_gravity="center"/>
 
             <EditText
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/IdEditText" />
         </LinearLayout>
@@ -48,11 +48,11 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Password"
+                android:text="비밀번호"
                 android:id="@+id/textView2" />
 
             <EditText
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"

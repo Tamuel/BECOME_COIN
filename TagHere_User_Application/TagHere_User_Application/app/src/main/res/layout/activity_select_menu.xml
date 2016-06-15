@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="taghere.project.helloworld.taghere.SelectMenuActivity">
+    tools:context=".Menu.SelectMenuActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,13 +24,15 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <ImageButton
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/memberInfoButton"
-                android:background="@drawable/memberinfo_button"/>
+                android:background="@drawable/memberinfo_button"
+                android:onClick="onClickMemberInfoButton"/>
 
             <ImageView
                 android:layout_width="30dp"
@@ -41,7 +43,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/QAbutton"
-                android:background="@drawable/qa_button"/>
+                android:background="@drawable/qa_button"
+                android:onClick="onClickQAButton"/>
 
         </LinearLayout>
 
@@ -52,13 +55,15 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="137dp">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <ImageButton
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/buildingButton"
-                android:background="@drawable/build_button"/>
+                android:background="@drawable/build_button"
+                android:onClick="onClickBuildingButton"/>
 
             <ImageView
                 android:layout_width="30dp"
@@ -69,14 +74,16 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/optionButton"
-                android:background="@drawable/option_button"/>
+                android:background="@drawable/option_button"
+                android:onClick="onClickOptionButton"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <ImageButton
                 android:layout_width="40dp"

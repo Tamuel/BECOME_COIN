@@ -1,15 +1,16 @@
-package taghere.project.helloworld.taghere.GoogleMap;
+package taghere.project.helloworld.taghere.Menu;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import taghere.project.helloworld.taghere.R;
 
-public class CoinPositionActivity extends AppCompatActivity {
+//설정 액티비티
+public class OptionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coin_position);
+        setContentView(R.layout.activity_option);
     }
 }

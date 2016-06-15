@@ -2,7 +2,6 @@ package taghere.project.helloworld.taghere.GoogleMap;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,22 +28,24 @@ public class GoogleMapActivity extends FragmentActivity {
                 new MarkerOptions().position(
                         new LatLng(35.886869, 128.608408)).title("coin1"),
                 new MarkerOptions().position(
-                        new LatLng(34.886839, 127.608378)).title("coin2")
+                        new LatLng(30.886839, 120.608378)).title("coin2")
         };
 
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Intent coinActivity = new Intent(GoogleMapActivity.this, CoinPositionActivity.class);
-                startActivity(coinActivity);
-
-                return true;
-            }
-        });
 
         for(MarkerOptions temp : coinMarker) {
             temp.icon(BitmapDescriptorFactory.fromResource(R.drawable.coin_position_mark));
             googleMap.addMarker(temp);
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                //마크 클릭 시
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    Intent googleBuildingInfoIntent = new Intent(getApplicationContext(), GoogleBuildingInfoActivity.class);
+                    startActivityForResult(googleBuildingInfoIntent, 1001);
+
+                    return true;
+                }
+            });
         }
     }
 
