@@ -6,6 +6,9 @@ import drawingObjects.DrawingObject;
 
 public class CoinData {
 
+	private String user;
+	private String longitude;
+	private String latitude;
 	private ArrayList<DrawingObject> history;
 	private ArrayList<DrawingObject> drawingObjectList;
 	private DrawingObject drawingObject;

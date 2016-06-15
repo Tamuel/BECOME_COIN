@@ -127,43 +127,135 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		greedDownButton.addActionListener(this);
 	}
 	
+	/**
+	 * ALL CASES: <br>
+	 * - data type <br>
+	 * @param object
+	 */
+	private void data1of8(DrawingObject object) {
+		System.out.print(object.getToolMode() + ":");
+	}
+	
+	/**
+	 * CASE LINE, RECT, CIRCLE: <br>
+	 * - thickness <br>
+	 * CASE ICON, TAG, BEACON: <br>
+	 * - icon type <br>
+	 * @param object
+	 */
+	private void data2of8(DrawingObject object) {
+		if(object.getToolMode() == ToolMode.ICON ||
+				object.getToolMode() == ToolMode.TAG ||
+				object.getToolMode() == ToolMode.BEACON) {
+			try {
+				System.out.print(object.getIcon() + ":");
+			} catch (Exception e) {
+				System.out.print("null" + ":");
+			}
+		}
+		else {
+			System.out.print(object.getThickness() + ":");
+		}
+	}
+	
+	/**
+	 * ALL CASES: <br>
+	 * - x1 <br>
+	 * @param object
+	 */
+	private void data3of8(DrawingObject object) {
+		System.out.print((int)object.getBeginPoint().getX() + ":");
+	}
+	
+	/**
+	 * ALL CASES: <br>
+	 * - y1 <br>
+	 * @param object
+	 */
+	private void data4of8(DrawingObject object) {
+		System.out.print((int)object.getBeginPoint().getY() + ":");
+	}
+
+	/**
+	 * ALL CASES: <br>
+	 * - x2 (or width) <br>
+	 * @param object
+	 */
+	private void data5of8(DrawingObject object) {
+		System.out.print((int)object.getEndPoint().getX() + ":");
+	}
+	
+	/**
+	 * ALL CASES: <br>
+	 * - y2 (or height) <br>
+	 * @param object
+	 */
+	private void data6of8(DrawingObject object) {
+		System.out.print((int)object.getEndPoint().getY() + ":");
+	}
+	
+	/**
+	 * CASE LINE, RECT, CIRCLE: <br>
+	 * - line color sGBA <br>
+	 * CASE ICON: <br>
+	 * - theta(radian) <br>
+	 * CASE TAG, BEACON: <br>
+	 * - major key (or tag key) <br>
+	 * @param object
+	 */
+	private void data7of8(DrawingObject object) {
+		if(object.getToolMode() == ToolMode.LINE ||
+				object.getToolMode() == ToolMode.RECT ||
+				object.getToolMode() == ToolMode.CIRCLE) {
+			System.out.print(object.getLineColor().getRGB() + ":");
+		}
+		else if(object.getToolMode() == ToolMode.ICON) {
+			System.out.print(object.getTheta() + ":");
+		}
+		else {
+			System.out.print(object.getMajorKey() + ":");
+		}
+	}
+	
+	/**
+	 * CASE LINE, RECT, CIRCLE: <br>
+	 * - fill color sGBA (if no fill color, then null) <br>
+	 * CASE ICON, TAG: <br>
+	 * - null <br>
+	 * CASE BEACON: <br>
+	 * - minor key <br>
+	 * @param object
+	 */
+	private void data8of8(DrawingObject object) {
+		if(object.getToolMode() == ToolMode.LINE ||
+				object.getToolMode() == ToolMode.RECT ||
+				object.getToolMode() == ToolMode.CIRCLE) {
+			try {
+				System.out.print(object.getFillColor().getRGB());
+			} catch (Exception e) {
+				System.out.print("null");
+			}
+		}
+		else if(object.getToolMode() == ToolMode.ICON) {
+			System.out.print("null");
+		}
+		else {
+			System.out.print(object.getMinorKey());
+		}
+	}
+	
 	public void saveData() {
 		// TODO save procedure
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
 			DrawingObject object = coinData.getDrawingObjectList().get(i);
-			System.out.print(object.getToolMode() + ":");
-			if(object.getToolMode() == ToolMode.ICON) {
-				try {
-					System.out.print(object.getIcon() + ":");
-				} catch (Exception e) {
-					System.out.print("null" + ":");
-				}
-			}
-			else {
-				System.out.print(object.getThickness() + ":");
-			}
-			System.out.print((int)object.getBeginPoint().getX() + ":");
-			System.out.print((int)object.getBeginPoint().getY() + ":");
-			System.out.print((int)object.getEndPoint().getX() + ":");
-			System.out.print((int)object.getEndPoint().getY() + ":");
-			if(object.getToolMode() == ToolMode.LINE ||
-					object.getToolMode() == ToolMode.RECT ||
-					object.getToolMode() == ToolMode.CIRCLE) {
-				System.out.print(object.getLineColor().getRGB() + ":");
-				try {
-					System.out.print(object.getFillColor().getRGB());
-				} catch (Exception e) {
-					System.out.print("null");
-				}
-			}
-			else if(object.getToolMode() == ToolMode.ICON) {
-				System.out.print(object.getTheta() + ":");
-				System.out.print("null");
-			}
-			else {
-				System.out.print(object.getMajorKey() + ":");
-				System.out.print(object.getMinorKey());
-			}
+			data1of8(object);
+			data2of8(object);
+			data3of8(object);
+			data4of8(object);
+			data5of8(object);
+			data6of8(object);
+			data7of8(object);
+			data8of8(object);
 			System.out.println("");
 		}
 	}
