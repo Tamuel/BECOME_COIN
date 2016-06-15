@@ -1,5 +1,6 @@
 package serverConnector;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,6 +13,7 @@ import javax.swing.ImageIcon;
 import dataObjects.CoinFloor;
 import drawingObjects.DrawingObject;
 import gui.draw.ToolMode;
+import resource.CoinIcon;
 
 /**
  * Created by DongKyu on 2016-05-24.
@@ -24,6 +26,8 @@ public class ServerManager {
     private String userID;
     private String userNickName;
     private ArrayList<CoinFloor> floorPlans = new ArrayList<>();
+    private CoinFloor selectedFloor;
+    private ArrayList<DrawingObject> objects;
 
     private int requestResult;
     private String result = "";
@@ -64,8 +68,22 @@ public class ServerManager {
         floorPlans.add(fp2);
         floorPlans.add(fp3);
     }
+    
+    
 
-    public static ServerManager getInstance() {
+    public CoinFloor getSelectedFloor() {
+		return selectedFloor;
+	}
+
+
+
+	public void setSelectedFloor(CoinFloor selectedFloor) {
+		this.selectedFloor = selectedFloor;
+	}
+
+
+
+	public static ServerManager getInstance() {
         if(instance == null)
             instance = new ServerManager();
         return instance;
@@ -99,8 +117,8 @@ public class ServerManager {
      * - data type <br>
      * @param object
      */
-    private void data1of8(DrawingObject object) {
-       System.out.print(object.getToolMode() + ":");
+    private String data1of8(DrawingObject object) {
+       return object.getToolMode() + ":";
     }
     
     /**
@@ -110,18 +128,18 @@ public class ServerManager {
      * - icon type <br>
      * @param object
      */
-    private void data2of8(DrawingObject object) {
+    private String data2of8(DrawingObject object) {
        if(object.getToolMode() == ToolMode.ICON ||
              object.getToolMode() == ToolMode.TAG ||
              object.getToolMode() == ToolMode.BEACON) {
           try {
-             System.out.print(object.getIcon() + ":");
+             return object.getIcon() + ":";
           } catch (Exception e) {
-             System.out.print("null" + ":");
+             return "null" + ":";
           }
        }
        else {
-          System.out.print(object.getThickness() + ":");
+          return object.getThickness() + ":";
        }
     }
     
@@ -130,8 +148,8 @@ public class ServerManager {
      * - x1 <br>
      * @param object
      */
-    private void data3of8(DrawingObject object) {
-       System.out.print((int)object.getBeginPoint().getX() + ":");
+    private String data3of8(DrawingObject object) {
+       return (int)object.getBeginPoint().getX() + ":";
     }
     
     /**
@@ -139,8 +157,8 @@ public class ServerManager {
      * - y1 <br>
      * @param object
      */
-    private void data4of8(DrawingObject object) {
-       System.out.print((int)object.getBeginPoint().getY() + ":");
+    private String data4of8(DrawingObject object) {
+       return (int)object.getBeginPoint().getY() + ":";
     }
 
     /**
@@ -148,8 +166,8 @@ public class ServerManager {
      * - x2 (or width) <br>
      * @param object
      */
-    private void data5of8(DrawingObject object) {
-       System.out.print((int)object.getEndPoint().getX() + ":");
+    private String data5of8(DrawingObject object) {
+       return (int)object.getEndPoint().getX() + ":";
     }
     
     /**
@@ -157,8 +175,8 @@ public class ServerManager {
      * - y2 (or height) <br>
      * @param object
      */
-    private void data6of8(DrawingObject object) {
-       System.out.print((int)object.getEndPoint().getY() + ":");
+    private String data6of8(DrawingObject object) {
+       return (int)object.getEndPoint().getY() + ":";
     }
     
     /**
@@ -170,17 +188,17 @@ public class ServerManager {
      * - major key (or tag key) <br>
      * @param object
      */
-    private void data7of8(DrawingObject object) {
+    private String data7of8(DrawingObject object) {
        if(object.getToolMode() == ToolMode.LINE ||
              object.getToolMode() == ToolMode.RECT ||
              object.getToolMode() == ToolMode.CIRCLE) {
-          System.out.print(object.getLineColor().getRGB() + ":");
+          return object.getLineColor().getRGB() + ":";
        }
        else if(object.getToolMode() == ToolMode.ICON) {
-          System.out.print(object.getTheta() + ":");
+          return object.getTheta() + ":";
        }
        else {
-          System.out.print(object.getMajorKey() + ":");
+          return object.getMajorKey() + ":";
        }
     }
     
@@ -193,42 +211,63 @@ public class ServerManager {
      * - minor key <br>
      * @param object
      */
-    private void data8of8(DrawingObject object) {
+    private String data8of8(DrawingObject object) {
        if(object.getToolMode() == ToolMode.LINE ||
              object.getToolMode() == ToolMode.RECT ||
              object.getToolMode() == ToolMode.CIRCLE) {
           try {
-             System.out.print(object.getFillColor().getRGB());
+             return object.getFillColor().getRGB() + "";
           } catch (Exception e) {
-             System.out.print("null");
+             return "null";
           }
        }
        else if(object.getToolMode() == ToolMode.ICON) {
-          System.out.print("null");
+          return "null";
        }
        else {
-          System.out.print(object.getMinorKey());
+          return object.getMinorKey();
        }
     }
     
-    public void parseObjectData(ArrayList<DrawingObject> objects) {
+    public String parseObjectData(ArrayList<DrawingObject> objects) {
        // TODO save procedure
+    	String data = "";
        for(int i = 0; i < objects.size(); i++) {
           DrawingObject object = objects.get(i);
-          data1of8(object);
-          data2of8(object);
-          data3of8(object);
-          data4of8(object);
-          data5of8(object);
-          data6of8(object);
-          data7of8(object);
-          data8of8(object);
-          System.out.println("");
+          data += data1of8(object);
+          data += data2of8(object);
+          data += data3of8(object);
+          data += data4of8(object);
+          data += data5of8(object);
+          data += data6of8(object);
+          data += data7of8(object);
+          data += data8of8(object);
+          data += "\n";
        }
+       
+       return data;
     }
+    
+    public String parseObjectData(DrawingObject object) {
+        // TODO save procedure
+     	String data = "";
+     	
+       data += data1of8(object);
+       data += data2of8(object);
+       data += data3of8(object);
+       data += data4of8(object);
+       data += data5of8(object);
+       data += data6of8(object);
+       data += data7of8(object);
+       data += data8of8(object);
+//           data += "\n";
+        
+        return data;
+     }
     
     public void parseFloorPlanData(String data) {
     	floorPlans.clear();
+    	if(data.equals("")) return;
     	for(String line : data.split("\n")) {
     		String temp[] = line.split(":");
         	CoinFloor newFloor = new CoinFloor();
@@ -242,13 +281,95 @@ public class ServerManager {
         	floorPlans.add(newFloor);
     	}
     }
+    
+
+    public ArrayList<DrawingObject> getObject(String objectData) {
+        // Get Objects
+        String line[] = objectData.split("\n");
+
+        ArrayList<DrawingObject> tempObjects = new ArrayList<>();
+
+        int lineColor, fillColor;
+        for(String temp : line) {
+            String data[] = temp.split(":");
+            DrawingObject newObject = new DrawingObject();
+            switch (data[0]) {
+                case "RECT":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.RECT);
+                case "CIRCLE":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.CIRCLE);
+                case "LINE":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.LINE);
+
+                    newObject.setThickness(Integer.parseInt(data[1]));
+                    newObject.setBeginPoint(
+                            new Point(
+                                    Integer.parseInt(data[2]),
+                                    Integer.parseInt(data[3])
+                            )
+                    );
+                    if(newObject.getToolMode() != ToolMode.LINE) {
+                        newObject.setEndPoint(
+                                new Point(
+                                        Integer.parseInt(data[4]) + Integer.parseInt(data[2]),
+                                        Integer.parseInt(data[5]) + Integer.parseInt(data[3])
+                                )
+                        );
+                    } else {
+                        newObject.setEndPoint(
+                                new Point(
+                                        Integer.parseInt(data[4]),
+                                        Integer.parseInt(data[5])
+                                )
+                        );
+                    }
+                    if(!data[6].equals("null")) {
+                        lineColor = Integer.parseInt(data[6]);
+                        newObject.setLineColor(new Color(lineColor, true));
+                    }
+                    if(!data[7].equals("null")) {
+                        fillColor = Integer.parseInt(data[7]);
+                        newObject.setFillColor(new Color(fillColor, true));
+                    }
+                    break;
+
+                case "ICON":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.ICON);
+                case "BEACON":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.BEACON);
+                case "TAG":
+                    if(newObject.getToolMode() ==  null) newObject.setToolMode(ToolMode.TAG);
+                    newObject.setBeginPoint(
+                            new Point(
+                                    Integer.parseInt(data[2]),
+                                    Integer.parseInt(data[3])
+                            )
+                    );
+                    newObject.setEndPoint(
+                            new Point(
+                                    Integer.parseInt(data[2]) + 50,
+                                    Integer.parseInt(data[3]) + 50
+                            )
+                    );
+                    if(newObject.getToolMode() != ToolMode.ICON) {
+                        newObject.setMajorKey(data[6]);
+                        newObject.setMinorKey(data[7]);
+                    }
+                    newObject.setIcon(CoinIcon.valueOf(data[1]));
+                    break;
+            }
+            if(newObject.getToolMode() != null)
+                tempObjects.add(newObject);
+        }
+        return tempObjects;
+    }
 
     private String requestServer(String urlString) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 final StringBuffer sb = new StringBuffer();
-
+                System.out.println(urlString);
                 try {
                     URL url = new URL(urlString);
                     HttpURLConnection conn =
@@ -360,14 +481,47 @@ public class ServerManager {
         return temp;
     }
     
-    public String requestMakeFloorPlanObjectsToServer(String userID, int floorPlanID, String objectData) {
-        String temp = requestServer("http://ksd.iptime.org:8080/addUser?id=" + id + "&password=" + password + "&name=" + nickname);
+    public String requestMakeFloorPlanObjectsToServer(String objectData) {
+    	objectData = objectData.replace("\n", "%0A");
+        String temp = requestServer("http://ksd.iptime.org:8080/addFloorObject/" + userID +
+        		"/" + selectedFloor.getId() + "/" + objectData);
 
-        if(temp.equals("JOIN_REJECT") || temp.equals("") || temp.equals("NONE"))
+        if(temp.equals("ADD_REJECT") || temp.equals("") || temp.equals("NONE"))
             requestResult = REJECT;
-        else if(temp.equals("JOIN_SUCCESS"))
+        else if(temp.equals("ADD_SUCCESS"))
             requestResult = ACCEPT;
 
         return temp;
     }
+    
+    public String requestGetObjectListofFloorPlanToServer() {
+        String temp = requestServer("http://ksd.iptime.org:8080/floorObjectList/" + userID +
+        		"/" + selectedFloor.getId());
+
+        if(temp.equals("ADD_REJECT") || temp.equals("") || temp.equals("NONE"))
+            requestResult = REJECT;
+        else
+            requestResult = ACCEPT;
+        
+        System.out.println(temp);
+        
+        objects = getObject(temp);
+
+        return temp;
+    }
+
+
+
+	public ArrayList<DrawingObject> getObjects() {
+		return objects;
+	}
+
+
+
+	public void setObjects(ArrayList<DrawingObject> objects) {
+		this.objects = objects;
+	}    
+    
+    
+    
 }

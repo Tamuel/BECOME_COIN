@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/floor_plan_parent_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.softwork.ydk.beacontestapp.FloorPlanActivity">
+
+    <RelativeLayout
+        android:id="@+id/floor_plan_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/canvas_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/banner_layout"
+            android:orientation="vertical"
+            android:background="@drawable/white_background_gray_stroke_round_border"
+            android:padding="10dp"
+            android:elevation="2dp"
+            android:layout_margin="@dimen/font_size_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/banner_text_view"
+                android:text="Banner here"
+                android:textSize="@dimen/font_size_middle"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/location_text_view"
+                android:text="(0, 0)"
+                android:textSize="@dimen/font_size_small"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/show_floor_plan_location"
+                    android:text="@string/location"
+                    android:textSize="@dimen/font_size_small"
+                    android:textColor="@drawable/blue_simple_button_text"
+                    android:background="@drawable/blue_simple_button"
+                    android:padding="1dp"
+                    android:onClick="showGoogleMaps"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <Button
+                    android:id="@+id/exit_floor_plan_button"
+                    android:text="@string/exit"
+                    android:textSize="@dimen/font_size_small"
+                    android:textColor="@drawable/blue_simple_button_text"
+                    android:background="@drawable/blue_simple_button"
+                    android:padding="1dp"
+                    android:onClick="exitFloorPlan"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanInfoLayout
+        android:id="@+id/floor_plan_info_view"
+        android:background="@drawable/white_background_gray_stroke"
+        android:orientation="vertical"
+        android:elevation="15dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/info_layout_height"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/InfoTitleTextView"
+                android:text="Title Here!"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="@dimen/font_size_big"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:text="@string/cancel"
+                android:textColor="@drawable/blue_simple_button_text"
+                android:background="@drawable/blue_simple_button"
+                android:layout_gravity="center_vertical"
+                android:onClick="cancelObject"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <Button
+                android:text="@string/delete"
+                android:textColor="@drawable/blue_simple_button_text"
+                android:background="@drawable/blue_simple_button"
+                android:layout_gravity="center_vertical"
+                android:onClick="deleteObject"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/InfoContentTextView"
+                android:text="Content Hereeeeeeeeeef asfas"
+                android:textSize="@dimen/font_size_middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+    </com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanInfoLayout>
+
+</RelativeLayout>
+<!-- From: file:/C:/Users/DongKyu/Desktop/BECOME_COIN/ReferenceProject/BEACON/MyApplication/app/src/main/res/layout/activity_floor_plan.xml -->

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_user"
+        android:title="@string/action_user"
+        android:icon="@drawable/ic_account_circle_black_48dp"
+        android:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never"/>
+
+</menu><!-- From: file:/C:/Users/DongKyu/Desktop/BECOME_COIN/ReferenceProject/BEACON/MyApplication/app/src/main/res/menu/floor_plan_list_menu.xml -->

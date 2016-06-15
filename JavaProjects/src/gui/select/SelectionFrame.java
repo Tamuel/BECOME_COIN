@@ -85,12 +85,12 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		editButton.addActionListener(this);
 		this.add(editButton).setBounds(1129, 730, 100, 30);
 		
-		upButton = new CoinButton("위로");
+		upButton = new CoinButton("▲");
 		upButton.addActionListener(this);
 		upButton.setBackground(CoinColor.ORANGE);
 		this.add(upButton).setBounds(50 ,730, 30, 30);
 		
-		downButton = new CoinButton("아래로");
+		downButton = new CoinButton("▼");
 		downButton.addActionListener(this);
 		downButton.setBackground(CoinColor.ORANGE);
 		this.add(downButton).setBounds(90 ,730, 30, 30);
@@ -189,6 +189,8 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 			 * 
 			 */
 			if(selectedFloor != null) {
+				ServerManager.getInstance().setSelectedFloor(selectedFloor);
+				ServerManager.getInstance().requestGetObjectListofFloorPlanToServer();
 				DrawingFrame drawingFrame = new DrawingFrame();
 				this.dispose();
 			}

@@ -83,8 +83,8 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 
 	        if(ServerManager.getInstance().getResult() == ServerManager.ACCEPT) {
 	            ServerManager.getInstance().setUserNickName(data.split("\n")[0]);
-	            ServerManager.getInstance().parseFloorPlanData(data.substring(data.split("\n")[0].length() + 1));
 	            ServerManager.getInstance().setUserID(idField.getText());
+    			ServerManager.getInstance().requestUserFloorPlansToServer();
 				SelectionFrame selectionFrame = new SelectionFrame();
 				this.dispose();
 	        } else {

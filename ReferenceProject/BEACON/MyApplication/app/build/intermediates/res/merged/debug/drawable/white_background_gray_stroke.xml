@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke android:width="1px" android:color="#aaaaaa"/>
+    <solid android:color="@color/white" />
+    <corners android:radius="2dp"/>
+</shape><!-- From: file:/C:/Users/DongKyu/Desktop/BECOME_COIN/ReferenceProject/BEACON/MyApplication/app/src/main/res/drawable/white_background_gray_stroke.xml -->

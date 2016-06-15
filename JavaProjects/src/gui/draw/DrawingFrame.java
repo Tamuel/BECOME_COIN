@@ -23,6 +23,7 @@ import gui.component.CoinFrame;
 import gui.select.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
+import serverConnector.ServerManager;
 
 public class DrawingFrame extends CoinFrame implements ActionListener, MouseWheelListener, MouseListener, KeyListener{
 	
@@ -49,6 +50,10 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		super("Coin Drawing Frame", 1280, 800);
 		
 		coinData = new CoinData();
+		ServerManager.getInstance().requestGetObjectListofFloorPlanToServer();
+		coinData.setDrawingObjectList(
+				ServerManager.getInstance().getObjects()
+				);
 		
 		addComponents();
 	}
@@ -245,7 +250,12 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	}
 	
 	public void saveData() {
-		// TODO save procedure
+		ServerManager.getInstance().requestMakeFloorPlanObjectsToServer(
+			ServerManager.getInstance().parseObjectData(coinData.getDrawingObjectList())
+			);
+	
+	
+	
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
 			DrawingObject object = coinData.getDrawingObjectList().get(i);
 			data1of8(object);

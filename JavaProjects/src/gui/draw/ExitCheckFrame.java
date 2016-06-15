@@ -11,6 +11,7 @@ import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import resource.CoinColor;
 import resource.CoinFont;
+import serverConnector.ServerManager;
 
 public class ExitCheckFrame extends CoinFrame implements ActionListener {
 	
@@ -36,10 +37,12 @@ public class ExitCheckFrame extends CoinFrame implements ActionListener {
 	
 	public void addButtons() {
 		exitWithSaveButton = new CoinButton("저장하고 종료하시겠습니까?");
+		exitWithSaveButton.addActionListener(this);
 		this.add(exitWithSaveButton).setBounds(50, 50, 200, 30);
 		
 		exitWithoutSaveButton = new CoinButton("저장하지 않고 종료하시겠습니까?");
 		exitWithoutSaveButton.setBackground(CoinColor.ORANGE);
+		exitWithoutSaveButton.addActionListener(this);
 		this.add(exitWithoutSaveButton).setBounds(50, 100, 200, 30);
 	}
 	
@@ -54,6 +57,12 @@ public class ExitCheckFrame extends CoinFrame implements ActionListener {
 			dispose();
 		}
 		else if(e.getSource() == minimizeButton) {
+		}
+		else if(e.getSource() == exitWithSaveButton) {
+			
+		}
+		else if(e.getSource() == exitWithoutSaveButton) {
+			
 		}
 	}
 	

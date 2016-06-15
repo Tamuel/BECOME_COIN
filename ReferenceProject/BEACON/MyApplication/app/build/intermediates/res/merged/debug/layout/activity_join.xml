@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.softwork.ydk.beacontestapp.JoinActivity">
+
+    <TextView
+        android:text="@string/join_coin"
+        android:textSize="@dimen/font_size_big"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/id_edit_text"
+        android:textSize="@dimen/font_size_middle"
+        android:hint="@string/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/password_edit_text"
+        android:textSize="@dimen/font_size_middle"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/nickname_edit_text"
+        android:textSize="@dimen/font_size_middle"
+        android:hint="@string/nickname"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/join_button"
+            android:text="@string/join"
+            android:textSize="@dimen/font_size_small"
+            android:textColor="@drawable/blue_simple_button_text"
+            android:background="@drawable/blue_simple_button"
+            android:padding="1dp"
+            android:onClick="join"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:text="@string/cancel"
+            android:textSize="@dimen/font_size_small"
+            android:textColor="@drawable/blue_simple_button_text"
+            android:background="@drawable/blue_simple_button"
+            android:padding="1dp"
+            android:onClick="cancel"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+<!-- From: file:/C:/Users/DongKyu/Desktop/BECOME_COIN/ReferenceProject/BEACON/MyApplication/app/src/main/res/layout/activity_join.xml -->

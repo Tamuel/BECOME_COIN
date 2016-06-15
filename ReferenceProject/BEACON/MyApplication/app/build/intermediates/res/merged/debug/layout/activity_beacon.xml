@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/SetLocationButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="SET BEACON"
+        android:onClick="resetBeacon"/>
+
+    <!--<EditText
+        android:id="@+id/SetSizeEditText"
+        android:hint="Region size {x, y, mag}"
+        android:textSize="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:id="@+id/SetBeaconLocationEditText"
+        android:hint="Beacon Location {x, y, x, y, x, y}"
+        android:textSize="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" />
+-->
+    <TextView
+        android:id="@+id/SensorValueTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/BeaconDataTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textSize="10dp"/>
+
+    <TextView
+        android:id="@+id/CurPos"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:textSize="10dp"/>
+
+    <RelativeLayout
+        android:id="@+id/DrawGrphicLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
+
+</LinearLayout>
+<!-- From: file:/C:/Users/DongKyu/Desktop/BECOME_COIN/ReferenceProject/BEACON/MyApplication/app/src/main/res/layout/activity_beacon.xml -->
