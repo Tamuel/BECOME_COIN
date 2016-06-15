@@ -218,7 +218,7 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 			System.out.print(object.getTheta() + ":");
 		}
 		else {
-			System.out.print(object.getMajorKey() + ":");
+			System.out.print(object.getMajorKey() + "null:");
 		}
 	}
 	
@@ -253,9 +253,6 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 		ServerManager.getInstance().requestMakeFloorPlanObjectsToServer(
 			ServerManager.getInstance().parseObjectData(coinData.getDrawingObjectList())
 			);
-	
-	
-	
 		for(int i = 0; i < coinData.getDrawingObjectList().size(); i++) {
 			DrawingObject object = coinData.getDrawingObjectList().get(i);
 			data1of8(object);

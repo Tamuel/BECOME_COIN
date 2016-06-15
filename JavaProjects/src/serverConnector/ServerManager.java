@@ -276,8 +276,10 @@ public class ServerManager {
         	newFloor.setBuildingName(temp[2]);
         	newFloor.setDescription(temp[3]);
         	newFloor.setFloor(Integer.parseInt(temp[4]));
-        	newFloor.setLatitude(Double.parseDouble(temp[5]));
-        	newFloor.setLongitude(Double.parseDouble(temp[6]));
+        	if(!temp[5].equals("null"))
+        		newFloor.setLatitude(Double.parseDouble(temp[5]));
+        	if(!temp[6].equals("null"))
+        		newFloor.setLongitude(Double.parseDouble(temp[6]));
         	floorPlans.add(newFloor);
     	}
     }

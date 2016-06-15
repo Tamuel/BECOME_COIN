@@ -113,6 +113,12 @@ public class ToolAttributePanel extends JPanel implements ActionListener, KeyLis
 		button.addActionListener(this);
 		iconButtonList.add(button);
 		
+		button = new CoinImageButton();
+		button.setIcon(CoinIcon.COIN_DOOR.getImageIcon());
+		this.add(button).setBounds(ICON_POSITION[2], ICON_POSITION[0], 50, 50);
+		button.addActionListener(this);
+		iconButtonList.add(button);
+		
 		/*for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < ICON_LIST.length; j++) {
 				CoinImageButton button = new CoinImageButton();
