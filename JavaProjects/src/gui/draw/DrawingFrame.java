@@ -110,17 +110,17 @@ public class DrawingFrame extends CoinFrame implements ActionListener, MouseWhee
 	}
 	
 	public void addButtons() {
-		exitSaveButton = new CoinButton("ÀúÀå / Á¾·á");
+		exitSaveButton = new CoinButton("ì €ìž¥ / ì¢…ë£Œ");
 		this.add(exitSaveButton).setBounds(900, 100, 100, 30);
 		exitSaveButton.addActionListener(this);
 		
-		greedUpButton = new CoinButton("¡â");
+		greedUpButton = new CoinButton("ì—…");
 		greedUpButton.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(greedUpButton).setBounds(185, 735, 20, 20);
 		greedUpButton.setVisible(false);
 		greedUpButton.addActionListener(this);
 		
-		greedDownButton = new CoinButton("¡ä");
+		greedDownButton = new CoinButton("ë‹¤ìš´");
 		greedDownButton.setFont(CoinFont.BIG_FONT_BOLD);
 		this.add(greedDownButton).setBounds(210, 735, 20, 20);
 		greedDownButton.setVisible(false);

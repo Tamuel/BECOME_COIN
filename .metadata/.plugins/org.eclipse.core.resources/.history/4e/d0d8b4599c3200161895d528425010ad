@@ -1,0 +1,88 @@
+package gui.select;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import gui.component.CoinButton;
+import gui.component.CoinFrame;
+import resource.CoinColor;
+import resource.CoinFont;
+import serverConnector.ServerManager;
+
+public class NewFloorPlan extends CoinFrame implements ActionListener{
+
+	private ArrayList<JTextField> textFields = new ArrayList<>();
+	
+	private CoinButton addButton;
+	private CoinButton cancelButton;
+	
+	public NewFloorPlan() {
+		super("New Floor Frame", 600, 700);
+
+		String labelName[] = {
+				"Ãþ¸í",
+				"ºôµù¸í",
+				"¼³¸í",
+				"Ãþ",
+				"À§µµ",
+				"°æµµ",
+				"¼¶³×ÀÏ"
+		};
+		
+		for(int i = 0; i < 7; i++) {
+			JLabel newLabel = new JLabel(labelName[i]);
+			newLabel.setFont(CoinFont.BIG_FONT_BOLD);
+			newLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			this.add(newLabel).setBounds(100, 80 * i + 50, 400, 20);
+			
+			JTextField newField = new JTextField();
+			newField.setBorder(new LineBorder(CoinColor.DARK_GRAY, 1));
+			newField.setFont(CoinFont.BIG_FONT);
+			textFields.add(newField);
+			this.add(newField).setBounds(100, 80 * i + 80, 400, 30);
+		}
+		
+		addButton = new CoinButton("Ãß°¡");
+		addButton.addActionListener(this);
+		this.add(addButton).setBounds(100, 650, 185, 30);
+		
+
+		cancelButton = new CoinButton("Ãë¼Ò");
+		cancelButton.addActionListener(this);
+		this.add(cancelButton).setBounds(315, 650, 185, 30);
+		
+		exitButton.addActionListener(this);
+		minimizeButton.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == exitButton) {
+			dispose();
+		}
+		else if(e.getSource() == minimizeButton) {
+			setState(Frame.ICONIFIED);
+		}
+		else if(e.getSource() == addButton) {
+			ServerManager.getInstance().requestAddFloorPlanToServer(
+					textFields.get(0).getText(), textFields.get(1).getText(), textFields.get(2).getText(),
+					Integer.parseInt(textFields.get(3).getText()),
+					Double.parseDouble(textFields.get(4).getText()),
+					Double.parseDouble(textFields.get(5).getText()),
+					null
+					);
+			dispose();
+		}
+		else if(e.getSource() == cancelButton) {
+			dispose();
+		}
+	}
+
+}

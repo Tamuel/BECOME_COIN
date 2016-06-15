@@ -55,7 +55,7 @@ public class MapPreviewPanel extends JPanel {
 		scroll.repaint();
 		this.repaint();
 		
-		editButton = new CoinButton("³»¿ë ¼öÁ¤");
+		editButton = new CoinButton("ìˆ˜ì •");
 		this.add(editButton).setBounds(10, 540, 100, 30);
 		editButton.setVisible(false);
 	}
@@ -77,7 +77,7 @@ public class MapPreviewPanel extends JPanel {
 		nameTextField.setEditable(true);
 		infoTextArea.setEditable(true);
 		editSwitch = true;
-		editButton.setText("¼öÁ¤ ¿Ï·á");
+		editButton.setText("ìˆ˜ì • ì™„ë£Œ");
 	}
 	
 	public void switchOff(CoinFloor floor) {
@@ -85,7 +85,7 @@ public class MapPreviewPanel extends JPanel {
 		nameTextField.setEditable(false);
 		infoTextArea.setEditable(false);
 		editSwitch = false;
-		editButton.setText("³»¿ë ¼öÁ¤");
+		editButton.setText("ìˆ˜ì •");
 	}
 	
 	public void saveData(CoinFloor floor) {
@@ -93,7 +93,7 @@ public class MapPreviewPanel extends JPanel {
 		 * 
 		 */
 		floor.setName(nameTextField.getText().toString());
-		floor.setBriefInfo(infoTextArea.getText().toString());
+		floor.setDescription(infoTextArea.getText().toString());
 	}
 	
 	/**
@@ -111,7 +111,7 @@ public class MapPreviewPanel extends JPanel {
 		}
 		else {
 			nameTextField.setText(floor.getName());
-			infoTextArea.setText(floor.getBriefInfo());
+			infoTextArea.setText(floor.getDescription());
 		}
 		
 		this.repaint();

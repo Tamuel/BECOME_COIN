@@ -1,0 +1,20 @@
+package gui.select;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import gui.component.CoinFrame;
+
+public class NewFloorPlan extends CoinFrame implements ActionListener{
+
+	public NewFloorPlan(String title, int width, int height) {
+		super("New Floor Frame", 600, 1000);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}

@@ -15,6 +15,7 @@ import gui.component.CoinTextField;
 import gui.select.SelectionFrame;
 import resource.CoinColor;
 import resource.CoinFont;
+import serverConnector.ServerManager;
 
 public class LoginFrame extends CoinFrame implements ActionListener{
 	
@@ -47,11 +48,11 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 		passwordField.setBackground(CoinColor.LIGHT_GRAY);
 		this.add(passwordField).setBounds(xBorder * 5, yBorder * 18, this.getWidth() - xBorder * 10,50);
 		
-		loginButton = new CoinButton(" ∑Œ±◊¿Œ ");//StringR.LOGIN);
+		loginButton = new CoinButton("Î°úÍ∑∏Ïù∏");//StringR.LOGIN);
 		loginButton.addActionListener(this);
 		this.add(loginButton).setBounds(xBorder * 5, yBorder * 24, 100, 40);
 		
-		signupButton = new CoinButton(" »∏ø¯ ∞°¿‘ ");//StringR.EXIT);
+		signupButton = new CoinButton("ÌöåÏõêÍ∞ÄÏûÖ");//StringR.EXIT);
 		signupButton.addActionListener(this);
 		this.add(signupButton).setBounds(this.getWidth() - xBorder * 15, yBorder * 24, 100, 40);
 		
@@ -78,8 +79,17 @@ public class LoginFrame extends CoinFrame implements ActionListener{
 			 * 2. if valid reply with user data, disopse this and open the selection frame
 			 * 3. if not valid with null data, do nothing and ask user to retry
 			 */
-			SelectionFrame selectionFrame = new SelectionFrame();
-			this.dispose();
+			String data = ServerManager.getInstance().requestLoginToServer(idField.getText(), passwordField.getText());
+
+	        if(ServerManager.getInstance().getResult() == ServerManager.ACCEPT) {
+	            ServerManager.getInstance().setUserNickName(data.split("\n")[0]);
+	            ServerManager.getInstance().parseFloorPlanData(data.substring(data.split("\n")[0].length() + 1));
+	            ServerManager.getInstance().setUserID(idField.getText());
+				SelectionFrame selectionFrame = new SelectionFrame();
+				this.dispose();
+	        } else {
+	        	// Login Fail
+	        }
 		}
 		else if(e.getSource() == signupButton) {
 			SignupFrame signupFrame = new SignupFrame();

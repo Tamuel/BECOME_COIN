@@ -35,10 +35,10 @@ public class ExitCheckFrame extends CoinFrame implements ActionListener {
 	}
 	
 	public void addButtons() {
-		exitWithSaveButton = new CoinButton("º¯°æ»çÇ× ÀúÀå ¹× Á¾·á");
+		exitWithSaveButton = new CoinButton("ì €ìž¥í•˜ê³  ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		this.add(exitWithSaveButton).setBounds(50, 50, 200, 30);
 		
-		exitWithoutSaveButton = new CoinButton("º¯°æ»çÇ× Ãë¼Ò ¹× Á¾·á");
+		exitWithoutSaveButton = new CoinButton("ì €ìž¥í•˜ì§€ ì•Šê³  ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		exitWithoutSaveButton.setBackground(CoinColor.ORANGE);
 		this.add(exitWithoutSaveButton).setBounds(50, 100, 200, 30);
 	}

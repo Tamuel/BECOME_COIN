@@ -20,6 +20,7 @@ import gui.component.CoinButton;
 import gui.component.CoinFrame;
 import resource.CoinColor;
 import resource.CoinFont;
+import serverConnector.ServerManager;
 
 public class SignupFrame extends CoinFrame implements ActionListener, KeyListener, FocusListener{
 
@@ -35,7 +36,7 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 	
 	private JTextField idField;
 	private JPasswordField passwordField;
-	private JPasswordField passwordCheckField;
+	private JTextField nickNameField;
 	
 	private CoinButton confirmButton;
 	private CoinButton cancelButton;
@@ -68,7 +69,7 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 		nameLabel.setFont(CoinFont.VERY_BIG_FONT);
 		this.add(nameLabel).setBounds(160, 44, 200, 50);
 		
-		idLabel = new JLabel("¾ÆÀÌµğ");
+		idLabel = new JLabel("ì•„ì´ë””");
 		idLabel.setFont(CoinFont.BIG_FONT);
 		this.add(idLabel).setBounds(55, 140, this.getWidth() - 100, 40);
 		
@@ -78,7 +79,7 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 		idField.addKeyListener(this);
 		this.add(idField).setBounds(50, 180, this.getWidth() - 100, 40);
 		
-		passwordLabel = new JLabel("ºñ¹Ğ¹øÈ£");
+		passwordLabel = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 		passwordLabel.setFont(CoinFont.BIG_FONT);
 		this.add(passwordLabel).setBounds(55, 225, this.getWidth() - 100, 40);
 		
@@ -88,21 +89,21 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 		passwordField.addKeyListener(this);
 		this.add(passwordField).setBounds(50, 260, this.getWidth() - 100, 40);
 		
-		passwordCheckLabel = new JLabel("ºñ¹Ğ¹øÈ£ È®ÀÎ");
+		passwordCheckLabel = new JLabel("ë‹‰ë„¤ì„");
 		passwordCheckLabel.setFont(CoinFont.BIG_FONT);
 		this.add(passwordCheckLabel).setBounds(55, 305, this.getWidth() - 100, 40);
 		
-		passwordCheckField = new JPasswordField();
-		passwordCheckField.setBorder(new LineBorder(CoinColor.DARK_GRAY, 1));
-		passwordCheckField.setFont(CoinFont.BIG_FONT);
-		passwordCheckField.addKeyListener(this);
-		this.add(passwordCheckField).setBounds(50, 340, this.getWidth() - 100, 40);
+		nickNameField = new JTextField();
+		nickNameField.setBorder(new LineBorder(CoinColor.DARK_GRAY, 1));
+		nickNameField.setFont(CoinFont.BIG_FONT);
+		nickNameField.addKeyListener(this);
+		this.add(nickNameField).setBounds(50, 340, this.getWidth() - 100, 40);
 		
-		confirmButton = new CoinButton("È¸¿ø °¡ÀÔ");
+		confirmButton = new CoinButton("ê°€ì…");
 		confirmButton.addActionListener(this);
 		this.add(confirmButton).setBounds(50, 400, 100, 40);
 		
-		cancelButton = new CoinButton("Ãë¼Ò");
+		cancelButton = new CoinButton("ì·¨ì†Œ");
 		cancelButton.addActionListener(this);
 		this.add(cancelButton).setBounds(250, 400, 100, 40);
 		
@@ -122,29 +123,29 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 	public boolean validCheck() {
 		
 		if(idField.getText().isEmpty()) {
-			warningLabel.setText("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			warningLabel.setText("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤");
 			idField.grabFocus();
 			return false;
 		}
 		else if(idValidCheck() == false) {
-		 	warningLabel.setText("ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		 	warningLabel.setText("ìœ íš¨í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			idField.grabFocus();
 		}
 		else if(passwordField.getPassword().length == 0) {
-			warningLabel.setText("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			warningLabel.setText("ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
 			passwordField.grabFocus();
 			return false;
 		}
 		else if(passwordValidCheck() == false) {
-			warningLabel.setText("ºñ¹Ğ¹øÈ£´Â ¿µ¹®ÀÚ, ¼ıÀÚ, Æ¯¼ö±âÈ£ Æ÷ÇÔ ¹× 10ÀÚ ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.");
+			warningLabel.setText("ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, Æ¯ï¿½ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 10ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
 			passwordField.grabFocus();
 			return false;
 		}
-		else if(!Arrays.equals(passwordField.getPassword(), passwordCheckField.getPassword())) {
-			warningLabel.setText("ºñ¹Ğ¹øÈ£°¡ ´Ù¸¨´Ï´Ù.");
-			passwordCheckField.grabFocus();
-			return false;
-		}
+//		else if(!Arrays.equals(passwordField.getPassword(), passwordCheckField.getPassword())) {
+//			warningLabel.setText("ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½Ï´ï¿½.");
+//			passwordCheckField.grabFocus();
+//			return false;
+//		}
 		
 		return true;
 	}
@@ -205,15 +206,25 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 	}
 	
 	private void signup() {
-		if(validCheck() == true) {
+//		if(validCheck() == true) {
 			/* TODO Signup process must be implemented
 			 * 1. request signup with user data to server
 			 * 2. if get done message, open the login frame and dispose this
 			 * 3. if get error message(exception), notify user there's an error
 			 */
-			LoginFrame loginFrame = new LoginFrame();
-			this.dispose();
-		}
+			ServerManager.getInstance().requestJoinToServer(
+	                idField.getText(),
+	                passwordField.getText(),
+	                nickNameField.getText()
+	        );
+
+	        if(ServerManager.getInstance().getResult() == ServerManager.ACCEPT) {
+				LoginFrame loginFrame = new LoginFrame();
+				this.dispose();
+	        } else {
+	        	// Join fail
+	        }
+//		}
 	}
 
 	@Override
@@ -233,22 +244,23 @@ public class SignupFrame extends CoinFrame implements ActionListener, KeyListene
 		if(arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 			if(arg0.getSource() == idField)
 				passwordField.grabFocus();
-			else if(arg0.getSource() == passwordField)
-				passwordCheckField.grabFocus();
+//			else if(arg0.getSource() == passwordField)
+//				passwordCheckField.grabFocus();
 			else
 				signup();
 		}
 		else if(arg0.getKeyCode() == KeyEvent.VK_UP) {
-			if(arg0.getSource() == passwordCheckField)
-				passwordField.grabFocus();
-			else if(arg0.getSource() == passwordField)
+//			if(arg0.getSource() == passwordCheckField)
+//				passwordField.grabFocus();
+//			else
+			if(arg0.getSource() == passwordField)
 				idField.grabFocus();
 		}
 		else if(arg0.getKeyCode() == KeyEvent.VK_DOWN) {
 			if(arg0.getSource() == idField)
 				passwordField.grabFocus();
-			else if(arg0.getSource() == passwordField)
-				passwordCheckField.grabFocus();
+//			else if(arg0.getSource() == passwordField)
+//				passwordCheckField.grabFocus();
 		}
 		else if(arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			LoginFrame loginFrame = new LoginFrame();

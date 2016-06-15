@@ -23,6 +23,7 @@ import gui.login.LoginFrame;
 import gui.login.SignupFrame;
 import resource.CoinColor;
 import resource.CoinFont;
+import serverConnector.ServerManager;
 
 public class SelectionFrame extends CoinFrame implements ActionListener{
 	
@@ -30,7 +31,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	private JLabel nameLabel;
 	private JLabel userNameLabel;
 	
-	private MapListPanel mapListPanel;
+	public MapListPanel mapListPanel;
 	private MapPreviewPanel mapPreviewPanel;
 	
 	private CoinButton logoutButton;
@@ -62,34 +63,34 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		addPanels();
 		
 		// TODO get logged in user name(id) from server if it's valid
-		String userName = "Park, Dongwon";
-		userNameLabel = new JLabel(userName + " ¥‘");
+		String userName = ServerManager.getInstance().getUserNickName();
+		userNameLabel = new JLabel(userName + " Îãò");
 		userNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		userNameLabel.setFont(CoinFont.BIG_FONT);
 		this.add(userNameLabel).setBounds(1030, 50, 200, 30);
 		
-		logoutButton = new CoinButton("∑Œ±◊æ∆øÙ");
+		logoutButton = new CoinButton("Î°úÍ∑∏ÏïÑÏõÉ");
 		logoutButton.addActionListener(this);
 		this.add(logoutButton).setBounds(1130, 90, 100, 30);
 		
-		newButton = new CoinButton("√ﬂ∞°");
+		newButton = new CoinButton("Ï∂îÍ∞Ä");
 		newButton.addActionListener(this);
 		this.add(newButton).setBounds(240, 730, 100, 30);
 		
-		deleteButton = new CoinButton("ªË¡¶");
+		deleteButton = new CoinButton("ÏÇ≠Ï†ú");
 		deleteButton.addActionListener(this);
 		this.add(deleteButton).setBounds(367, 730, 100, 30);
 		
-		editButton = new CoinButton("µµ∏È ºˆ¡§");
+		editButton = new CoinButton("ÎèÑÎ©¥ ÏàòÏ†ï");
 		editButton.addActionListener(this);
 		this.add(editButton).setBounds(1129, 730, 100, 30);
 		
-		upButton = new CoinButton("°‚");
+		upButton = new CoinButton("ÏúÑÎ°ú");
 		upButton.addActionListener(this);
 		upButton.setBackground(CoinColor.ORANGE);
 		this.add(upButton).setBounds(50 ,730, 30, 30);
 		
-		downButton = new CoinButton("°‰");
+		downButton = new CoinButton("ÏïÑÎûòÎ°ú");
 		downButton.addActionListener(this);
 		downButton.setBackground(CoinColor.ORANGE);
 		this.add(downButton).setBounds(90 ,730, 30, 30);
@@ -100,15 +101,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 	 * <br>except drawing objects for performance and traffic
 	 */
 	public void loadFloors() {
-		floorList = new ArrayList<CoinFloor>();
-		
-		for(int i = 0; i < 10; i++) {
-			CoinFloor floor = new CoinFloor();
-			floor.setName("KNU Global Plaza floor " + (i + 1));
-			floor.setBriefInfo("This is floor #" + (i+1) + " of KNU GP");
-			floor.setOwner("KNU");
-			floorList.add(floor);
-		}
+		floorList = ServerManager.getInstance().getFloorPlans();
 	}
 	
 	public void addPanels() {		
@@ -139,7 +132,7 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		this.minimizeButton.addActionListener(this);
 	}
 	
-	private void buttonColorChange() {
+	public void buttonColorChange() {
 		if(selectedButton != null) {
 			selectedButton.setBackground(CoinColor.WHITE);
 			selectedButton.setForeground(CoinColor.BLACK);
@@ -171,25 +164,23 @@ public class SelectionFrame extends CoinFrame implements ActionListener{
 		}
 		else if(e.getSource() == newButton) {
 			/* TODO new floor adding
-			 * 
 			 */
-			CoinFloor floor = new CoinFloor();
-			floor.setName("new floor");
-			floor.setBriefInfo("this is new added floor.");
-			floorList.add(floor);
-			mapListPanel.makeList(floorList);
-			buttonColorChange();
+
+			NewFloorPlan newFloorPlan = new NewFloorPlan(this);
 			this.repaint();
 		}
 		else if(e.getSource() == deleteButton) {
 			/* TODO delete floor information
 			 * 
 			 */
-			int index = floorList.indexOf(selectedFloor);
-			floorList.remove(index);
+			System.out.println(selectedFloor.getName() + " " + selectedFloor.getId());
+			ServerManager.getInstance().requestDeleteFloorPlanToServer(selectedFloor.getId());
+			ServerManager.getInstance().requestUserFloorPlansToServer();
+
 			mapListPanel.makeList(floorList);
 			mapPreviewPanel.getSwitchButon().setVisible(false);
 			mapPreviewPanel.updatePreview(null);
+			
 			selectedFloor = null;
 			selectedButton = null;
 		}

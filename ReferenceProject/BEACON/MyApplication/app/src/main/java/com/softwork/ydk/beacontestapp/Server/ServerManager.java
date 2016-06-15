@@ -331,7 +331,7 @@ public class ServerManager {
                     HttpURLConnection conn =
                             (HttpURLConnection) url.openConnection();
                     if (conn != null) {
-                        conn.setConnectTimeout(2000);
+                        conn.setConnectTimeout(1000);
                         conn.setUseCaches(false);
                         if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             BufferedReader br

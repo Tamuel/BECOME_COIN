@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.softwork.ydk.beacontestapp.BeaconActivity;
 import com.softwork.ydk.beacontestapp.FloorPlan.FloorPlan;
 import com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanActivity;
 import com.softwork.ydk.beacontestapp.FloorPlanActivity.FloorPlanEditActivity;

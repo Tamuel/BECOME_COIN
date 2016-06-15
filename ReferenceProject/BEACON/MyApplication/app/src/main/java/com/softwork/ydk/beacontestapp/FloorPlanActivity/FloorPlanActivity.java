@@ -43,6 +43,9 @@ import com.softwork.ydk.beacontestapp.GoogleMaps.GoogleMapActivity;
 import com.softwork.ydk.beacontestapp.R;
 import com.softwork.ydk.beacontestapp.Server.ServerManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FloorPlanActivity extends Activity {
     private RelativeLayout floorPlanView;
     private FloorPlanInfoLayout floorPlanInfoView;
@@ -105,10 +108,10 @@ public class FloorPlanActivity extends Activity {
             "LINE:3:680:380:650:380:-16777216:null\n" +
             "LINE:3:720:290:770:290:-16777216:null\n" +
             "LINE:3:750:290:750:370:-16777216:null\n" +
-            "BEACON:CON_BEACON:125:215:50:50:M1:m1\n" +
-            "BEACON:CON_BEACON:845:215:50:50:M2:m2\n" +
-            "BEACON:CON_BEACON:125:445:50:50:M3:m3\n" +
-            "BEACON:CON_BEACON:845:445:50:50:M4:m4\n" +
+            "BEACON:CON_BEACON:125:215:50:50:1000:100\n" +
+            "BEACON:CON_BEACON:845:215:50:50:1000:200\n" +
+            "BEACON:CON_BEACON:125:445:50:50:1000:300\n" +
+            "BEACON:CON_BEACON:845:445:50:50:1000:400\n" +
             "TAG:COIN_TAG:495:105:50:50:tagkey1234:null\n" +
             "LINE:3:200:240:200:270:-16777216:null\n" +
             "LINE:3:810:240:830:240:-16777216:null\n" +
@@ -143,7 +146,6 @@ public class FloorPlanActivity extends Activity {
         params.setMargins(0, getResources().getDisplayMetrics().heightPixels - BFunc.getDP(this, 200), 0, 0);
         floorPlanInfoView.setLayoutParams(params);
 
-        canvasView.addView(new CanvasView(this));
 
         DrawingObject.iconSize = new int[2];
         DrawingObject.iconSize[aX] = BFunc.getDP(this, 40);
@@ -154,6 +156,8 @@ public class FloorPlanActivity extends Activity {
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
+
+        // Get floor plan
         floorPlan = ServerManager.getInstance().getFloorPlans().get(getIntent().getIntExtra("FLOOR_PLAN", 0));
         setBanner();
         if(floorPlan.getObjects().size() == 0)
@@ -175,7 +179,9 @@ public class FloorPlanActivity extends Activity {
         }
 
         if(beaconService == null)
-            beaconService = new BeaconService(this);
+            resetBeaconService();
+
+        canvasView.addView(new CanvasView(this));
 
     }
 
@@ -184,6 +190,20 @@ public class FloorPlanActivity extends Activity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
             return;
         }
+    }
+
+    public void resetBeaconService() {
+        if(beaconService != null)
+            beaconService.unBindService();
+        beaconService = null;
+        beaconService = new BeaconService(this);
+    }
+
+    @Override
+    public void finish() {
+        beaconService.unBindService();
+        beaconService = null;
+        super.finish();
     }
 
     public SensorEventListener sensorEventListener = new SensorEventListener() {
@@ -243,10 +263,11 @@ public class FloorPlanActivity extends Activity {
 
         // For beacons
         private int beaconRange[] = new int[BeaconRangingListener.numberOfBeacons];
-        private int BEACON_CLAMP_LENGTH = (int)(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 1.2);
-        private int approximatePos[][] = new int[BeaconRangingListener.numberOfBeacons][2];
-        private int beaconPos[][] = new int[BeaconRangingListener.numberOfBeacons][2];
+        private int BEACON_CLAMP_LENGTH = 1000;
+        private Map<Integer, int[]> approximatePos = new HashMap<>();
+        private Map<Integer, int[]> beaconPos = new HashMap<>();
         private int next_pos[] = {0, 0};
+        private int cur_pos[] = {0, 0};
 
         // For dragging
         private int pressedPos[]        = {0, 0};
@@ -308,12 +329,26 @@ public class FloorPlanActivity extends Activity {
             paint.setStyle(Paint.Style.STROKE);
             paint.setTextAlign(Paint.Align.CENTER);
             paint.setStyle(Paint.Style.FILL);
+
+            triangle = new Path();
+
+
+            // Set Beacon
+            for(DrawingObject tempObject : floorPlan.getObjects()) {
+                if(tempObject.getToolMode() == ToolMode.BEACON) {
+                    int pos[] = {tempObject.getBeginPoint().x, tempObject.getBeginPoint().y};
+                    beaconPos.put(Integer.parseInt(tempObject.getMinorKey()), pos);
+                }
+            }
         }
 
 
         public void onDraw(Canvas canvas) {
+            calculateCurPos();
             for(DrawingObject tempObject : floorPlan.getObjects()) {
                 tempBitmap = null;
+
+
                 switch (tempObject.getToolMode()) {
                     case LINE:
                         paint.setStyle(Paint.Style.STROKE);
@@ -451,8 +486,7 @@ public class FloorPlanActivity extends Activity {
 
             paint.setColor(Color.BLUE);
 
-            triangle = new Path();
-
+            triangle.reset();
             triangle.moveTo(
                     points[4],
                     points[5]
@@ -476,6 +510,40 @@ public class FloorPlanActivity extends Activity {
             triangle.close();
 
             canvas.drawPath(triangle, paint);
+
+
+            for(int key : approximatePos.keySet()) {
+                paint.setColor(Color.GRAY);
+                canvas.drawText(
+                        String.format(
+                                "%d",
+                                key
+                        ),
+                        criteriaPos[aX] + approximatePos.get(key)[aX] * magnitude,
+                        criteriaPos[aY] + approximatePos.get(key)[aY] * magnitude,
+                        paint
+                );
+                paint.setColor(Color.RED);
+                canvas.drawCircle(
+                        criteriaPos[aX] + approximatePos.get(key)[aX] * magnitude,
+                        criteriaPos[aY] + approximatePos.get(key)[aY] * magnitude,
+                        compassCircleSize,
+                        paint
+                );
+            }
+
+            // Draw current position
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(20);
+            paint.setColor(Color.rgb(0, 175, 255));
+            canvas.drawCircle(
+                    criteriaPos[aX] + cur_pos[aX] * magnitude,
+                    criteriaPos[aY] + cur_pos[aY] * magnitude,
+                    20,
+                    paint
+            );
+            cur_pos[aX] += (next_pos[aX] - cur_pos[aX]) / 30;
+            cur_pos[aY] += (next_pos[aY] - cur_pos[aY]) / 30;
 
             invalidate();
         }
@@ -602,99 +670,67 @@ public class FloorPlanActivity extends Activity {
         }
 
         public void calculateCurPos() {
-            int range[] = new int[BeaconRangingListener.numberOfBeacons];
-            int closestBeacon = 0;
+            Map<Integer, Integer> range = new HashMap<>();
+            int closestBeacon = 0; // key
 
             // 공간보다 크게 잡히는 것을 방지
-            for(int i = 0; i < BeaconRangingListener.numberOfBeacons; i++)
-                range[i] = BeaconRangingListener.beacons[i] > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacons[i];
+            for(int key : beaconPos.keySet())
+                if(BeaconRangingListener.beacons.containsKey(key))
+                    range.put(key, BeaconRangingListener.beacons.get(key) > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacons.get(key));
 
-            // 가장 근접한 비콘 탐지
-            for(int i = 1; i < BeaconRangingListener.numberOfBeacons; i++)
-                if(range[i] < range[closestBeacon])
-                    closestBeacon = i;
+            if(range.size() == 1) {
+                next_pos[aX] = beaconPos.get(range.keySet().toArray()[0])[aY];
+                next_pos[aY] = beaconPos.get(range.keySet().toArray()[0])[aY];
+            }
 
-            // 근접한 비콘을 제외한 비콘들의 신호 세기에 비례해 위치 설정
-            double gradient;
-            double distance;
-            double distanceFromClosestBeacon;
-            double newPositions[] = {0, 0};
-            for (int b_index = 0; b_index < BeaconRangingListener.numberOfBeacons; b_index++) {
-                if (b_index != closestBeacon) {
+            if(range.size() >= 2) {
+                approximatePos.clear();
+
+                // 가장 근접한 비콘 탐지
+                closestBeacon = (int) range.keySet().toArray()[0];
+                for (int key : range.keySet())
+                    if (range.get(key) < range.get(closestBeacon))
+                        closestBeacon = key;
+
+                // 근접한 비콘을 제외한 비콘들의 신호 세기에 비례해 위치 설정
+                double gradient;
+                double distance;
+                double distanceFromClosestBeacon;
+                double newPositions[] = {0, 0};
+                for (int key : range.keySet()) {
                     try {
                         // 두 비콘 사이의 기울기
-                        gradient = (double)(beaconPos[b_index][aY] - beaconPos[closestBeacon][aY]) / (double)(beaconPos[b_index][aX] - beaconPos[closestBeacon][aX]);
+                        gradient = (double) (beaconPos.get(key)[aY] - beaconPos.get(closestBeacon)[aY]) / (double) (beaconPos.get(key)[aX] - beaconPos.get(closestBeacon)[aX]);
                     } catch (ArithmeticException e) {
                         gradient = 10000;
                     }
                     // 두 비콘 사이의 거리
-                    distance = Math.sqrt(Math.pow(beaconPos[b_index][aX] - beaconPos[closestBeacon][aX], 2) + Math.pow(beaconPos[b_index][aY] - beaconPos[closestBeacon][aY], 2));
-                    distanceFromClosestBeacon = range[b_index] - distance;
-                    if(beaconPos[b_index][aX] > beaconPos[closestBeacon][aX])
+                    distance = Math.sqrt(Math.pow(beaconPos.get(key)[aX] - beaconPos.get(closestBeacon)[aX], 2) + Math.pow(beaconPos.get(key)[aY] - beaconPos.get(closestBeacon)[aY], 2));
+                    distanceFromClosestBeacon = range.get(key) - distance;
+                    if (beaconPos.get(key)[aX] > beaconPos.get(closestBeacon)[aX])
                         distanceFromClosestBeacon = -distanceFromClosestBeacon;
 
                     double bias = distanceFromClosestBeacon / (distanceFromClosestBeacon + Math.abs(gradient) * distanceFromClosestBeacon);
                     newPositions[aX] += distanceFromClosestBeacon * bias;
                     newPositions[aY] += distanceFromClosestBeacon * bias * gradient;
 
-                    approximatePos[b_index][aX] = beaconPos[closestBeacon][aX] + (int)(distanceFromClosestBeacon * bias);
-                    approximatePos[b_index][aY] = beaconPos[closestBeacon][aY] + (int)(distanceFromClosestBeacon * bias * gradient);
-                } else {
-                    int _x = (x2 - x1) / 2;
-                    int _y = (y2 - y1) / 2;
-                    try {
-                        // 두 비콘 사이의 기울기
-                        gradient = (double)(beaconPos[b_index][aY] - _y) / (double)(beaconPos[b_index][aX] - _x);
-                    } catch (ArithmeticException e) {
-                        gradient = 10000;
-                    }
-                    distance = Math.sqrt(Math.pow(beaconPos[b_index][aX] - _x, 2) + Math.pow(beaconPos[b_index][aY] - _y, 2));
-                    distanceFromClosestBeacon = range[b_index];
-                    if(beaconPos[b_index][aX] > _x)
-                        distanceFromClosestBeacon = -distanceFromClosestBeacon;
-
-                    double bias = distanceFromClosestBeacon / (distanceFromClosestBeacon + Math.abs(gradient) * distanceFromClosestBeacon);
-                    newPositions[aX] += distanceFromClosestBeacon * bias * 2;
-                    newPositions[aY] += distanceFromClosestBeacon * bias * gradient * 2;
-
-                    approximatePos[b_index][aX] = beaconPos[closestBeacon][aX] + (int)(distanceFromClosestBeacon * bias * 2);
-                    approximatePos[b_index][aY] = beaconPos[closestBeacon][aY] + (int)(distanceFromClosestBeacon * bias * gradient * 2);
+                    int pos[] = {
+                            beaconPos.get(closestBeacon)[aX] + (int) (distanceFromClosestBeacon * bias),
+                            beaconPos.get(closestBeacon)[aY] + (int) (distanceFromClosestBeacon * bias * gradient)
+                    };
+                    approximatePos.put(key, pos);
                 }
+                next_pos[aX] = 0;
+                next_pos[aY] = 0;
+                for(int key : approximatePos.keySet()) {
+                    next_pos[aX] += approximatePos.get(key)[aX];
+                    next_pos[aY] += approximatePos.get(key)[aY];
+                }
+                next_pos[aX] /= range.size();
+                next_pos[aY] /= range.size();
+//                next_pos[aX] = beaconPos.get(closestBeacon)[aX] + (int) newPositions[aX];
+//                next_pos[aY] = beaconPos.get(closestBeacon)[aY] + (int) newPositions[aY];
             }
-            next_pos[aX] = beaconPos[closestBeacon][aX] + (int) newPositions[aX] / (BeaconRangingListener.numberOfBeacons - 1);
-            next_pos[aY] = beaconPos[closestBeacon][aY] + (int) newPositions[aY] / (BeaconRangingListener.numberOfBeacons - 1);
-
-
-            /*
-            double  distance[] = {
-                    Math.sqrt(Math.pow(b1_coor[0] - b2_coor[0], 2) + Math.pow(b1_coor[1] - b2_coor[1], 2)),
-                    Math.sqrt(Math.pow(b1_coor[0] - b3_coor[0], 2) + Math.pow(b1_coor[1] - b3_coor[1], 2)),
-                    Math.sqrt(Math.pow(b3_coor[0] - b2_coor[0], 2) + Math.pow(b3_coor[1] - b2_coor[1], 2)),
-            };
-            double range1 = BeaconRangingListener.beacon1 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon1;
-            double range2 = BeaconRangingListener.beacon2 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon2;
-            double range3 = BeaconRangingListener.beacon3 > BEACON_CLAMP_LENGTH ? BEACON_CLAMP_LENGTH : BeaconRangingListener.beacon3;
-
-            if(range1 + range2 > distance[0]) {
-                double bias = (range1 - ((range1 + range2) - distance[0]) / 2) / distance[0];
-                double _x = b1_coor[aX] + (b2_coor[0] - b1_coor[0]) * bias;
-                double _y = b1_coor[aY] + (b2_coor[1] - b1_coor[1]) * bias;
-                next_pos[aX] = b3_coor[aX] + (int)((_x - b3_coor[aX]) * (range3 / distance[2]));
-                next_pos[aY] = b3_coor[aY] + (int)((_y - b3_coor[aY]) * (range3 / distance[2]));
-            } else if(range1 + range3 > distance[1]) {
-                double bias = (range1 - ((range1 + range3) - distance[1]) / 2) / distance[1];
-                double _x = b1_coor[aX] + (b3_coor[0] - b1_coor[0]) * bias;
-                double _y = b1_coor[aY] + (b3_coor[1] - b1_coor[1]) * bias;
-                next_pos[aX] = b2_coor[aX] + (int)((_x - b2_coor[aX]) * (range2 / distance[1]));
-                next_pos[aY] = b2_coor[aY] + (int)((_y - b2_coor[aY]) * (range2 / distance[1]));
-            } else if(range2 + range3 > distance[2]) {
-                double bias = (range2 - ((range2 + range3) - distance[2]) / 2) / distance[2];
-                double _x = b2_coor[aX] + (b3_coor[0] - b2_coor[0]) * bias;
-                double _y = b2_coor[aY] + (b3_coor[1] - b2_coor[1]) * bias;
-                next_pos[aX] = b1_coor[aX] + (int)((_x - b1_coor[aX]) * (range1 / distance[0]));
-                next_pos[aY] = b1_coor[aY] + (int)((_y - b1_coor[aY]) * (range1 / distance[0]));
-            }
-            */
 
         }
     }

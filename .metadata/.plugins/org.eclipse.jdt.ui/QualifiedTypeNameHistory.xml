@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="gui.draw.ToolMode"/>
+<fullyQualifiedTypeName name="drawingObjects.DrawingObject"/>
+<fullyQualifiedTypeName name="java.awt.Point"/>
+<fullyQualifiedTypeName name="com.sun.corba.se.spi.activation.ServerManager"/>
+<fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+<fullyQualifiedTypeName name="gui.select.NewFloorPlan"/>
+<fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+<fullyQualifiedTypeName name="gui.component.CoinTextField"/>
+<fullyQualifiedTypeName name="gui.component.CoinButton"/>
+<fullyQualifiedTypeName name="javax.swing.JTextField"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="dataObjects.CoinFloor"/>
+<fullyQualifiedTypeName name="gui.select.SelectionFrame"/>
+<fullyQualifiedTypeName name="serverConnector.ServerManager"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,47 @@
+package gui.select;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+
+import gui.component.CoinFrame;
+import gui.component.CoinTextField;
+
+public class NewFloorPlan extends CoinFrame implements ActionListener{
+
+	private JLabel nameLabel;
+	private JLabel buildingNameLabel;
+	private JLabel descriptionLabel;
+	private JLabel floorLabel;
+	private JLabel longitudeNameLabel;
+	private JLabel latitudeLabel;
+	private JLabel imageLabel;
+	
+	private CoinTextField nameField;
+	private CoinTextField buildingNameField;
+	private CoinTextField descriptionField;
+	private CoinTextField floorField;
+	private CoinTextField longitudeField;
+	private CoinTextField latitudeField;
+	private CoinTextField imageField;
+	
+	
+	public NewFloorPlan() {
+		super("New Floor Frame", 600, 1000);
+		exitButton.addActionListener(this);
+		minimizeButton.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == exitButton) {
+			dispose();
+		}
+		else if(e.getSource() == minimizeButton) {
+			setState(Frame.ICONIFIED);
+		}
+	}
+
+}

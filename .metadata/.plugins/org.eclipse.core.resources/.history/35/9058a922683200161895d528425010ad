@@ -1,0 +1,65 @@
+package gui.select;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import gui.component.CoinFrame;
+import gui.component.CoinTextField;
+import resource.CoinFont;
+
+public class NewFloorPlan extends CoinFrame implements ActionListener{
+
+	private ArrayList<CoinTextField> textFields = new ArrayList<>();
+	
+	private CoinTextField nameField;
+	private CoinTextField buildingNameField;
+	private CoinTextField descriptionField;
+	private CoinTextField floorField;
+	private CoinTextField longitudeField;
+	private CoinTextField latitudeField;
+	private CoinTextField imageField;
+	
+	
+	public NewFloorPlan() {
+		super("New Floor Frame", 600, 1000);
+
+		String labelName[] = {
+				"Ãþ¸í",
+				"ºôµù¸í",
+				"¼³¸í",
+				"Ãþ",
+				"À§µµ",
+				"°æµµ",
+				"¼¶³×ÀÏ"
+		};
+		
+		for(int i = 0; i < 7; i++) {
+			JLabel newLabel = new JLabel(labelName[i]);
+			newLabel.setFont(CoinFont.BIG_FONT_BOLD);
+			newLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			this.add(newLabel).setBounds(100, 80 * i, 300, 80 * (i + 1) + 50);
+			
+			JTextField newField = new JTextField();
+		}
+		
+		exitButton.addActionListener(this);
+		minimizeButton.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == exitButton) {
+			dispose();
+		}
+		else if(e.getSource() == minimizeButton) {
+			setState(Frame.ICONIFIED);
+		}
+	}
+
+}

@@ -1,0 +1,324 @@
+package serverConnector;
+
+import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
+import dataObjects.CoinFloor;
+import drawingObjects.DrawingObject;
+import gui.draw.ToolMode;
+
+/**
+ * Created by DongKyu on 2016-05-24.
+ */
+public class ServerManager {
+    public final static int REJECT = 0;
+    public final static int ACCEPT = 1;
+
+    public static ServerManager instance = null;
+    private String userID;
+    private String userNickName;
+    private ArrayList<CoinFloor> floorPlans = new ArrayList<>();
+
+    private int requestResult;
+    private String result = "";
+
+    public ServerManager() {
+
+    	CoinFloor fp1 = new CoinFloor();
+        fp1.setBuildingName("IT 4호관");
+        fp1.setFloor(1);
+        fp1.setName("1층");
+        fp1.setDescription("IT 4호관 이다");
+        fp1.setLatitude(35.887944);
+        fp1.setLongitude(128.611260);
+
+        CoinFloor fp2 = new CoinFloor();
+        fp2.setBuildingName("공대 9호관");
+        fp2.setFloor(1);
+        fp2.setName("1층");
+        fp2.setDescription("공대 9호관 1층이다");
+        fp2.setLatitude(132.2);
+        fp2.setLongitude(132.2);
+
+        CoinFloor fp3 = new CoinFloor();
+        fp3.setBuildingName("IT 2호관");
+        fp3.setName("1층");
+        fp3.setFloor(1);
+        fp3.setDescription("IT 2호관 1층이다");
+        fp3.setLatitude(132.2);
+        fp3.setLongitude(132.2);
+
+        floorPlans.add(fp1);
+        floorPlans.add(fp2);
+        floorPlans.add(fp3);
+        floorPlans.add(fp1);
+        floorPlans.add(fp2);
+        floorPlans.add(fp3);
+        floorPlans.add(fp1);
+        floorPlans.add(fp2);
+        floorPlans.add(fp3);
+    }
+
+    public static ServerManager getInstance() {
+        if(instance == null)
+            instance = new ServerManager();
+        return instance;
+    }
+
+    public ArrayList<CoinFloor> getFloorPlans() {
+        return floorPlans;
+    }
+
+    public void setFloorPlans(ArrayList<CoinFloor> floorPlans) {
+        this.floorPlans = floorPlans;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+    /**
+     * ALL CASES: <br>
+     * - data type <br>
+     * @param object
+     */
+    private void data1of8(DrawingObject object) {
+       System.out.print(object.getToolMode() + ":");
+    }
+    
+    /**
+     * CASE LINE, RECT, CIRCLE: <br>
+     * - thickness <br>
+     * CASE ICON, TAG, BEACON: <br>
+     * - icon type <br>
+     * @param object
+     */
+    private void data2of8(DrawingObject object) {
+       if(object.getToolMode() == ToolMode.ICON ||
+             object.getToolMode() == ToolMode.TAG ||
+             object.getToolMode() == ToolMode.BEACON) {
+          try {
+             System.out.print(object.getIcon() + ":");
+          } catch (Exception e) {
+             System.out.print("null" + ":");
+          }
+       }
+       else {
+          System.out.print(object.getThickness() + ":");
+       }
+    }
+    
+    /**
+     * ALL CASES: <br>
+     * - x1 <br>
+     * @param object
+     */
+    private void data3of8(DrawingObject object) {
+       System.out.print((int)object.getBeginPoint().getX() + ":");
+    }
+    
+    /**
+     * ALL CASES: <br>
+     * - y1 <br>
+     * @param object
+     */
+    private void data4of8(DrawingObject object) {
+       System.out.print((int)object.getBeginPoint().getY() + ":");
+    }
+
+    /**
+     * ALL CASES: <br>
+     * - x2 (or width) <br>
+     * @param object
+     */
+    private void data5of8(DrawingObject object) {
+       System.out.print((int)object.getEndPoint().getX() + ":");
+    }
+    
+    /**
+     * ALL CASES: <br>
+     * - y2 (or height) <br>
+     * @param object
+     */
+    private void data6of8(DrawingObject object) {
+       System.out.print((int)object.getEndPoint().getY() + ":");
+    }
+    
+    /**
+     * CASE LINE, RECT, CIRCLE: <br>
+     * - line color sGBA <br>
+     * CASE ICON: <br>
+     * - theta(radian) <br>
+     * CASE TAG, BEACON: <br>
+     * - major key (or tag key) <br>
+     * @param object
+     */
+    private void data7of8(DrawingObject object) {
+       if(object.getToolMode() == ToolMode.LINE ||
+             object.getToolMode() == ToolMode.RECT ||
+             object.getToolMode() == ToolMode.CIRCLE) {
+          System.out.print(object.getLineColor().getRGB() + ":");
+       }
+       else if(object.getToolMode() == ToolMode.ICON) {
+          System.out.print(object.getTheta() + ":");
+       }
+       else {
+          System.out.print(object.getMajorKey() + ":");
+       }
+    }
+    
+    /**
+     * CASE LINE, RECT, CIRCLE: <br>
+     * - fill color sGBA (if no fill color, then null) <br>
+     * CASE ICON, TAG: <br>
+     * - null <br>
+     * CASE BEACON: <br>
+     * - minor key <br>
+     * @param object
+     */
+    private void data8of8(DrawingObject object) {
+       if(object.getToolMode() == ToolMode.LINE ||
+             object.getToolMode() == ToolMode.RECT ||
+             object.getToolMode() == ToolMode.CIRCLE) {
+          try {
+             System.out.print(object.getFillColor().getRGB());
+          } catch (Exception e) {
+             System.out.print("null");
+          }
+       }
+       else if(object.getToolMode() == ToolMode.ICON) {
+          System.out.print("null");
+       }
+       else {
+          System.out.print(object.getMinorKey());
+       }
+    }
+    
+    public void parseData(ArrayList<DrawingObject> objects) {
+       // TODO save procedure
+       for(int i = 0; i < objects.size(); i++) {
+          DrawingObject object = objects.get(i);
+          data1of8(object);
+          data2of8(object);
+          data3of8(object);
+          data4of8(object);
+          data5of8(object);
+          data6of8(object);
+          data7of8(object);
+          data8of8(object);
+          System.out.println("");
+       }
+    }
+
+    private String requestServer(String urlString) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final StringBuffer sb = new StringBuffer();
+
+                try {
+                    URL url = new URL(urlString);
+                    HttpURLConnection conn =
+                            (HttpURLConnection) url.openConnection();
+                    if (conn != null) {
+                        conn.setConnectTimeout(2000);
+                        conn.setUseCaches(false);
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            BufferedReader br
+                                    = new BufferedReader(new InputStreamReader
+                                    (conn.getInputStream(), "utf-8"));
+                            while (true) {
+                                String line = br.readLine();
+                                if (line == null) break;
+                                sb.append(line);
+                            }
+                            br.close();
+                        }
+                        conn.disconnect();
+                    }
+                    System.out.println(sb.toString());
+                    result = sb.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = "NONE";
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public int getResult() {
+        result = "";
+        return requestResult;
+    }
+
+
+    public String requestLoginToServer(String id, String password) {
+        String temp = requestServer("http://ksd.iptime.org:8080/userSearch/" + id + "/" + password);
+
+        if(temp.equals("LOGIN_REJECT") || temp.equals("") || temp.equals("NONE"))
+            requestResult = REJECT;
+        else
+            requestResult = ACCEPT;
+
+        return temp;
+    }
+
+
+    public String requestJoinToServer(String id, String password, String nickname) {
+        String temp = requestServer("http://ksd.iptime.org:8080/addUser?id=" + id + "&password=" + password + "&name=" + nickname);
+
+        if(temp.equals("JOIN_REJECT") || temp.equals("") || temp.equals("NONE"))
+            requestResult = REJECT;
+        else if(temp.equals("JOIN_SUCCESS"))
+            requestResult = ACCEPT;
+
+        return temp;
+    }
+    
+    public String requestAddFloorPlanToServer(String name, String buildingName, String description, int floor, double latitude, double longitude, ImageIcon image) {
+        String temp = requestServer("http://ksd.iptime.org:8080/addUser?id=" + id + "&password=" + password + "&name=" + nickname);
+
+        if(temp.equals("JOIN_REJECT") || temp.equals("") || temp.equals("NONE"))
+            requestResult = REJECT;
+        else if(temp.equals("JOIN_SUCCESS"))
+            requestResult = ACCEPT;
+
+        return temp;
+    }
+    
+    public String requestAddFloorPlanToServer(String name, String buildingName, String description, int floor, double latitude, double longitude, ImageIcon image) {
+        String temp = requestServer("http://ksd.iptime.org:8080/addUser?id=" + id + "&password=" + password + "&name=" + nickname);
+
+        if(temp.equals("JOIN_REJECT") || temp.equals("") || temp.equals("NONE"))
+            requestResult = REJECT;
+        else if(temp.equals("JOIN_SUCCESS"))
+            requestResult = ACCEPT;
+
+        return temp;
+    }
+}

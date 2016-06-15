@@ -92,10 +92,10 @@ public class FloorPlanEditActivity extends Activity {
             "LINE:3:680:380:650:380:-16777216:null\n" +
             "LINE:3:720:290:770:290:-16777216:null\n" +
             "LINE:3:750:290:750:370:-16777216:null\n" +
-            "BEACON:CON_BEACON:125:215:50:50:M1:m1\n" +
-            "BEACON:CON_BEACON:845:215:50:50:M2:m2\n" +
-            "BEACON:CON_BEACON:125:445:50:50:M3:m3\n" +
-            "BEACON:CON_BEACON:845:445:50:50:M4:m4\n" +
+            "BEACON:CON_BEACON:125:215:50:50:1000:100\n" +
+            "BEACON:CON_BEACON:845:215:50:50:1000:200\n" +
+            "BEACON:CON_BEACON:125:445:50:50:1000:300\n" +
+            "BEACON:CON_BEACON:845:445:50:50:1000:400\n" +
             "TAG:COIN_TAG:495:105:50:50:tagkey1234:null\n" +
             "LINE:3:200:240:200:270:-16777216:null\n" +
             "LINE:3:810:240:830:240:-16777216:null\n" +

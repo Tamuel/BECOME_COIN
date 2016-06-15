@@ -3,29 +3,32 @@ package dataObjects;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
+
 import drawingObjects.DrawingObject;
 
 public class CoinFloor {
 
-	private String owner;
-	private String name;
-	private Date date;
-	private String briefInfo;
-	
-	private ArrayList<CoinRoom> roomList = null;
-	
-	private ArrayList<DrawingObject> drawingObject = null;
+	private int id;
+    private String name;
+    private String buildingName;
+    private String description;
+    private int floor;
+    private double longitude;
+    private double latitude;
+    private ImageIcon floorPlanImage;
+
 	
 	public CoinFloor() {
-		setDate(new Date());
 	}
 
-	public String getOwner() {
-		return owner;
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -36,35 +39,65 @@ public class CoinFloor {
 		this.name = name;
 	}
 
-	public Date getDate() {
-		return date;
+
+	public String getBuildingName() {
+		return buildingName;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
 	}
 
-	public String getBriefInfo() {
-		return briefInfo;
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setBriefInfo(String briefInfo) {
-		this.briefInfo = briefInfo;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public ArrayList<CoinRoom> getRoomList() {
-		return roomList;
+
+	public int getFloor() {
+		return floor;
 	}
 
-	public void setRoomList(ArrayList<CoinRoom> roomList) {
-		this.roomList = roomList;
+
+	public void setFloor(int floor) {
+		this.floor = floor;
 	}
 
-	public ArrayList<DrawingObject> getDrawingObject() {
-		return drawingObject;
+
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setDrawingObject(ArrayList<DrawingObject> drawingObject) {
-		this.drawingObject = drawingObject;
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
+
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+
+	public ImageIcon getFloorPlanImage() {
+		return floorPlanImage;
+	}
+
+
+	public void setFloorPlanImage(ImageIcon floorPlanImage) {
+		this.floorPlanImage = floorPlanImage;
+	}
+
+	
 }
