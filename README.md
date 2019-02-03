@@ -4,7 +4,7 @@ Framework for creating, managing and using indoor maps.\
 지도 제작 프로그램은 Java를 이용하여 제작되었고, 서버는 Spring Framework를 이용해 제작되었습니다.\
 사용자 및 관리자용 어플리케이션은 Android 스마트폰 용으로 제작되었습니다.
 
-# Screenshot
+## Screenshot
 * 실내 지도 제작 프로그램 (Java)
 
   ![screenshot0](https://github.com/Tamuel/KNU_OSS_2016_BECOME/blob/master/Screenshot/01_coin.png)
@@ -17,17 +17,17 @@ Framework for creating, managing and using indoor maps.\
 
   ![screenshot2](https://github.com/Tamuel/KNU_OSS_2016_BECOME/blob/master/Screenshot/03_coin.png)
 
-# Video
+## Video
 * Youtube
   * [프로그램 및 시연 영상](https://www.youtube.com/watch?v=l68vaEEVJ20)
   * [프로그램 영상](https://www.youtube.com/watch?v=mUppaqvo_qE)
   
-# Libraries and APIs
+## Libraries and APIs
 * [Spring Framework](https://spring.io/)
 * [Google Maps](https://cloud.google.com/maps-platform/maps/?hl=ko)
 * [ZXING 바코드, QR코드 API](https://github.com/zxing/zxing)
 
-# Teams
+## Teams
 * 유동규 (eastern7star@gmail.com)
 * 박동원 (b1011dong@gmail.com)
 * 이승진 (fewfree12@naver.com)
